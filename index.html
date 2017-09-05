@@ -30,20 +30,85 @@
 	</div>
 
 	<div class = "container">
-		<div class = "row">
+		<div class = "row home">
 			<div class = "col-md-3">
 
 				<h1 class= "cathead firstcat">CATEGORY</h1>
 				<hr>
 				<form action="">
-					<input type="checkbox" name="check1" value="">Tops<br>
-					<input type="checkbox" name="check2" value="">Bottoms 
+					<div>
+				        <input class = "checkboxes" type="checkbox" id="check1"/>
+				        <label class = "checklabel" for="check1">
+				          <div><i class="fa fa-check"></i></div> Heads...
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check2"/>
+				        <label class = "checklabel" for="check2">
+				          <div><i class="fa fa-check"></i></div> Shoulders
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check3"/>
+				        <label class = "checklabel" for="check3">
+				          <div><i class="fa fa-check"></i></div> Knees
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check4"/>
+				        <label class = "checklabel" for="check4">
+				          <div><i class="fa fa-check"></i></div> And Toes
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check5"/>
+				        <label class = "checklabel" for="check5">
+				          <div><i class="fa fa-check"></i></div> *Knees and Toes!*
+				        </label>
+				    </div>
+					 
+				</form>
+
+				<h1 class= "cathead firstcat">CATEGORY</h1>
+				<hr>
+				<form action="">
+					<div>
+				        <input class = "checkboxes" type="checkbox" id="check1"/>
+				        <label class = "checklabel" for="check1">
+				          <div><i class="fa fa-check"></i></div> Heads...
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check2"/>
+				        <label class = "checklabel" for="check2">
+				          <div><i class="fa fa-check"></i></div> Shoulders
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check3"/>
+				        <label class = "checklabel" for="check3">
+				          <div><i class="fa fa-check"></i></div> Knees
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check4"/>
+				        <label class = "checklabel" for="check4">
+				          <div><i class="fa fa-check"></i></div> And Toes
+				        </label>
+				    </div>
+				    <div>
+				        <input class = "checkboxes" type="checkbox" id="check5"/>
+				        <label class = "checklabel" for="check5">
+				          <div><i class="fa fa-check"></i></div> *Knees and Toes!*
+				        </label>
+				    </div>
+					 
 				</form>
 				
 			</div>
-			<div class = "col-md-9">
+			<div class = "col-md-9 grid">
 				<div class = "itemsearch">
-					<input class = "filter" type = "text" name = "filter" placeholder="Search for all of your favorite brands">
+					<input id = "itemfilter" class = "filter" type = "text" name = "filter" placeholder="Search for all of your favorite brands"  onkeyup="filterFunction()">
 					<div class = "additional">
 					<center>
 						<p class = "sortby">SORT BY</p>
@@ -53,24 +118,24 @@
 				</div>
 				<hr>
 
-				<div class= "row">
-					<div class ="col-md-4">
+				<div id = "itemrow" class= "row">
+					<div class ="col-md-4 post" id = "post">
 						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
 						<hr>
-						<p class= "postname">ITEM NAME</p>
+						<p class= "postname">SUPREME</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
 
 					</div>
-					<div class ="col-md-4">
+					<div class ="col-md-4 post" id = "post">
 						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
 						<hr>
-						<p class= "postname">ITEM NAME</p>
+						<p class= "postname">GUCCI</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
 
 					</div>
-					<div class ="col-md-4">
+					<div class ="col-md-4 post" id = "post">
 						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
 						<hr>
 						<p class= "postname">ITEM NAME</p>
@@ -79,11 +144,75 @@
 
 					</div>
 				</div>
+
+				<div id = "itemrow" class= "row">
+					<div class ="col-md-4 post" id = "post">
+						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
+						<hr>
+						<p class= "postname">SAINT LAURENT</p>
+						<p class= "postdesigner">Designer Name, Size</p>
+						<p class= "postprice">$1000</p>
+
+					</div>
+					<div class ="col-md-4 post" id = "post">
+						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
+						<hr>
+						<p class= "postname">ITEM NAME</p>
+						<p class= "postdesigner">Designer Name, Size</p>
+						<p class= "postprice">$1000</p>
+
+					</div>
+					<div class ="col-md-4 post" id = "post">
+						<img class= "postimg" src = "http://budgetstockphoto.com/bamers/stock_photo_spectrum.jpg">
+						<hr>
+						<p class= "postname">SAINT LAURENT</p>
+						<p class= "postdesigner">Designer Name, Size</p>
+						<p class= "postprice">$1000</p>
+
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function filterFunction() {
+			var itemfilter, filtervalue, itemrow, fullpost, postname, postdesigner;
+			itemfilter = document.getElementById('itemfilter')
+			filtervalue = itemfilter.value.toUpperCase();
+			itemrow = document.getElementById('itemrow');
+			fullpost = document.getElementsByClassName('post')
+	
+			for (i = 0; i < fullpost.length; i++) {
+		        postname = fullpost[i].getElementsByClassName('postname')[0].innerHTML;
+		        postdesigner = fullpost[i].getElementsByClassName('postdesigner')[0].innerHTML;
+		        if (postname.toUpperCase().indexOf(filtervalue) > -1 || postdesigner.toUpperCase().indexOf(filtervalue) > -1) {
+		            fullpost[i].style.display = "";
+		        } else {
+		            fullpost[i].style.display = "none";
+		        }
+		    }
+		}
+
+
+
+	</script>
 </body>
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
