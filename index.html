@@ -12,6 +12,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
+	<!--SWEETALERT-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.8.0/sweetalert2.min.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.8.0/sweetalert2.min.css">
+	
+	
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<script src="https://use.fontawesome.com/8130789d52.js"></script>
 
@@ -21,7 +27,7 @@
 		<div class = "navbarmob">
 			<ul>			
 				<li><a class = "" href = "signup.html">SIGN UP</a></li>
-				<li><a class = "" href = "#">LOGIN</a></li>
+				<li><a class = "" href = "#" onclick="loginswal()">LOGIN</a></li>
 				<li><a class = "" href = "sell.html">SELL</a></li>
 				<li><a class = "" href = "#">APP</a></li>
 				<li><a class = "" href = "about.html">ABOUT</a></li>
@@ -37,31 +43,31 @@
 				<hr>
 				<form action="">
 					<div>
-				        <input class = "checkboxes" type="checkbox" id="check1"/>
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  onchange = "checkfilters()" id="check1"/>
 				        <label class = "checklabel" for="check1">
 				          <div><i class="fa fa-check"></i></div> Heads...
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check2"/>
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check2"/>
 				        <label class = "checklabel" for="check2">
 				          <div><i class="fa fa-check"></i></div> Shoulders
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check3"/>
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check3"/>
 				        <label class = "checklabel" for="check3">
 				          <div><i class="fa fa-check"></i></div> Knees
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check4"/>
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check4"/>
 				        <label class = "checklabel" for="check4">
 				          <div><i class="fa fa-check"></i></div> And Toes
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check5"/>
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check5"/>
 				        <label class = "checklabel" for="check5">
 				          <div><i class="fa fa-check"></i></div> *Knees and Toes!*
 				        </label>
@@ -73,32 +79,32 @@
 				<hr>
 				<form action="">
 					<div>
-				        <input class = "checkboxes" type="checkbox" id="check1"/>
-				        <label class = "checklabel" for="check1">
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check6"/>
+				        <label class = "checklabel" for="check6">
 				          <div><i class="fa fa-check"></i></div> Heads...
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check2"/>
-				        <label class = "checklabel" for="check2">
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check7"/>
+				        <label class = "checklabel" for="check7">
 				          <div><i class="fa fa-check"></i></div> Shoulders
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check3"/>
-				        <label class = "checklabel" for="check3">
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check8"/>
+				        <label class = "checklabel" for="check8">
 				          <div><i class="fa fa-check"></i></div> Knees
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check4"/>
-				        <label class = "checklabel" for="check4">
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check9"/>
+				        <label class = "checklabel" for="check9">
 				          <div><i class="fa fa-check"></i></div> And Toes
 				        </label>
 				    </div>
 				    <div>
-				        <input class = "checkboxes" type="checkbox" id="check5"/>
-				        <label class = "checklabel" for="check5">
+				        <input class = "checkboxes" type="checkbox" onchange = "checkfilters()"  id="check10"/>
+				        <label class = "checklabel" for="check10">
 				          <div><i class="fa fa-check"></i></div> *Knees and Toes!*
 				        </label>
 				    </div>
@@ -125,6 +131,7 @@
 						<p class= "postname">SUPREME</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag">Footwear</p>
 
 					</div>
 					<div class ="col-md-4 post" id = "post">
@@ -133,6 +140,7 @@
 						<p class= "postname">GUCCI</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag">Footwear</p>
 
 					</div>
 					<div class ="col-md-4 post" id = "post">
@@ -141,6 +149,7 @@
 						<p class= "postname">ITEM NAME</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag">Footwear</p>
 
 					</div>
 				</div>
@@ -152,6 +161,8 @@
 						<p class= "postname">SAINT LAURENT</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag">Heads...</p>
+
 
 					</div>
 					<div class ="col-md-4 post" id = "post">
@@ -160,6 +171,7 @@
 						<p class= "postname">ITEM NAME</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag"> Shoulders</p>
 
 					</div>
 					<div class ="col-md-4 post" id = "post">
@@ -168,6 +180,7 @@
 						<p class= "postname">SAINT LAURENT</p>
 						<p class= "postdesigner">Designer Name, Size</p>
 						<p class= "postprice">$1000</p>
+						<p class = "posttag"> Heads...</p>
 
 					</div>
 				</div>
@@ -177,13 +190,108 @@
 	</div>
 
 	<script type="text/javascript">
+		function loginswal(){
+			swal({
+			  title: 'Welcome Back!',
+			  text: 'Please enter your email and password',
+			  html:
+			    '<p>Please enter your email and password</p><br><input id="swal-input1" type = "email" placeholder= "Email Address" class="swal2-input">' +
+			    '<input id="swal-input2"  type = "password" placeholder = "Password" class="swal2-input">',
+			  preConfirm: function () {
+			    return new Promise(function (resolve) {
+			      resolve([
+			        $('#swal-input1').val(),
+			        $('#swal-input2').val()
+			      ])
+			    })
+			  },
+			  onOpen: function () {
+			    $('#swal-input1').focus()
+			  }
+			}).then(function (result) {
+			  swal(JSON.stringify(result))
+			}).catch(swal.noop)
+		}
+		
+
+		function checkfilters(){
+			var checkboxes, checkedboxes, checkedarray, itemrow, fullpost, itemtags, fullpostindexfail, fullpostindex;
+
+			itemrow = document.getElementById('itemrow');
+			fullpost = document.getElementsByClassName('post');
+		    checkboxes = document.getElementsByClassName("checkboxes");
+		    checklabels = document.getElementsByClassName("checklabel");
+		    checkedarray = []
+		    itemtags = []
+		    fullpostindex = [];
+		    fullpostindexfail = [];
+		    console.log(fullpostindex)
+
+		    for (var i = 0; i < checkboxes.length; i++) {
+		    	
+		    	if (checkboxes[i].checked == true) {
+		    		
+		    		checkedarray.push(checklabels[i].innerText)
+		   
+		    	}
+		    }
+		    console.log(checkedarray)
+		    if(checkedarray.length == 0){
+		    	console.log("nothing is checked");
+		    	for (i = 0; i < fullpost.length; i++) {
+		        	fullpost[i].style.display = ""
+		    	}
+		    }else{
+		    	for (i = 0; i < fullpost.length; i++) {
+		        	itemtags.push(fullpost[i].getElementsByClassName('posttag')[0].innerHTML);
+		        	
+				}
+				console.log(itemtags)
+		        if (itemtags.length == 0) {
+		            fullpost.style.display = "";
+		        } else {
+		            function getMatch(a, b) {
+					    var matches = [];
+
+					    for ( var i = 0; i < a.length; i++ ) {
+					    	
+					        for ( var e = 0; e < b.length; e++ ) {
+					            if ( a[i] === b[e] ) {
+					            	matches.push( a[i] );
+					            	fullpostindex.push(i)
+					            	console.log(fullpostindex)
+					            }else{
+					            	fullpostindexfail.push(i)
+					            }
+					            
+					        }
+					    }
+					    console.log("matches: ", matches)
+					    console.log("fullpostindex ", fullpostindex)
+					    console.log("fullpostindexfail ", fullpostindexfail)
+					}
+					getMatch(itemtags, checkedarray);
+					for (var i = 0; i <fullpostindexfail.length; i++) {
+						fullpost[i].style.display = "none"
+					}
+					for (var i = 0; i <fullpostindex.length; i++) {
+						fullpost[i].style.display = ""
+					}
+		        }
+
+		    }
+		    
+		}
+		
 		function filterFunction() {
 			var itemfilter, filtervalue, itemrow, fullpost, postname, postdesigner;
 			itemfilter = document.getElementById('itemfilter')
 			filtervalue = itemfilter.value.toUpperCase();
 			itemrow = document.getElementById('itemrow');
 			fullpost = document.getElementsByClassName('post')
-	
+
+			
+			
 			for (i = 0; i < fullpost.length; i++) {
 		        postname = fullpost[i].getElementsByClassName('postname')[0].innerHTML;
 		        postdesigner = fullpost[i].getElementsByClassName('postdesigner')[0].innerHTML;
@@ -193,6 +301,8 @@
 		            fullpost[i].style.display = "none";
 		        }
 		    }
+
+		    
 		}
 
 
