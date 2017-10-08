@@ -1,0 +1,32 @@
+.navbarpage{
+	padding-top:30px;
+	z-index: 500;
+	height:50px;
+	width: 100%;
+	transition: all 0.5s ease-out;
+	background-color: white;
+	border-bottom: solid 2px #00BCD4
+}
+.navbarpage>.navbarmob>ul{
+	text-decoration:none;
+	list-style: none;
+	margin: 0;
+	margin-top:0px;
+	margin-right: 10px;
+	padding: 0;
+	color: white;
+	font-family: 'Lato';
+	font-weight:400;
+	font-size: 16px;
+
+}
+.navbarpage>.navbarmob>ul>li{
+	float:right;
+	display: inline;
+	margin: 0px 0px 0px 0px;
+
+}
+.navbarpage>.navbarmob>ul>li>a{
+	padding:20px;
+	color:rgba(0,0,0,0.86);
+}

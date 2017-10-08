@@ -1,0 +1,26 @@
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import {Router, Route} from 'react-router';
+import '../styles/Header.css';
+import SellLayout from '../../Pages/Sell/components/SellLayout';
+
+
+class Header extends Component {
+
+	render(){
+		return (
+			<div className ="navbarpage">
+				<div className = "navbarmob">
+					<ul>
+						<li><a href = "signup.html">SIGN UP</a></li>
+						<li><a href = "#">LOGIN</a></li>
+						<li><a href = "#">APP</a></li>
+						<li><a href = "about.html">ABOUT</a></li>
+					</ul>
+				</div>
+			</div>
+		);
+	}
+}
+
+export default Header;
