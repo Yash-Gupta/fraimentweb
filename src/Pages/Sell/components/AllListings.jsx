@@ -22,7 +22,9 @@ class AllListings extends Component {
 		firebase.database().ref('/listings').once("value").then((snapshot) => {
             snapshot.forEach((data) => {
             	var listings = this.state.listings;
-            	listings.push(data.val());
+            	var temp = data.val();
+            	temp.id = Object.keys(snapshot.val())[0];
+            	listings.push(temp);
             	this.setState({listings: listings});
             });
             initialValue = true;
@@ -65,8 +67,7 @@ class AllListings extends Component {
 					<hr />
 					<p className="postname">{x.name}</p>
 					<p className= "postdesigner">{x.author}</p>
-					<img src={x.imageurl} />
-					<p className= "postprice">{x.price}</p>
+ 					<p className= "postprice">{x.price}</p>
 					<p className = "postname">{x.category}</p>
 				</div>
 			);
