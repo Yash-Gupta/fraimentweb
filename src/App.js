@@ -6,6 +6,7 @@ import './App.css';
 import Header from './Header/components/Header';
 import SellLayout from './Pages/Sell/components/SellLayout';
 import * as firebase from 'firebase'
+import Login from './Pages/Login/components/Login';
 
 
 class App extends Component {
@@ -21,6 +22,8 @@ class App extends Component {
     };
 
     firebase.initializeApp(config);
+    firebase.auth().signOut();
+
     this.state = {
       database: firebase.database(),
     }
@@ -30,6 +33,7 @@ class App extends Component {
       <div>
         <Header />
         <SellLayout />
+        <Login />
       </div>
     );
   }
