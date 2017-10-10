@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import {Switch, Route} from 'react-router-dom';
 import { render } from 'react-dom';
-import {Router, Route} from 'react-router';
+//import {Router, Route} from 'react-router';
 
 import './App.css';
 import Header from './Header/components/Header';
+import Account from './Account/components/Account';
 import SellLayout from './Pages/Sell/components/SellLayout';
-import * as firebase from 'firebase'
 import Login from './Pages/Login/components/Login';
-
+import * as firebase from 'firebase'
 
 class App extends Component {
   constructor(props){
@@ -22,8 +23,6 @@ class App extends Component {
     };
 
     firebase.initializeApp(config);
-    firebase.auth().signOut();
-
     this.state = {
       database: firebase.database(),
     }
@@ -32,11 +31,18 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <SellLayout />
-        <Login />
+        <Switch>
+          <Route exact path='/' component={SellLayout}/>
+          <Route exact path='/account' component={Account}/>
+          <Route exact path = '/login' component={Login}/>
+        </Switch>
       </div>
     );
   }
 }
 
 export default App;
+
+
+
+
