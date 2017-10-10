@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import { render } from 'react-dom';
 import {Router, Route} from 'react-router';
 import '../styles/Header.css';
@@ -12,10 +13,12 @@ class Header extends Component {
 			<div className ="navbarpage">
 				<div className = "navbarmob">
 					<ul>
+						<li><Link to='/account'>ACCOUNT</Link></li>
 						<li><a href = "signup.html">SIGN UP</a></li>
 						<li><a href = "#">LOGIN</a></li>
 						<li><a href = "#">APP</a></li>
 						<li><a href = "about.html">ABOUT</a></li>
+						
 					</ul>
 				</div>
 			</div>

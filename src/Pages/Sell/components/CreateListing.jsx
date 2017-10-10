@@ -9,7 +9,8 @@ class CreateListing extends Component {
 			name: "",
 			author: "",
 			price: "",
-			imageurl: ""
+			imageurl: "",
+			category:"",
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -21,10 +22,12 @@ class CreateListing extends Component {
 		var author = this.state.author;
 		var price = this.state.price;
 		var imageurl = this.state.imageurl;
+		var category = this.state.category;
 		var postData = {
 		    name: name,
 		    author: author,
 		    price: price,
+		    category: category
 		 };
 	
 		 // Get a key for a new Post.
@@ -50,10 +53,14 @@ class CreateListing extends Component {
 			case 'price':
 				this.setState({price: event.target.value});
 				break;
+
+			case 'category':
+				this.setState({category: event.target.value});
 			default:
 				break;
 		}
 	}
+
 
 	render(){
 		return (
@@ -70,6 +77,11 @@ class CreateListing extends Component {
         		  Price:
         		  <input type="text" name="price" onChange={this.handleChange} value={this.state.price} />
         		</label>
+        		<label>
+        		  Category:
+        		  <input type="text" name="category" onChange={this.handleChange} value={this.state.category} />
+        		</label>
+
         		<input type="submit" value="Submit" />
       		</form>
 		);
