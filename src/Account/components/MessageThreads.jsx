@@ -8,7 +8,6 @@ import '../styles/Account.css';
 class MessageThreads extends Component {
 	constructor(props){
 		super(props);
-
 		
 	}
 

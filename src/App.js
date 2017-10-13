@@ -8,7 +8,8 @@ import Header from './Header/components/Header';
 import Account from './Account/components/Account';
 import SellLayout from './Pages/Sell/components/SellLayout';
 import Login from './Pages/Login/components/Login';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import CreateMessages from './Messages/components/CreateMessages';
 
 class App extends Component {
   constructor(props){
@@ -23,9 +24,6 @@ class App extends Component {
     };
 
     firebase.initializeApp(config);
-    this.state = {
-      database: firebase.database(),
-    }
   }
   render() {
     return (
@@ -35,6 +33,7 @@ class App extends Component {
           <Route exact path='/' component={SellLayout}/>
           <Route exact path='/account' component={Account}/>
           <Route exact path = '/login' component={Login}/>
+          <Route exact path = '/create_messages' component={CreateMessages}/>
         </Switch>
       </div>
     );
