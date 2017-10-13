@@ -10,6 +10,8 @@ import SellLayout from './Pages/Sell/components/SellLayout';
 import Login from './Pages/Login/components/Login';
 import * as firebase from 'firebase';
 import CreateMessages from './Messages/components/CreateMessages';
+import Product from './Pages/Product/components/Product';
+import * as firebase from 'firebase'
 
 class App extends Component {
   constructor(props){
@@ -34,7 +36,8 @@ class App extends Component {
           <Route exact path='/account' component={Account}/>
           <Route exact path = '/login' component={Login}/>
           <Route exact path = '/create_messages' component={CreateMessages}/>
-        </Switch>
+          <Route exact path = '/product/:id' component={Product}/>        
+       </Switch>
       </div>
     );
   }

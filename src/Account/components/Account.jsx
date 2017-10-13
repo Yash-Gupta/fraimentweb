@@ -16,7 +16,7 @@ class Account extends Component {
 						<div className = "acctBtnHolder">
 							<center>
 								<h1 className = "accountButtons">My List</h1>
-								<h1 className = "accountB uttons">Messages</h1>
+								<h1 className = "accountButtons">Messages</h1>
 								<h1 className = "accountButtons">History</h1>
 								<h1 className = "accountButtons">Settings</h1>
 							</center>
