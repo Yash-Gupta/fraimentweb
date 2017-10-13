@@ -8,7 +8,9 @@ import Header from './Header/components/Header';
 import Account from './Account/components/Account';
 import SellLayout from './Pages/Sell/components/SellLayout';
 import Login from './Pages/Login/components/Login';
+import Product from './Pages/Product/components/Product';
 import * as firebase from 'firebase'
+
 
 class App extends Component {
   constructor(props){
@@ -35,7 +37,8 @@ class App extends Component {
           <Route exact path='/' component={SellLayout}/>
           <Route exact path='/account' component={Account}/>
           <Route exact path = '/login' component={Login}/>
-        </Switch>
+          <Route exact path = '/product/:id' component={Product}/>        
+       </Switch>
       </div>
     );
   }
