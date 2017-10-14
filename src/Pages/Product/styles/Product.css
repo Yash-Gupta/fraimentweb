@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+
+.product{
+	font-family: "Lato";
+	color:rgba(1,1,1,0.7);
+	font-size: 18px
+}
+
+
+.img-holder{
+	width:100%;
+}
+
+.prodTitle{
+	font-family: "Lato";
+	font-weight: 900;
+	text-transform: uppercase;
+	font-size: 28px;
+	color:rgba(1,1,1,0.7);
+}
+
+.prodDesc{
+	font-family: "Lato";
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 2em;
+}
+
+.prodSize{
+	font-family: "Lato";
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 2em;
+}
+
+.prodAuthor{
+	font-family: "Lato";
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 2em;
+}
+
+.prodPrice{
+	font-family: "Lato";
+	font-weight: 700;
+	line-height: 2em;
+	margin-bottom: 40px
+}
+
+.buyBtn{
+	text-align: center;
+	margin-top: 25px;
+	border:1.5px solid black;
+	width:100%;
+	height:80px;
+}
+
+.buyit{
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+  	font-family: "Lato";
+	font-weight: 300;
+	font-size: 22px;
+}
+
+.useless{
+	font-family: "Lato";
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 2em;
+	color:rgba(1,1,1,0.5);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

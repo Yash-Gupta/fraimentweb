@@ -28,6 +28,9 @@ class AllListings extends Component {
             	var temp = data.val();
             	temp.id = Object.keys(snapshot.val())[0];
             	listings.push(temp);
+            	console.log("temp = " + temp);
+            	console.log("tempid = " + temp.id);
+
             	this.setState({listings: listings});
             });
             initialValue = true;
@@ -74,6 +77,7 @@ class AllListings extends Component {
 						<p className= "postdesigner">{x.author}</p>
 						<p className= "postprice">{x.price}</p>
 						<p className = "postname">{x.category}</p>
+						<p className = "postname">{x.id}</p>
 					</Link>
 
 				</div>
