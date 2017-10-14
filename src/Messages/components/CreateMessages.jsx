@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import {Router, Route} from 'react-router';
+import axios from 'axios';
+
 
 import * as firebase from 'firebase';
 
@@ -15,6 +17,7 @@ class CreateMessages extends Component {
 		
 		this.handleChange = this.handleChange.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
+		console.log(firebase.auth().currentUser);
 	}
 
 	sendMessage(event){
@@ -24,34 +27,70 @@ class CreateMessages extends Component {
 		var user = firebase.auth().currentUser;
 		if (user) {
 			// User is signed in
-			//Add thread & add reciepients to thread 
-			var toID = this.state.userid;
-			var postData = {};
-			postData[toID] = true;
-			postData[user.email] = true;
-	
-			//Get a key for a new Post.
-			var threadID = firebase.database().ref().child('threads').push().key;
+			//Add thread & add recipients to thread
+			axios.get("http:\/\/34.211.71.161:3000/getByEmail?email=" + this.state.userid)
+				.then(res => {
+					var toID = res.data.uid;
+
+					var postData = {};
+					postData[toID] = true;
+					postData[user.uid] = true;
 			
-			var updates = {};
-			updates['/threads/' + threadID] = postData;
-			firebase.database().ref().update(updates);
+					var threadExists = false;
+					firebase.database().ref().child("threads").orderByChild(user.uid).equalTo(true).once("value",snapshot => {
+						var threadID;
 
-			//Add Message with thread ID
-			var senderID = user.email;
-			var message = this.state.message;
+						snapshot.forEach(function(childNodes){
+							if(childNodes.val()[user.uid] == true && childNodes.val()[toID] == true){
+								threadID = Object.keys(snapshot.val())[0];
+								
+							}else{
+							 	threadID = firebase.database().ref().child('threads').push().key;
+					
+								var updates = {};
+								updates['/threads/' + threadID] = postData;
+								firebase.database().ref().update(updates);
 
-			postData = {
-				senderID: senderID,
-				message: message,
-				threadID: threadID
-			};
+							}
+						});
 
-			var messageID = firebase.database().ref().child('messages').push().key;
+						var senderID = user.uid;
+						var message = this.state.message;
 			
-			var updates = {};
-			updates['/messages/' + messageID] = postData;
-			firebase.database().ref().update(updates);
+						postData = {
+							senderID: senderID,
+							message: message,
+							threadID: threadID
+						};
+			
+						var messageID = firebase.database().ref().child('messages').push().key;
+						
+						var updates = {};
+						updates['/messages/' + messageID] = postData;
+						firebase.database().ref().update(updates);
+					});
+
+
+					//Get a key for a new Post.
+					/*
+		
+					//Add Message with thread ID
+					var senderID = user.uid;
+					var message = this.state.message;
+		
+					postData = {
+						senderID: senderID,
+						message: message,
+						threadID: threadID
+					};
+		
+					var messageID = firebase.database().ref().child('messages').push().key;
+					
+					var updates = {};
+					updates['/messages/' + messageID] = postData;
+					firebase.database().ref().update(updates);*/
+      			}
+      		);
 		} else {
  			console.log("No user logged in. Log in and try again");
 		}

@@ -1,0 +1,54 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
+
+
+/* UNIVERSAL */
+a, a:hover{
+	text-decoration: none !important;
+	color:inherit;
+}
+
+input:focus, textarea:focus{
+	outline:none;
+}
+
+.row{
+	margin-bottom:20px;
+	padding:0px 5%;
+}
+
+input, textarea{
+	font-size:30px !important;
+	height: 54px !important;
+}
+
+textarea[name=description]{
+	resize: vertical !important;
+	font-size: 24px !important;
+	height:140px !important;
+}
+
+input[type=submit]{
+	float:right;
+	margin-right: 40px;
+
+}
+
+#previewPic{
+	width: 100%;
+}
+
+input[type=file]{
+	font-size:initial !important;
+}
+
+
+
+
+
+
+
+
+
+

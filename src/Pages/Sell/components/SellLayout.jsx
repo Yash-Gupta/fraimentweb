@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CreateListing from './CreateListing';
 import AllListings from './AllListings';
 
 class SellLayout extends Component {
@@ -11,7 +10,6 @@ class SellLayout extends Component {
 	render(){
 		return (
 			<div>
-				<CreateListing />
 				<AllListings />
 			</div>
 		);

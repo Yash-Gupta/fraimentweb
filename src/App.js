@@ -11,7 +11,7 @@ import Login from './Pages/Login/components/Login';
 import * as firebase from 'firebase';
 import CreateMessages from './Messages/components/CreateMessages';
 import Product from './Pages/Product/components/Product';
-import * as firebase from 'firebase'
+import CreateListing from './Pages/Sell/components/CreateListing';
 
 class App extends Component {
   constructor(props){
@@ -35,6 +35,7 @@ class App extends Component {
           <Route exact path='/' component={SellLayout}/>
           <Route exact path='/account' component={Account}/>
           <Route exact path = '/login' component={Login}/>
+          <Route exact path = '/create_listing' component={CreateListing}/>
           <Route exact path = '/create_messages' component={CreateMessages}/>
           <Route exact path = '/product/:id' component={Product}/>        
        </Switch>
