@@ -15,7 +15,7 @@ class Header extends Component {
 					<ul>
 						<li><Link to='/account'>ACCOUNT</Link></li>
 						<li><a href = "signup.html">SIGN UP</a></li>
-						<li><a href = "#">LOGIN</a></li>
+						<li><Link to='/login'>LOGIN</Link></li>
 						<li><a href = "#">APP</a></li>
 						<li><a href = "about.html">ABOUT</a></li>
 						
