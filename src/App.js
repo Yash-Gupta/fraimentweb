@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
 import { render } from 'react-dom';
-//import {Router, Route} from 'react-router';
 
 import './App.css';
-import Header from './Header/components/Header';
-import Account from './Account/components/Account';
-import SellLayout from './Pages/Sell/components/SellLayout';
-import Login from './Pages/Login/components/Login';
 import * as firebase from 'firebase';
-import CreateMessages from './Messages/components/CreateMessages';
-import Product from './Pages/Product/components/Product';
-import CreateListing from './Pages/Sell/components/CreateListing';
+
+import Home from './scenes/Home/components/Home';
+import Header from './components/Header/components/Header';
+import Account from './scenes/Account/components/Account';
+import CreateListing from './scenes/CreateListing/components/CreateListing';
+import Login from './scenes/Login/components/Login';
+import CreateMessages from './components/MessageThread/components/CreateMessages';
+import ProductDetail from './scenes/ProductDetail/components/ProductDetail';
 
 class App extends Component {
   constructor(props){
@@ -32,12 +32,12 @@ class App extends Component {
       <div>
         <Header />
         <Switch>
-          <Route exact path='/' component={SellLayout}/>
+          <Route exact path='/' component={Home}/>
           <Route exact path='/account' component={Account}/>
           <Route exact path = '/login' component={Login}/>
           <Route exact path = '/create_listing' component={CreateListing}/>
           <Route exact path = '/create_messages' component={CreateMessages}/>
-          <Route exact path = '/product/:id' component={Product}/>        
+          <Route exact path = '/product/:id' component={ProductDetail}/>        
        </Switch>
       </div>
     );

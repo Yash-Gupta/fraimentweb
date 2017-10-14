@@ -3,8 +3,6 @@ import {Link} from 'react-router-dom';
 import { render } from 'react-dom';
 import {Router, Route} from 'react-router';
 import '../styles/Header.css';
-import SellLayout from '../../Pages/Sell/components/SellLayout';
-
 
 class Header extends Component {
 

@@ -8,7 +8,7 @@ import '../styles/Product.css';
 
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-class AllListings extends Component {
+class ProductDetail extends Component {
 	constructor(props){
 		super(props);
 
@@ -83,4 +83,4 @@ class AllListings extends Component {
 	}
 }
 
-export default AllListings;
+export default ProductDetail;

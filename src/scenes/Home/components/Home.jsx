@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom';
 import { render } from 'react-dom';
 import {Router, Route} from 'react-router';
 import * as firebase from 'firebase';
-import '../styles/AllListings.css';
+import '../styles/Home.css';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-class AllListings extends Component {
+class Home extends Component {
 
 	constructor(props){
 		super(props);
@@ -137,4 +137,4 @@ class AllListings extends Component {
 	}
 }
 
-export default AllListings;
+export default Home;
