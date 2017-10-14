@@ -26,7 +26,7 @@ class AllListings extends Component {
             snapshot.forEach((data) => {
             	var listings = this.state.listings;
             	var temp = data.val();
-            	temp.id = Object.keys(snapshot.val())[0];
+            	temp.id = data.key;
             	listings.push(temp);
             	this.setState({listings: listings});
             });
