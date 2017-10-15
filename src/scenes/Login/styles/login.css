@@ -1,0 +1,88 @@
+form{
+	-webkit-box-sizing:border-box !important;
+	box-sizing: border-box !important;
+}
+
+.background{
+	background-color:rgba(0,0,0,0.01);
+	height:100%;
+}
+.loginformholder{
+	background-color: white;
+	padding:50px;
+	padding-bottom: 100px
+}
+
+.loginput{
+	font-family: "Lato";
+	font-weight: 300;
+	padding: 25px;
+	font-size: 16px !important;
+	width:100%;
+	margin-top: 15px;
+	border:solid 1px rgba(0,0,0,0.3);
+	box-sizing: border-box;
+}
+.loginput:active, .loginput:focus{
+	border-color: #00BCD4;
+}
+
+.submitdiv{
+	display:block;
+	float:right;
+	height:800px;
+	border:black solid 1px;
+
+}
+.submit{
+	box-sizing: border-box;
+	font-family: "Open Sans";
+	font-weight: 600;
+	color:white;
+	background-color:#00BCD4;
+	border:none; 
+	font-size:16px !important;
+	letter-spacing: 1.25px;
+	display: block;
+	padding:15px 30px 15px 30px;
+	float:right;
+	display: block;
+	position: relative;
+	margin-top: 20px;
+}
+
+.title{
+	font-family: "Open Sans";
+	font-weight: 600;
+	color:rgba(0,0,0,0.8);
+	font-size:28px;
+}
+
+.welcome{
+	font-family: "Open Sans";
+	font-weight: 300;
+	color:rgba(0,0,0,0.8);
+	font-size:20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

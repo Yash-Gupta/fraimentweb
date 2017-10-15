@@ -59,6 +59,7 @@ class Home extends Component {
 	render(){
 		var rows = [];
 		var cats = [];
+		console.log(this.state.listings)
 		this.state.listings.map((x, i) => {
 
 			var styles = {
