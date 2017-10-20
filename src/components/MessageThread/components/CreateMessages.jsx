@@ -17,7 +17,6 @@ class CreateMessages extends Component {
 		
 		this.handleChange = this.handleChange.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
-		console.log(firebase.auth().currentUser);
 	}
 
 	sendMessage(event){

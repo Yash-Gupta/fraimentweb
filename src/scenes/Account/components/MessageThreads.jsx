@@ -14,39 +14,55 @@ class MessageThreads extends Component {
 			threadids: []
 			
 		}
+
+		this.loadThreads = this.loadThreads.bind(this);
 	}
-	componentWillMount() {
-		var initialValue = false;
-		firebase.database().ref('/users/Vkv3ORi8oVXouzgEQdpgJ7Og7X52/buy_messages').once("value").then((snapshot) => {
-            snapshot.forEach((data) => {
-            	var mythreadids = this.state.threadids;
-            	var threadid = data.key;
-            	console.log("data key " + threadid);
-            	console.log("mythreadids" + mythreadids);
 
-            	mythreadids.push(threadid);
-            	this.setState({threadids: threadid});
-            	
-            });
-            initialValue = true;
-        });
-        console.log(this.state.threadids);
-
-        firebase.database().ref('/threads/-KwNExbz9lTOkD85C5yB').once("value").then((snapshot) => {
+	loadThreads(threadID){
+		firebase.database().ref('/threads/' + threadID).once("value").then((snapshot) => {
+            console.log("Thread loaded: " + snapshot.key);
+            console.log("-----------------------------");
             snapshot.forEach((data) => {
             	console.log(data.key + ": " + data.val());
             	
             });
-            initialValue = true;
         });
 
-        firebase.database().ref('/messages/').orderByChild('threadID').equalTo('-KwNExbz9lTOkD85C5yB').once("value").then((snapshot) => {
+        firebase.database().ref('/messages/').orderByChild('threadID').equalTo(threadID).once("value").then((snapshot) => {
+            console.log("Messages for thread ID: " + threadID);
+                        console.log("-----------------------------");
+
             snapshot.forEach((data) => {
             	console.log(data.key + ": " + data.val().message);
             	
             });
+        });
+	}
+
+	componentWillMount() {
+		var initialValue = false;
+		var user = firebase.auth().currentUser;
+
+
+		firebase.database().ref('/users/Vkv3ORi8oVXouzgEQdpgJ7Og7X52/buy_messages').once("value").then((snapshot) => {
+            var counter = 0;
+            snapshot.forEach((data) => {
+            	var mythreadids = this.state.threadids;
+            	var threadid = data.key;
+            	//console.log("data key " + threadid);
+            	//console.log("mythreadids" + mythreadids);
+
+            	mythreadids.push(threadid);
+            	this.setState({ threadids: mythreadids }, () => {
+            		this.loadThreads(this.state.threadids[counter]);
+				})
+            	//this.setState({threadids: ["hello"]});
+            	counter++;
+            });
             initialValue = true;
         });
+
+       
         
 
 
