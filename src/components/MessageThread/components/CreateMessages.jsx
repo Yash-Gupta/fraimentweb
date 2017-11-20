@@ -27,7 +27,7 @@ class CreateMessages extends Component {
 		if (user) {
 			// User is signed in
 			//Add thread & add recipients to thread
-			axios.get("http:\/\/34.211.71.161:3000/getByEmail?email=" + this.state.userid)
+			axios.get("http:\/\/34.216.98.242:3000/getByEmail?email=" + this.state.userid)
 				.then(res => {
 					var toID = res.data.uid;
 

@@ -39,15 +39,12 @@ class MessageThreads extends Component {
 
 		var messages = this.state.messages;
         firebase.database().ref('/messages/').orderByChild('threadID').equalTo(threadID).once("value").then((snapshot) => {
-            //console.log("Messages for thread ID: " + threadID);
-			//console.log("-----------------------------");
-            messages[threadID] = [];
+            messages[threadID] = {};
             var counter = 0;
 
             snapshot.forEach((data) => {
-            	messages[threadID][counter] = data.val().message;
+            	messages[threadID][counter] = {"message" : data.val().message, "senderID": data.val().senderID};
             	counter++;
-            	//console.log(data.key + ": " + data.val().message);
             });
 			this.setState({messsages: messages});
         });
@@ -57,22 +54,18 @@ class MessageThreads extends Component {
 		var initialValue = false;
 		var user = firebase.auth().currentUser;
 
-
 		firebase.database().ref('/users/Vkv3ORi8oVXouzgEQdpgJ7Og7X52/buy_messages').once("value").then((snapshot) => {
             var counter = 0;
-            snapshot.forEach((data) => {
-            	var mythreadids = this.state.threadids;
+            snapshot.forEach((data) => { //for each message thread
+            	var mythreadids = this.state.threadids; //get current threadids
             	var threadid = data.key;
-            	//console.log("data key " + threadid);
 
             	mythreadids.push(threadid);
             	this.setState({ threadids: mythreadids }, () => {
             		this.loadThreads(this.state.threadids[counter]);
 				})
 				
-
-            	//this.setState({threadids: ["hello"]});
-            	counter++;
+				counter++;
             });
             initialValue = true;
         });
@@ -108,7 +101,7 @@ class MessageThreads extends Component {
 				backgroundSize:'cover',
 			};
        		messageThreads.push(
-				<div>
+				<div key="{i}">
 					<div className = "oneMessage">
 						<div className = "itemimg" style={styles}>
 						</div>
