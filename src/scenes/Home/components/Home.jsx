@@ -28,8 +28,6 @@ class Home extends Component {
             	var temp = data.val();
             	temp.id = data.key;
             	listings.push(temp);
-            	console.log("temp = " + temp);
-            	console.log("tempid = " + temp.id);
 
             	this.setState({listings: listings});
             });
@@ -59,7 +57,6 @@ class Home extends Component {
 	render(){
 		var rows = [];
 		var cats = [];
-		console.log(this.state.listings)
 		this.state.listings.map((x, i) => {
 
 			var styles = {

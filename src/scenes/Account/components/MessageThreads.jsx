@@ -11,31 +11,45 @@ class MessageThreads extends Component {
 		super(props);
 
 		this.state = {
-			threadids: []
+			threadids: [],
+			threads: {},
+			messages: {}
 			
 		}
 
 		this.loadThreads = this.loadThreads.bind(this);
+		this.getImageFromListing = this.getImageFromListing.bind(this);
+
 	}
 
 	loadThreads(threadID){
+		var threads = this.state.threads;
+        var counter = 0;
 		firebase.database().ref('/threads/' + threadID).once("value").then((snapshot) => {
-            console.log("Thread loaded: " + snapshot.key);
-            console.log("-----------------------------");
+            
+            threads[snapshot.key] = {};
             snapshot.forEach((data) => {
-            	console.log(data.key + ": " + data.val());
             	
+            	threads[snapshot.key][data.key] = data.val();
+
             });
+            counter++;
+			this.setState({threads: threads});
         });
 
+		var messages = this.state.messages;
         firebase.database().ref('/messages/').orderByChild('threadID').equalTo(threadID).once("value").then((snapshot) => {
-            console.log("Messages for thread ID: " + threadID);
-                        console.log("-----------------------------");
+            //console.log("Messages for thread ID: " + threadID);
+			//console.log("-----------------------------");
+            messages[threadID] = [];
+            var counter = 0;
 
             snapshot.forEach((data) => {
-            	console.log(data.key + ": " + data.val().message);
-            	
+            	messages[threadID][counter] = data.val().message;
+            	counter++;
+            	//console.log(data.key + ": " + data.val().message);
             });
+			this.setState({messsages: messages});
         });
 	}
 
@@ -50,85 +64,79 @@ class MessageThreads extends Component {
             	var mythreadids = this.state.threadids;
             	var threadid = data.key;
             	//console.log("data key " + threadid);
-            	//console.log("mythreadids" + mythreadids);
 
             	mythreadids.push(threadid);
             	this.setState({ threadids: mythreadids }, () => {
             		this.loadThreads(this.state.threadids[counter]);
 				})
+				
+
             	//this.setState({threadids: ["hello"]});
             	counter++;
             });
             initialValue = true;
         });
 
-       
-        
-
-
-        {/*this.state.threadids.map((x, i) => {
-
-			
-			rows.push(
-				<div key={i} className ="col-md-4 post" id = "post">
-
-					<Link to={"/product/" + x.id + ""}>
-						<div className = "img-holder" style={styles}>
-						</div>
-						<hr />
-						<p className="postname">{x.name}</p>
-						<p className= "postdesigner">{x.author}</p>
-						<p className= "postprice">{x.price}</p>
-						<p className = "postname">{x.category}</p>
-						<p className = "postname">{x.id}</p>
-					</Link>
-
-				</div>
-			);
-		})*/}
-
-
-
-
+        console.log(this.state.messages);
+		console.log(this.state.threads);
 
 	}
 
+	getImageFromListing(listingId){
+		return new Promise((resolve, reject) => {
+			firebase.database().ref('/listings/' + listingId + '/imageurl').once("value").then((snapshot) => {
+				return snapshot.val();    	
+       		});
+      	})
+		
+	}
+
 	render(){
+
+		var messageThreads = [];
+
+
+		Object.keys(this.state.threads).map((x, i) => {
+			var imageurl = "";
+			this.getImageFromListing(this.state.threads[x].listingid).then(function (res){
+				imageurl = res;
+				console.log(res);
+			});
+			
+       		var styles = {
+				backgroundImage: "url(" + imageurl + ")",
+				backgroundSize:'cover',
+			};
+       		messageThreads.push(
+				<div>
+					<div className = "oneMessage">
+						<div className = "itemimg" style={styles}>
+						</div>
+						<div className = "details">
+							<p className= "itemname">{this.state.threads[x].listing_name}</p>
+							<p className = "message">{this.state.threads[x].last_message_text}</p>
+						</div>
+						<div className = "timestamp">
+							<p className = "time">7 min ago</p>
+							<p className = "username">{this.state.threads[x].seller_id}</p>
+						</div>
+					</div>
+					<hr />
+				</div>
+			);
+		
+		});
 
 		return (
 
 			<div className = "messages">
 				<div className = "col-md-9">
 					<center>
+					
 					<h1 className = "acctTitle">MY MESSAGES</h1>
 					</center>
-					<hr></hr>
-					<div className = "oneMessage">
-						<div className = "itemimg">
-						</div>
-						<div className = "details">
-							<p className= "itemname">NAME</p>
-							<p className = "message">I SEE THAT PUSSY IS HAIRLESS, MWAH! I FRENCH KISS IT LIKE WE BE IN PARIS! </p>
-						</div>
-						<div className = "timestamp">
-							<p className = "time">7 min ago</p>
-							<p className = "username">hype_beast64</p>
-						</div>
-					</div>
-					<hr />
-					<div className = "oneMessage">
-						<div className = "itemimg">
-						</div>
-						<div className = "details">
-							<p className= "itemname">NAME</p>
-							<p className = "message">I SAG MY PANTS UNTIL MY ASS SHOWS.</p>
-						</div>
-						<div className = "timestamp">
-							<p className = "time">7 min ago</p>
-							<p className = "username">hype_beast64</p>
-						</div>
-					</div>
-					<hr />
+					{messageThreads}
+				
 				</div>
 			</div>		
 		);
