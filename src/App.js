@@ -11,6 +11,8 @@ import Account from './scenes/Account/components/Account';
 import CreateListing from './scenes/CreateListing/components/CreateListing';
 import Login from './scenes/Login/components/Login';
 import CreateMessages from './components/MessageThread/components/CreateMessages';
+import MessageThread from './components/MessageThread/components/MessageThread';
+
 import ProductDetail from './scenes/ProductDetail/components/ProductDetail';
 
 class App extends Component {
@@ -37,6 +39,8 @@ class App extends Component {
           <Route exact path = '/login' component={Login}/>
           <Route exact path = '/create_listing' component={CreateListing}/>
           <Route exact path = '/create_messages' component={CreateMessages}/>
+          <Route exact path = '/test_threads' component={MessageThread}/>
+
           <Route exact path = '/product/:id' component={ProductDetail}/>        
        </Switch>
       </div>

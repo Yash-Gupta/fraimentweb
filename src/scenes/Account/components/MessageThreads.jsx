@@ -3,6 +3,14 @@ import { render } from 'react-dom';
 import {Router, Route} from 'react-router';
 import * as firebase from 'firebase';
 import '../styles/Account.css';
+import MessageThread from '../../../components/MessageThread/components/MessageThread';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
+//import '../../../../node_modules/bootstrap/dist/js/jquery.min.js';
+//import '../../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
+
+
+//import MessageThread from '../../';
 //import SellLayout from '../../Pages/Sell/components/SellLayout';
 
 
@@ -31,6 +39,13 @@ class MessageThreads extends Component {
             snapshot.forEach((data) => {
             	
             	threads[snapshot.key][data.key] = data.val();
+            	firebase.database().ref('/listings/' + snapshot.val().listingid + '/imageurl').once("value").then((snapshot2) => {
+					threads[snapshot.key]["imageurl"] = snapshot2.val();
+					//console.log(imageurl);
+					//return imageurl;
+       			});
+           		//threads[snapshot.key]["imageurl"] = this.getImageFromListing(snapshot.val().listingid);
+			
 
             });
             counter++;
@@ -79,42 +94,54 @@ class MessageThreads extends Component {
 
         console.log(this.state.messages);
 		console.log(this.state.threads);
+		
 
+
+	}
+	onThreadClick(event){
+		 var popup = document.getElementById("myPopup");
+    	 popup.classList.toggle("show");
 	}
 
 	getImageFromListing(listingId){
-		return new Promise((resolve, reject) => {
+		//return new Promise((resolve, reject) => {
 			firebase.database().ref('/listings/' + listingId + '/imageurl').once("value").then((snapshot) => {
-				return snapshot.val();    	
+				var imageurl = snapshot.val();
+				console.log(imageurl);
+				return imageurl;
        		});
-      	})
+			
+      	//})
 		
 	}
 
 	render(){
-
 		var messageThreads = [];
+		
 
 
 		Object.keys(this.state.threads).map((x, i) => {
 			var imageurl = "";
-			this.getImageFromListing(this.state.threads[x].listingid).then(function (res){
+			console.log(x);
+
+			/*this.getImageFromListing(this.state.threads[x].listingid).then((res) => {
 				imageurl = res;
-				console.log(res);
-			});
-			
+			});*/
+			console.log(imageurl);
        		var styles = {
-				backgroundImage: "url(" + imageurl + ")",
+				backgroundImage: "url(" + this.state.threads[x].img_url + ")",
 				backgroundSize:'cover',
 			};
        		messageThreads.push(
-				<div>
-					<div className = "oneMessage">
+				<div key = {i} >
+					 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+					<div className = "oneMessage" data-toggle="modal" data-target="#exampleModal">
 						<div className = "itemimg" style={styles}>
 						</div>
 						<div className = "details">
 							<p className= "itemname">{this.state.threads[x].listing_name}</p>
 							<p className = "message">{this.state.threads[x].last_message_text}</p>
+
 						</div>
 						<div className = "timestamp">
 							<p className = "time">7 min ago</p>
@@ -122,6 +149,39 @@ class MessageThreads extends Component {
 						</div>
 					</div>
 					<hr />
+					<div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div className="modal-dialog" role="document">
+					    <div className="modal-content">
+					      <div className="modal-header">
+					        <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+					        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div className="modal-body">
+					         <MessageThread 
+						data = {
+							{"threadid" : x}
+
+						}
+
+					/>
+					      </div>
+					      <div className="modal-footer">
+					        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+					        <button type="button" className="btn btn-primary">Save changes</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
+					
+				
+				   
+						
+
+
+					
 				</div>
 			);
 		
@@ -134,8 +194,11 @@ class MessageThreads extends Component {
 					<center>
 					
 					<h1 className = "acctTitle">MY MESSAGES</h1>
+					
 					</center>
 					{messageThreads}
+
+
 				
 				</div>
 			</div>		
