@@ -1,0 +1,31 @@
+/* FONTS */
+
+@font-face {
+  font-family: 'Gotham Book';
+  src: url("./fonts/Gotham Book.ttf") format('ttf');
+}
+
+@font-face {
+  font-family: 'Gotham Black';
+  src: url("./fonts/GOTHAM-BLACK.TTF") format('ttf');
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url("./fonts/GOTHAM-LIGHT.TTF") format('ttf');
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url("./fonts/GOTHAM-MEDIUM.TTF") format('ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat Regular';
+  src: url("./fonts/Montserrat-Regular.ttf") format('ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("./fonts/OpenSans-Regular.ttf") format('ttf');
+}

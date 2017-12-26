@@ -1,0 +1,56 @@
+.product-box{
+	width:200px;
+	display:inline-block;
+	vertical-align:top;
+	padding:25px;
+	text-align: left;
+}
+
+.product-box>.product-image-box{
+    position: relative;
+}
+
+.product-box>.product-image-box>img{
+	width: 100%;
+}
+
+.product-box>.product-image-box>.product-image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.81);
+}
+
+.product-box>.product-image-box>.product-image-overlay>p {
+	margin:0;
+	padding: 10px 7px;
+	font-family: 'Open Sans';
+	font-family: 12px;
+	font-weight: 200;
+}
+
+.product-box>.product-title{
+	font-family: 'Gotham Medium';
+	font-size:14px;
+	margin:2px 0;
+	width: 100%;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height:16px;
+}
+
+.product-box>.product-size{
+	font-family: 'Gotham Light';
+	font-size: 14px;
+	margin:2px 0;
+}
+
+.product-box>.product-price{
+	font-family: 'Gotham Medium';
+	font-size: 16px;
+	margin:2px 0;
+
+}
+
