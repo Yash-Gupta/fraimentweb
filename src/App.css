@@ -34,3 +34,23 @@
   font-family: "Avenir Next Regular";
   src: url(./fonts/AvenirNext-Regular-08.ttf);
 }
+
+@font-face {
+  font-family: "Avenir Next Bold";
+  src: url(./fonts/AvenirNext-Bold-01.ttf);
+}
+
+@font-face {
+  font-family: "Avenir Next Medium";
+  src: url(./fonts/AvenirNext-Medium-06.ttf);
+}
+
+@font-face {
+  font-family: "Avenir Next Heavy";
+  src: url(./fonts/AvenirNext-Heavy-09.ttf);
+}
+
+@font-face {
+  font-family: "Avenir Next UltraLight";
+  src: url(./fonts/AvenirNext-UltraLight-11.ttf);
+}
