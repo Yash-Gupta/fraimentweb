@@ -17,7 +17,7 @@ class Signup extends Component {
 		this.state = {
 			username: "",
 			conf_password: "",
-			password: "",
+			 password: "",
 			errors:[]
 		}
 
