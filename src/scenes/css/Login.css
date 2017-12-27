@@ -1,0 +1,61 @@
+input:focus{
+	outline:none;
+}
+
+a:focus{
+	outline:none;
+}
+
+ button:focus{
+	outline:none;
+}
+
+.loginContainer{
+
+	display:flex;
+	justify-content: center;
+	height:100%;
+
+	margin-top:200px;
+}
+
+.loginPageSubmit{
+	background-color:black;
+	color:white;
+	border-radius: 28px;
+	width:280px;
+	padding:10px 10px;
+	font-size:20px;
+
+}
+
+
+.loginPageBoxes{
+	border: solid 1.5px #E0E0E0;
+	border-radius: 5px;
+	width:258px;
+	padding:10px 10px;
+	font-size:20px;
+	color:#424242
+;
+	margin-bottom: 15px;
+	font-family: "Helvetica";
+	transition:0.3s ease;
+
+}
+
+.loginPageBoxes:focus{
+	border: solid 1.5px #BDBDBD;
+	transition:0.3s ease;
+	
+}
+.loginPageBoxes::placeholder{
+	
+	font-size:20px;
+	color:#BDBDBD;
+}
+
+.noAcct{
+	font-style:bold;
+	width:280px;
+}

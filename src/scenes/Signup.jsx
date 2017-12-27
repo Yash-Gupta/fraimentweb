@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './css/Login.css';
+import './css/Signup.css';
 import * as firebase from 'firebase';
 
 
@@ -50,7 +50,7 @@ class Signup extends Component {
 				console.log(error);
 			});
 
-		this.props.history.push('/login');
+		//this.props.history.push('/login');
 	}
 
 	handleChange(event){
@@ -72,7 +72,7 @@ class Signup extends Component {
 	render() {
 		return (
 			<div className = "">
-				<h1 className = "">Signup for Fraiment</h1>
+			
 
 				<div className = "errors"> 
 					{this.state.errors.map(function(errorMsg){
@@ -81,12 +81,14 @@ class Signup extends Component {
 				</div>
 
 				<div>
-					<form onSubmit={this.signup}>
-						<input className = "" type="text" placeholder="Username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />			   
-						<input className = "" type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
-						<input className = "" type="password" placeholder="Confirm Password" name="conf_password" onChange={this.handleChange} value={this.state.conf_password} /> <br />
-						<button className="submit" type="submit" value="">SIGN IN</button>
-					</form>
+					<div className = "signupPageContainer">
+						<form onSubmit={this.signup}>
+							<input className = "signupPageBoxes" type="text" placeholder="Username" name="username" onChange={this.handleChange} value={this.state.username} /> <br />			   
+							<input className = "signupPageBoxes" type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
+							<input className = "signupPageBoxes" type="password" placeholder="Confirm Password" name="conf_password" onChange={this.handleChange} value={this.state.conf_password} /> <br />
+							<button className="signupPageSubmit" type="submit" value="">sign up</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		);

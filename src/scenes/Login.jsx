@@ -59,16 +59,19 @@ class Login extends Component {
 	render() {
 		return (
 			<div className = "">
-				<h1 className = "">Login to Fraiment</h1>
+			
 
-				<hr />
+				<div className = "">
+					<div className = "loginContainer">
+						<form onSubmit={this.login}>
+							<input className = "loginPageBoxes" type="text" placeholder="username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />			   
+							<input className = "loginPageBoxes" type="password" placeholder="password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
+							<button className="loginPageSubmit" type="submit" value="">log in</button>
 
-				<div>
-					<form onSubmit={this.login}>
-						<input className = "" type="text" placeholder="Username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />			   
-						<input className = "" type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
-						<button className="submit" type="submit" value="">SIGN IN</button>
-					</form>
+							<center><p className = "noAcct">don't have an account? sign up.</p></center>
+						</form>
+					</div>
+					
 				</div>
 			</div>
 		);

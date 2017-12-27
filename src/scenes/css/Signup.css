@@ -1,0 +1,68 @@
+input:focus{
+	outline:none;
+}
+
+a:focus{
+	outline:none;
+}
+
+ button:focus{
+	outline:none;
+}
+
+html{
+	font-family: "Avenir Next Regular"
+}
+
+.signupPageContainer{
+
+	display:flex;
+	justify-content: center;
+	height:100%;
+	
+	margin-top:200px;
+}
+
+.signupPageSubmit{
+	background-color:black;
+	color:white;
+	border-radius: 28px;
+	width:280px;
+	padding:10px 10px;
+	font-size:20px;
+	font-family:"Avenir Next Regular";
+	
+
+}
+
+
+.signupPageBoxes{
+	border: solid 1.5px #E0E0E0;
+	border-radius: 5px;
+	width:258px;
+	padding:10px 10px;
+	font-size:20px;
+	color:#424242
+;
+	margin-bottom: 15px;
+	font-family: "Avenir Next Regular";
+	transition:0.3s ease;
+
+}
+
+.signupPageBoxes:focus{
+	border: solid 1.5px #BDBDBD;
+	transition:0.3s ease;
+	
+}
+.signupPageBoxes::placeholder{
+	
+	font-size:20px;
+	color:#BDBDBD;
+	font-family: "Avenir Next Regular"
+}
+
+.noAcct{
+	font-style:bold;
+	width:280px;
+}
