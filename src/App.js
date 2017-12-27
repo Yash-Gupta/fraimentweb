@@ -12,6 +12,9 @@ import Signup from './scenes/Signup.jsx';
 import Login from './scenes/Login.jsx';
 
 
+/* CUSTOM CSS */
+
+
 class App extends Component {
     constructor(props){
         super(props);
@@ -47,7 +50,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(firebase.auth().currentUser);
         return (
             <div>
                 <Header id="" simple={this.state.simpleHeader} currentUser={firebase.auth().currentUser}/>
@@ -65,8 +67,8 @@ class App extends Component {
                         return (<Signup updateHeader={this.updateHeader}></Signup>);
                     }}/>
 
-                    <Route path="/listing/:id" render={() => {
-                        return (<ProductDetail updateHeader={this.updateHeader}></ProductDetail>);
+                    <Route path="/listing/:id" render={({match}) => {
+                        return (<ProductDetail match={match} updateHeader={this.updateHeader}></ProductDetail>);
                     }}/>
 
                 </Switch>
