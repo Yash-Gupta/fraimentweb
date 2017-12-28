@@ -41,6 +41,49 @@ class ProductDetail extends Component {
 		return (
 			<div>
 				<div className="productdetail-container">
+					<div className = "productDetailBigImg" style={backgroundStyles}>
+						
+					</div>
+					<div className = "productDetailPreview">
+						<div className = "productPreviewImg">
+
+						</div>
+						<div className = "productPreviewImg">
+						</div>
+						<div className = "productPreviewImg">
+						</div>
+					</div>
+					<div className = "productDetailContent">
+
+						<p className = "prodTitle">{this.state.name}</p>
+						<p className= "product prodSize"> {this.state.size}</p>
+						<p className= "product prodPrice">{this.state.price}</p>
+
+						<button className = "buyBtn">BUY</button>
+						<button className = "messageBtn">MESSAGE</button>
+
+						<div className = "profileHolder">
+							<div className = "profImg"></div>
+							<div className = "profContent">
+								<p className = "profUser">AgentYash01</p>
+								<p className = "profLoc">Chandigargh</p>
+								<div className = "rating">
+									<div className = "star"></div>
+									<div className = "star"></div>
+									<div className = "star"></div>
+									<div className = "star"></div>
+									<div className = "starOutline"></div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+
+				</div>
+				{/*}
 					<div className="row">
 						<div className="col-md-8">
 							<div className = "col-md-9">
@@ -97,7 +140,7 @@ class ProductDetail extends Component {
 
 				<hr />
 
-				<center><h1 className = "relList">Related Listings</h1></center>
+				<center><h1 className = "relList">Related Listings</h1></center>*/}
 			</div>
 
 		);

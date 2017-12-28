@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,900');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300i,400,700,900');
 
-.product{
+
+p{
+	margin:0px;
+}
+/*.product{
 	font-family: "Lato";
 	color:rgba(1,1,1,0.7);
 	font-size: 18px
@@ -190,4 +194,190 @@
 	font-family: "Lato";
 	font-size:34px;
 	font-weight: 600;
+}*/
+
+.productdetail-container{
+	display:flex;
+	flex-direction: row;
+  	height: 100%;
+  	padding:50px;
 }
+
+.productDetailBigImg{
+	width:50%;
+	background-color:gray;
+	height:500px;
+}
+
+.productDetailPreview{
+	width:15%;
+	padding:0px 20px;
+}
+
+.productDetailContent{
+	width:35%;
+	padding-left:20px;
+}
+
+.productPreviewImg{
+	height:160px;
+	background-color:gray;
+	margin-bottom: 10px;
+}
+
+
+.prodTitle{
+	font-family: "Avenir Next Regular";
+	margin:0px;
+	text-transform: uppercase;
+	font-size: 28px;
+	color:rgba(1,1,1,0.7);
+
+}
+
+.product{
+	font-family: "Avenir Next Regular";
+	color:rgba(1,1,1,0.7);
+	font-size: 18px
+}
+
+.prodSize{
+	font-family: "Avenir Next Regular";
+	font-weight: 300;
+	font-size: 18px;
+	line-height: 1.5em;
+	margin:0px;
+}
+
+
+.prodPrice{
+	font-family: "Avenir Next Bold";
+	
+	line-height: 1.5em;
+	margin:0px;
+	margin-bottom: 40px
+}
+
+.profileHolder{
+	margin-top:40px;
+}
+
+
+.profImg{
+	height:60px;
+	width:60px;
+	display: inline-block;
+	float:left;
+	border-radius: 50%;
+	background-color: gray;
+
+}
+
+.profContent{
+	display: inline-block;
+	padding:0px 16px;
+
+
+}
+
+.profUser{
+	font-weight: 600;
+	font-family: "Lato";
+	font-size: 18px;
+	letter-spacing: 1px
+}
+
+.profLoc{
+	font-style: italic;
+	font-weight: 300i;
+	font-family: "Open Sans";
+	font-size: 16px;
+}
+
+
+.desname{
+	font-family: "Lato";
+	font-size:28px;
+	font-weight: 600;
+}
+
+.desPar{
+	font-family: "Lato";
+	font-size:16px;
+	font-weight: 300;
+}
+
+
+.preview{
+	width:100%;
+	height:160px;
+	margin-bottom: 10px;
+	background-color: gray;
+	
+}
+
+.rating{
+	margin-top:10px;
+}
+
+.star{
+	width:25px;
+	height:25px;
+	background-color: gray;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right:5px;
+}
+
+.starOutline{
+	width:25px;
+	height:25px;
+	border:1px gray solid;
+	border-radius: 50%;
+	display: inline-block;
+	margin-right:5px;
+}
+
+.relList{
+	font-family: "Lato";
+	font-size:34px;
+	font-weight: 600;
+}
+
+
+.buyBtn{
+	text-align: center;
+	margin-top: 25px;
+	border:1.5px solid black;
+	background-color:black;
+	color:white;
+	width:100%;
+	height:60px;
+	font-family: "Avenir Next Regular";
+	font-size:14px;
+	transition:all ease 0.2s;
+}
+
+.messageBtn{
+	text-align: center;
+	margin-top: 10px;
+	border:1.5px solid black;
+	background-color:transparent;
+	color:black;
+	width:100%;
+	height:60px;
+	font-family: "Avenir Next Regular";
+	font-size:14px;
+	transition:all ease 0.2s;
+
+}
+
+
+
+
+
+
+
+
+
+
