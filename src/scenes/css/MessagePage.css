@@ -1,0 +1,35 @@
+.messages-container{
+	display:flex;
+	flex: 1;
+}
+.messages-right{
+	display:flex;
+	flex-direction: column;
+	flex:1;
+}
+
+.messages-right>.message-thread{
+	padding-left: 40px;
+	padding-right: 40px;
+	overflow-y: scroll;
+}
+
+.messages-right>.message-topbar{
+	width: 100%;
+	margin:0;
+	margin-bottom: 10px;
+	padding:15px 0px;
+	text-align: center;
+	border-bottom: 1px solid rgba(0,0,0,0.25) ;
+}
+
+/* SEND INPUT */
+
+.messages-send{
+	width: 100%;
+}
+
+.messages-send>form>input[name=message]{
+	width: 100%;
+	font-size: 24px;
+}

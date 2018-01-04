@@ -7,10 +7,13 @@ import * as firebase from 'firebase';
 import Main from './scenes/Main.jsx';
 import Header from './components/Header.jsx';
 
-import ProductDetail from './scenes/ProductDetail.jsx';
-import Signup from './scenes/Signup.jsx';
 import Login from './scenes/Login.jsx';
+import Signup from './scenes/Signup.jsx';
 
+import CreateProduct from './scenes/CreateProduct.jsx';
+import ProductDetail from './scenes/ProductDetail.jsx';
+
+import MessagePage from './scenes/MessagePage.jsx';
 
 /* CUSTOM CSS */
 
@@ -51,8 +54,8 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <Header id="" simple={this.state.simpleHeader} currentUser={firebase.auth().currentUser}/>
+            <div className="app">
+                <Header id="" simple={this.state.simpleHeader} currentUser={this.state.user}/>
                 <Switch>
 
                     <Route exact path="/" render={() => {
@@ -67,8 +70,16 @@ class App extends Component {
                         return (<Signup updateHeader={this.updateHeader}></Signup>);
                     }}/>
 
+                    <Route path="/listing/create" render={() => {
+                        return (<CreateProduct currentUser={this.state.user} updateHeader={this.updateHeader}></CreateProduct>);
+                    }}/>
+
                     <Route path="/listing/:id" render={({match}) => {
                         return (<ProductDetail match={match} updateHeader={this.updateHeader}></ProductDetail>);
+                    }}/>
+
+                    <Route path="/messages/:id?" render={({match}) => {
+                        return (<MessagePage match={match} currentUser={this.state.user} updateHeader={this.updateHeader}></MessagePage>);
                     }}/>
 
                 </Switch>

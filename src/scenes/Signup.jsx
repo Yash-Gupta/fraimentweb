@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 import './css/Signup.css';
 import * as firebase from 'firebase';
 
@@ -50,7 +50,7 @@ class Signup extends Component {
 				console.log(error);
 			});
 
-		//this.props.history.push('/login');
+		this.props.history.push('/login');
 	}
 
 	handleChange(event){
@@ -95,4 +95,4 @@ class Signup extends Component {
 	}
 }
 
-export default Signup;
+export default withRouter(Signup);

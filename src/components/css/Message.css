@@ -1,0 +1,45 @@
+/* SENDER MESSAGE */
+.sender-message{
+	text-align: right;
+	width:100%;
+}
+
+.sender-message>.message{
+	font-size:14px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #0084ff;
+	border-radius: 20px;
+	padding: 6px 12px;
+	color:white;
+	margin:1px 0px;
+}
+
+.sender-message>img{
+	display:none;
+}
+
+/* RECIEVER MESSAGE */
+.reciever-message{
+	width:100%;
+}
+
+.reciever-message>.message{
+	font-size:14px;
+	display: inline-block;
+	vertical-align: bottom;
+	background-color: #f1f0f0;
+	border-radius: 20px;
+	padding: 6px 12px;
+	color:black;
+	margin:1px 0px;
+}
+
+.reciever-message>img{
+	border-radius: 50%;
+	width:35px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 5px;
+}
+

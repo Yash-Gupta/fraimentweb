@@ -45,11 +45,11 @@ class Header extends Component {
 			<div className="header">
 				<div className={this.props.simple ? "container container-global container-simple" : "container container-global"}>
 					<div className={!this.props.simple ? "header-global" : "header-global header-simple"}>
-						<Link to="/"><img src="images/logo.svg" alt="fraiment-logo"/> </Link>
+						<Link to="/"><img src="http://localhost:3000/images/logo.svg" alt="fraiment-logo"/> </Link>
 						{!this.props.simple && (
 						<div className="global-links">
 							<a className="links" href="#">shop</a>
-							<a className="links" href="#">sell</a>
+							<Link to="/listing/create" className="links">sell</Link>
 							<a className="links" href="#">help</a>
 						</div>
 						)

@@ -32,31 +32,42 @@
 
 .product-box>.product-timeposted {
 	margin:0;
-	padding: 10px 7px;
-	font-family: 'Open Sans';
-	font-family: 12px;
+	padding: 7px 0px;
+	font-family: 'Avenir Next Regular';
+	font-size: 12px;
 	font-weight: 200;
 }
 
 .product-box>.product-title{
-	font-family: 'Gotham Medium';
-	font-size:14px;
-	margin:2px 0;
-	width: 100%;
+	font-family: 'Avenir Next DemiBold';
+	font-size:13px;
+	margin:0;
+	width: 80%;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	height:16px;
+	display: inline-block;
 }
 
 .product-box>.product-size{
-	font-family: 'Gotham Light';
-	font-size: 14px;
+	font-family: 'Avenir Next Medium';
+	font-size: 13px;
+	margin:0;
+	display: inline-block;
+	float:right;
+	text-align: right;
+	width: 20%;
+}
+
+.product-box>.product-brand{
+	font-family: 'Avenir Next Regular';
+	font-size: 13px;
 	margin:2px 0;
 }
 
+
 .product-box>.product-price{
-	font-family: 'Gotham Medium';
+	font-family: 'Avenir Next Bold';
 	font-size: 16px;
 	margin:2px 0;
 

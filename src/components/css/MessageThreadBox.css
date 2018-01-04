@@ -1,0 +1,40 @@
+.thread-box{
+	cursor: pointer;
+	padding: 12px 0px;
+}
+
+.thread-box.active{
+	background-color: rgba(0, 0, 0, .05);
+}
+
+.thread-box>img{
+	border-radius: 100%;
+	width:15%;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 15px;
+}
+
+.thread-box>.thread-box-text{
+	display:inline-block;
+	vertical-align: middle;
+	width: 80%;
+}
+
+.thread-box>.thread-box-text>p{
+	margin:0;
+	font-size:14px;
+	text-overflow: ellipsis; 
+	width: 100%;
+	white-space: nowrap;
+	overflow-x: hidden;
+	color:rgba(0,0,0,0.6);
+}
+
+.thread-box>.thread-box-text>p.thread-username{
+	font-size:16px;
+	color:rgba(0,0,0,0.9);
+}
+
+
+
