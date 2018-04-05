@@ -36,13 +36,32 @@ class Profile extends Component {
 
 	loadListings(){
 		var self = this;
-		firebase.database().ref('/users/' + 'Vkv3ORi8oVXouzgEQdpgJ7Og7X52' + '/listings_bought').once("value").then((snapshot) => {
+		firebase.database().ref('/users/' + 'Vkv3ORi8oVXouzgEQdpgJ7Og7X52').once("value").then((snapshot) => {
+			
 			console.log("listings_bought");
+
+
 			
 			snapshot.forEach(function(data){
+				var userData = snapshot.val();
+
 				if(data.val()){
-					console.log(data.key);
-					self.loadListingInfo(data.key, self);
+
+					var boughtListKeys = Object.keys(userData.listings_bought);
+
+					for(var i = 0; i < boughtListKeys.length; i++){
+						self.loadListingInfo(boughtListKeys[i], self, "bought");
+					}
+
+
+					var soldListKeys = Object.keys(userData.listings_sold);
+
+					for(var i = 0; i < soldListKeys.length; i++){
+						self.loadListingInfo(soldListKeys[i], self, "sold");
+					}
+
+
+					
 					
 				}
 			});
@@ -51,14 +70,16 @@ class Profile extends Component {
 
 		});
 
+		
+
 		console.log(this.state.bought);
 	}
 
-	loadListingInfo(listingID, self){
+	loadListingInfo(listingID, self, type){
 
 		firebase.database().ref('/listings/' + listingID).once("value").then((snapshot) => {
             var data = snapshot.val();
-            //this.setState({name: x.name, category: x.category, size: x.size, designer: x.designer, price:x.price, description:x.description, imageurl: x.imageurl});
+           
             var temp = {};
             temp.id = listingID;
             temp.title = data.name;
@@ -68,12 +89,23 @@ class Profile extends Component {
 
             console.log(data);
 
-            var boughtListings = self.state.bought;
-			console.log(boughtListings);
-			boughtListings.push(temp);
+            if(type == "bought"){
+            	var boughtListings = self.state.bought;
+				console.log(boughtListings);
+				boughtListings.push(temp);
 
-			self.state.bought = boughtListings;
-			console.log(self.state.bought);
+				self.setState({bought: boughtListings});
+				console.log(self.state.bought);
+            }else if(type == "sold"){
+            	var soldListings = self.state.sold;
+				console.log(soldListings);
+				soldListings.push(temp);
+
+				self.setState({sold: soldListings});
+				console.log(self.state.sold);
+            }
+
+           
         });		
 
 	}
@@ -89,20 +121,26 @@ class Profile extends Component {
 		console.log(this.state.bought);
 
 		
-		var boughtItems = [];
-
-		for(var i = 0; i < 1; i++){
-			boughtItems.push(<ProductBox id={this.state.bought[i].id} image={this.state.bought[i].imageurl} title={this.state.bought[i].title} size={this.state.bought[i].size} price={this.state.bought[i].price}/>);
-
-		}
+		
 
 		return (
 			<div>
 				<div className = "boughtItems">
 					<h1>Bought Listings: </h1>
 					<div className="products">
-						{boughtItems}
+						
+						{this.state.bought.map((l) => {
+							return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						})}
+					</div>
 
+
+					<h1>Sold Listings: </h1>
+					<div className="products">
+						
+						{this.state.sold.map((l) => {
+							return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						})}
 					</div>
 				</div>
 				
