@@ -36,6 +36,7 @@ class Main extends Component {
 	}
 
 	render() {
+		console.log(this.state.listings);
 		return (
 			<div className="main-container">
 				{/* Search Box + Filter + Sort By */}
