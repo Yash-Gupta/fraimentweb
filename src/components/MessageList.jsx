@@ -72,11 +72,8 @@ class MessageList extends Component {
 					self.setState({threads: threadIds}); 
 				}
 			});
+
 		});*/}
-
-
-
-
 	}
 	
 
@@ -101,73 +98,29 @@ class MessageList extends Component {
 
 		}
 		this.updateThreads = this.updateThreads.bind(this);
-
 		this.toggleType = this.toggleType.bind(this);
-
 	}
 
 	toggleType(event){
-		console.log(event.currentTarget.id );
+		if(event.currentTarget.id == "buy") var other = "sell";
+		else var other = "buy";
 
+		var disappear = document.getElementsByClassName(other + "ThreadBoxes");
+		var appear = document.getElementsByClassName(event.currentTarget.id + "ThreadBoxes");
 
-		if(event.currentTarget.id == "buy"){
-			
-			
-			var sellHTML = document.getElementsByClassName("sellThreadBoxes");
-
-			
-
-			for(var i = 0; i < sellHTML.length; i++){
-				sellHTML[i].className += " displayNone";
-			}
-
-			var buyHTML = document.getElementsByClassName("buyThreadBoxes");
-
-			console.log(buyHTML);
-
-			for(var i = 0; i < buyHTML.length; i++){
-				buyHTML[i].className = "buyThreadBoxes";
-			}
-
-
-			document.getElementById("buyMessages").className = "selected";
-			document.getElementById("sellMessages").className = "notSelected";
-
-
-			
-
-
-
-
-		}else{
-			
-			
-			var buyHTML = document.getElementsByClassName("buyThreadBoxes");
-
-			for(var i = 0; i < buyHTML.length; i++){
-				buyHTML[i].className += " displayNone";
-			}
-
-			var sellHTML = document.getElementsByClassName("sellThreadBoxes");
-
-
-			for(var i = 0; i < sellHTML.length; i++){
-				sellHTML[i].className = "sellThreadBoxes";
-			}
-
-			document.getElementById("sellMessages").className = "selected";
-			document.getElementById("buyMessages").className = "notSelected";
+		for(var i = 0; i < disappear.length; i++){
+			disappear[i].className += " displayNone";
+		}
+		
+		for(var i = 0; i < appear.length; i++){
+			appear[i].className = event.currentTarget.id + "ThreadBoxes";
 		}
 
+		document.getElementById(event.currentTarget.id + "Messages").className = "selected";
+		document.getElementById(other + "Messages").className = "notSelected";
+
 		this.updateThreads();
-		
-
-
-
-
-
 	}
-	
 
 	render() {
 		var buyThreadBoxes = [];
@@ -187,23 +140,10 @@ class MessageList extends Component {
 			sellThreadBoxes.push(<MessageThreadBox sellerBool={this.state.sellThreads[i].props.sellerBool} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
 		}
 
-		
-
-
-
-
-
-
-
-		
-
-
-
 		return (
 			<div className="message-list">
 
 				<div className = "messageTypes">
-
 					<a id = "buy" onClick = {this.toggleType} >
 						<p id = "buyMessages"  className = "selected">Buy</p>
 					</a>
@@ -213,7 +153,6 @@ class MessageList extends Component {
 					</a>
 
 				</div>
-				
 
 				<div className = "buyThreadBoxes">
 					{buyThreadBoxes}
@@ -221,7 +160,7 @@ class MessageList extends Component {
 				<div className = "sellThreadBoxes displayNone">
 					{sellThreadBoxes}
 				</div>
-				
+
 			</div>
 		);
 	}

@@ -14,7 +14,6 @@ class MessageThreadBox extends Component {
 	getContent(threadID, sellerBool){
 		if(!sellerBool) var child = "seller_id";
 		else var child = "buyer_id";
-		console.log(child);
 		firebase.database().ref('/threads/' + threadID).once("value").then((threadData) => {
 			this.setState({last_message_text: threadData.child("last_message_text").val()});
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/profilepic').once("value").then((snapshot) => {
@@ -48,7 +47,7 @@ class MessageThreadBox extends Component {
 		
 
 		return (
-			<div className={classNameActive} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>
+			<div className={classNameActive} imageurl={this.state.recieverImageUrl} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>
 				<img src={this.state.recieverImageUrl} />
 				<div className="thread-box-text">
 					<p className="thread-username">@{this.state.recieverUsername}</p>

@@ -8,13 +8,14 @@ class ProductBox extends Component {
 			<Link to={"/listing/" + this.props.id}><div className="product-box" id={this.props.id}>
 				<div className="product-image-box">
 					<div className="product-image-container">
-						<img src={this.props.image}/>
+						<img alt={this.props.title} src={this.props.image}/>
 					</div>
 					
 				</div>
 				<p className="product-timeposted">1 min ago</p>
 				<h3 className="product-title">{this.props.title}</h3>
 				<p className="product-size">{this.props.size}</p>
+				<p className="product-brand">{this.props.brand}</p>
 				<p className="product-price">{this.props.price}</p>
 
 			</div></Link>

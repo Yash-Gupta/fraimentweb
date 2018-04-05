@@ -4,14 +4,18 @@ a{
 }
 
 .main-container{
-	max-width: 1024px;
-	margin-left: auto;
-	margin-right: auto;
+	display:flex;
+	flex-direction: row;
+  	height: 100%;
+  	width: 1024px;
+  	margin-right: auto;
+  	margin-left: auto;
+  	padding-top:30px;
 }
 
 .main-container>.products{
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	text-align: center;
+	text-align: left;
 }

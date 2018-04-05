@@ -1,0 +1,57 @@
+/* SENDER MESSAGE */
+.sender-offer{
+	text-align: right;
+	width:100%;
+}
+
+.sender-offer>.offer-container{
+	font-size:14px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: black;
+	border-radius: 20px;
+	padding: 6px 12px;
+	color:white;
+	margin:1px 0px;
+}
+
+.sender-offer>.offer-container>.action-items>#accept-btn{
+	font-size:14px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: black;
+	border-radius: 20px;
+	padding: 6px 12px;
+	color:white;
+	margin:1px 0px;
+}
+
+.sender-offer>img{
+	display:none;
+}
+
+
+/* RECIEVER MESSAGE */
+.reciever-offer{
+	width:100%;
+}
+
+.reciever-offer>.offer-container{
+	font-size:14px;
+	display: inline-block;
+	vertical-align: bottom;
+	background-color: #f1f0f0;
+	border-radius: 20px;
+	padding: 6px 12px;
+	color:black;
+	margin:1px 0px;
+}
+
+.reciever-offer>img{
+	border-radius: 50%;
+	width:35px;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 5px;
+}
+

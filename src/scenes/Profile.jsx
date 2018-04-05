@@ -15,12 +15,9 @@ class Profile extends Component {
 	constructor(props){
 		super(props);
 
-
-		
 		this.state = {
 			bought: [],
 			sold:[],
-
 		}
 
 		this.loadListings = this.loadListings.bind(this);
@@ -47,6 +44,7 @@ class Profile extends Component {
 
 				if(data.val()){
 
+
 					var boughtListKeys = Object.keys(userData.listings_bought);
 
 					for(var i = 0; i < boughtListKeys.length; i++){
@@ -63,11 +61,9 @@ class Profile extends Component {
 
 					
 					
+
 				}
 			});
-
-			
-
 		});
 
 		
@@ -106,22 +102,16 @@ class Profile extends Component {
             }
 
            
+
         });		
 
 	}
 
-	
-
-	
-
-	
-	
-
 	render() {
-		console.log(this.state.bought);
+	
+		
+		
 
-		
-		
 
 		return (
 			<div>
