@@ -39,6 +39,14 @@ class MessageList extends Component {
 				}
 			});
 		});
+
+
+
+
+	}
+
+	toggleType(){
+		
 	}
 
 	componentWillReceiveProps(newProps){
@@ -55,7 +63,11 @@ class MessageList extends Component {
 			threads: []
 		}
 		this.updateThreads = this.updateThreads.bind(this);
+
+		this.toggleType = this.toggleType.bind(this);
 	}
+
+	
 
 	render() {
 		var threadBoxes = [];
@@ -65,8 +77,25 @@ class MessageList extends Component {
 			threadBoxes.push(<MessageThreadBox sellerBool={this.state.threads[i].props.sellerBool} active={active} onClick={this.props.clickThread} key={i} id={this.state.threads[i].props.id} />);
 		}
 
+
+
 		return (
 			<div className="message-list">
+
+				<div className = "messageTypes">
+
+					<a id = "buyMessages" onClick = { this.toggleType} >
+						<p className = "selected">Buy</p>
+					</a>
+
+					<a id = "sellMessages" onClick = { this.toggleType} >
+						<p className = "">Sell</p>
+					</a>
+
+				</div>
+				
+
+
 				{threadBoxes}
 			</div>
 		);
@@ -74,3 +103,9 @@ class MessageList extends Component {
 }
 
 export default MessageList;
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 /* COMPONENTS */
 import MessageList from "../components/MessageList.jsx";
 import MessageThread from "../components/MessageThread.jsx";
+import CreateOffer from "../components/CreateOffer.jsx";
 
 class MessagePage extends Component {
 
@@ -15,7 +16,18 @@ class MessagePage extends Component {
 
 	componentWillReceiveProps(newProps){
 		if(newProps.currentUser !== null && newProps.currentUser.uid !== this.state.uid){
-			this.setState({uid: newProps.currentUser.uid});		
+			this.setState({uid: newProps.currentUser.uid});
+
+			if(this.props.match.params.id == null){
+				var self = this;
+				firebase.database().ref('/users/' + newProps.currentUser.uid + '/buy_messages').limitToFirst(1).once('value', function(snap) {
+  					for(var keys in snap.val()){
+  						self.props.match.params.id = keys;
+  					}
+				}).then(() => {
+					self.setState({threadID: self.props.match.params.id});
+				});
+			}
 		}
 	}
 
@@ -26,58 +38,71 @@ class MessagePage extends Component {
 			threadID: "",
 			uid: null,
 			username: "",
+			senderImage: "",
+			createOfferClosed: true,
 		}
-
-		if(this.props.match.params.id !== null) this.state.threadID = this.props.match.params.id; 
+		
 
 		this.clickThread = this.clickThread.bind(this);
 		this.submitMessage = this.submitMessage.bind(this);
+
+		this.toggleCreateOffer = this.toggleCreateOffer.bind(this);
+
+	}
+
+	toggleCreateOffer(event){
+		this.setState({createOfferClosed: !this.state.createOfferClosed});
 	}
 
 	clickThread(event){
-		console.log();
 		if(event.currentTarget.id != this.state.threadID){
-			this.setState({threadID: event.currentTarget.id, username: event.currentTarget.getAttribute("username")});
+			this.setState({threadID: event.currentTarget.id, username: event.currentTarget.getAttribute("username"), senderImage: event.currentTarget.getAttribute("imageurl")});
 		}
 	}
 
 	submitMessage(event){
-		if(event.key === "Enter"){
+		if(event.key === "Enter" || event.currentTarget.id == "sendBtn"){
 			event.preventDefault();
 			//create message
 			var newMessage = {
-				message: event.target.value,
+				message: document.getElementById("messageUserInput").value,
 				senderID: this.state.uid,
 				threadID: this.state.threadID,
-				timestamp: Date.now()
+				timestamp: -Date.now(),
+				type: "message"
 			};
 
         	var messageID = firebase.database().ref().child('messages').push().key;
 
 			var addMessage = {};
-			addMessage['/threads/' + this.state.threadID + '/messages/' + messageID] = {
-				message: event.target.value,
-				senderID: this.state.uid,
-				threadID: this.state.threadID,
-				timestamp: -Date.now()
-			};
+			addMessage['/threads/' + this.state.threadID + '/messages/' + messageID] = newMessage;
 
 			firebase.database().ref().update(addMessage);
-			event.currentTarget.value = "";
+			document.getElementById("messageUserInput").value = "";
 		}
+
+		if(document.getElementById("messageUserInput").value.replace(/^\s+|\s+$/g, '') === "" || document.getElementById("messageUserInput").value == null){ document.getElementById("sendBtn").disabled = true; }
+		else { document.getElementById("sendBtn").disabled = false; }
 	}
 
 	render() {
 		return (
 			<div className="messages-container">
+				<CreateOffer toggleView={this.toggleCreateOffer} hidden={this.state.createOfferClosed} uid={this.state.uid} threadID={this.state.threadID} />
+
 				<MessageList className="messages-left" currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
 				<div className="messages-right">
 					<p className="message-topbar">@{this.state.username}</p> 
-					<MessageThread uid={this.state.uid} id={this.state.threadID}/>
+					<MessageThread uid={this.state.uid} imageurl={this.state.senderImage} id={this.state.threadID}/>
 
 					<div className="messages-send">
-						<form method="POST"> 
-							<input onKeyPress={this.submitMessage} placeholder="Type a message..." name="message" />
+						<form method="POST" >
+							<input onKeyDown={this.submitMessage} placeholder="Type a message..." name="message" id="messageUserInput"/>
+							<input disabled type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
+							<div className="action-icons"> 
+								<i className="fas fa-camera" id="picture-select"></i>
+								<div className="action-icon" onClick={this.toggleCreateOffer}><i className="fas fa-plus" id="create-offer"></i></div>
+							</div>
 						</form>
 					</div>
 				</div>

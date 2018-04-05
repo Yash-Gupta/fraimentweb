@@ -28,8 +28,8 @@ class Header extends Component {
 		if(this.props.currentUser != null){	
 			userHeader = (
 				<AccountDropdown userid={this.props.currentUser.uid}> 
-					<li> Profile </li>
-					<li> Inbox </li>
+					<li> profile </li>
+					<li> <Link to="/messages"> inbox </Link> </li>
 					<li onClick={this.logout}> log out </li>
 				</AccountDropdown>);
 		}else{

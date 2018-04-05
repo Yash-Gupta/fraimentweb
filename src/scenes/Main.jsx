@@ -26,7 +26,8 @@ class Main extends Component {
 				temp.size = listing.child("size").val();
 				temp.price = listing.child("price").val();
 				temp.imageurl = listing.child("imageurl").val();
-
+				temp.brand = listing.child("designer").val();
+ 
 				var currentListings = self.state.listings;
 				currentListings.push(temp);
 
@@ -41,7 +42,7 @@ class Main extends Component {
 				{/* Search Box + Filter + Sort By */}
 				<div className="products">
 					{this.state.listings.map((l) => {
-						return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand}/>);
 					})}
 				</div>
 			</div>

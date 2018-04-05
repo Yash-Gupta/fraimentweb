@@ -9,15 +9,14 @@
 }
 
 .messages-right>.message-thread{
-	padding-left: 40px;
-	padding-right: 40px;
+	padding-left: 10px;
+	padding-right: 20px;
 	overflow-y: scroll;
 }
 
 .messages-right>.message-topbar{
 	width: 100%;
 	margin:0;
-	margin-bottom: 10px;
 	padding:15px 0px;
 	text-align: center;
 	border-bottom: 1px solid rgba(0,0,0,0.25) ;
@@ -27,9 +26,48 @@
 
 .messages-send{
 	width: 100%;
+	border-top: 1px solid rgba(0,0,0,0.5);
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    opacity: 0.4 !important;
+}
+
+.messages-send>form{
+	display: flex;
+	align-items: center;
 }
 
 .messages-send>form>input[name=message]{
-	width: 100%;
-	font-size: 24px;
+	width: 80%;
+	float:left;
+	border-radius: 0px;
+	border: 0.5px solid rgba(0,0,0,0.2);
+	margin:10px 0px 10px 10px;
+	padding: 5px;
+}
+
+.messages-send>form>input[name=sendButton]{
+	background:none;
+	border:none;
+	color: rgba(0,0,0,0.7);
+	font-weight: bold;
+}
+
+.messages-send>form>input[name=sendButton]:disabled{
+	color: rgba(0,0,0,0.2);
+}
+
+.messages-send>form>.action-icons{
+	color:rgba(0,0,0,0.3);
+	display: flex;
+	font-size:20px;
+	height: 100%;
+	flex:1;
+	right: 0px;
+	justify-content: flex-end;
+}
+
+.messages-send>form>.action-icons>.action-icon{
+	margin: 0px 5px;
 }

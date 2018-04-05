@@ -20,7 +20,6 @@ class ProductDetail extends Component {
 			description:"",
 			imageurl:""
 		}
-		console.log(this.state.id);
 	}
 
 	componentWillMount() {
@@ -39,108 +38,46 @@ class ProductDetail extends Component {
 		};
 		
 		return (
-			<div>
-				<div className="productdetail-container">
-					<div className = "productDetailBigImg" style={backgroundStyles}>
-						
-					</div>
-					<div className = "productDetailPreview">
-						<div className = "productPreviewImg">
-
-						</div>
-						<div className = "productPreviewImg">
-						</div>
-						<div className = "productPreviewImg">
-						</div>
-					</div>
-					<div className = "productDetailContent">
-
-						<p className = "prodTitle">{this.state.name}</p>
-						<p className= "product prodSize"> {this.state.size}</p>
-						<p className= "product prodPrice">{this.state.price}</p>
-
-						<button className = "buyBtn">BUY</button>
-						<button className = "messageBtn">MESSAGE</button>
-
-						<div className = "profileHolder">
-							<div className = "profImg"></div>
-							<div className = "profContent">
-								<p className = "profUser">AgentYash01</p>
-								<p className = "profLoc">Chandigargh</p>
-								<div className = "rating">
-									<div className = "star"></div>
-									<div className = "star"></div>
-									<div className = "star"></div>
-									<div className = "star"></div>
-									<div className = "starOutline"></div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
-
-
-
+			<div className="productdetail-container">
+				<div className = "productDetailBigImg" style={backgroundStyles}>
 				</div>
-				{/*}
-					<div className="row">
-						<div className="col-md-8">
-							<div className = "col-md-9">
-								<div className = "img-holder"></div>
-							</div>
-							
-							<div className = "col-md-3">
-								<div className = "preview"></div>
-								<div className = "preview"></div>
-								<div className = "preview"></div>
-							</div>
-						</div>
-
-						<div className="col-md-4 ">
-							<p>
-								<div className ="col-md-12 " id = "">
-									<p className = "prodTitle">{this.state.name}</p>
-									<p className= "product prodSize"><span className = "description">SIZE:</span> {this.state.size}</p>
-									<p className= "product prodPrice">{this.state.price}</p>
-
-									<button className = "buyBtn">BUY</button>
-									<button className = "messageBtn">MESSAGE</button>
-
-									<div className = "profileHolder">
-										<div className = "profImg"></div>
-										<div className = "profContent">
-											<p className = "profUser">AgentYash01</p>
-											<p className = "profLoc">Chandigargh</p>
-											<div className = "rating">
-												<div className = "star"></div>
-												<div className = "star"></div>
-												<div className = "star"></div>
-												<div className = "star"></div>
-												<div className = "starOutline"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</p>
-						</div>
+					
+				<div className = "productDetailPreview">
+					<div className = "productPreviewImg">
 					</div>
-
-					<div className = " row ">
-						<div className = "col-md-12 ">
-							<div className = "descrip">
-								<h1 className = "desname">Description</h1>
-								<p className = "desPar">{this.state.description}</p>
-							</div>
-							
-						</div>
 						
+					<div className = "productPreviewImg">
+					</div>
+					
+					<div className = "productPreviewImg">
 					</div>
 				</div>
+				
+				<div className = "productDetailContent">
 
-				<hr />
+					<p className = "prodTitle">{this.state.name}</p>
+					<p className= "product prodSize"> {this.state.size}</p>
+					<p className= "product prodPrice">{this.state.price}</p>
 
-				<center><h1 className = "relList">Related Listings</h1></center>*/}
+					<button className = "buyBtn">BUY</button>
+					<button className = "messageBtn">MESSAGE</button>
+
+					<div className = "profileHolder">
+						<div className = "profImg"></div>
+						<div className = "profContent">
+							<p className = "profUser">AgentYash01</p>
+							<p className = "profLoc">Chandigargh</p>
+							<div className = "rating">
+								<div className = "star"></div>
+								<div className = "star"></div>
+								<div className = "star"></div>
+								<div className = "star"></div>
+								<div className = "starOutline"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
 			</div>
 
 		);
