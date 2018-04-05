@@ -10,6 +10,8 @@ import Header from './components/Header.jsx';
 import Login from './scenes/Login.jsx';
 import Signup from './scenes/Signup.jsx';
 
+import Profile from './scenes/Profile.jsx';
+
 import CreateProduct from './scenes/CreateProduct.jsx';
 import ProductDetail from './scenes/ProductDetail.jsx';
 
@@ -68,6 +70,10 @@ class App extends Component {
 
                     <Route path="/signup" render={() => {
                         return (<Signup updateHeader={this.updateHeader}></Signup>);
+                    }}/>
+
+                     <Route path="/profile" render={() => {
+                        return (<Profile updateHeader={this.updateHeader}></Profile>);
                     }}/>
 
                     <Route path="/listing/create" render={() => {

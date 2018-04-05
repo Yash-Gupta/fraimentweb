@@ -44,6 +44,7 @@ class MessageThreadBox extends Component {
 	render() {
 		var classNameActive = "thread-box";
 		if(this.props.active) classNameActive += " active";
+		
 
 		return (
 			<div className={classNameActive} imageurl={this.state.recieverImageUrl} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>
