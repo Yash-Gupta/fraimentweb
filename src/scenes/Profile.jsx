@@ -3,13 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import './css/Profile.css';
 import * as firebase from 'firebase';
 
-
-
 /* COMPONENTS */
 import ProductBox from '../components/ProductBox';
-
-
-
 
 class Profile extends Component {
 
@@ -30,19 +25,12 @@ class Profile extends Component {
 		this.loadListingInfo = this.loadListingInfo.bind(this);
 		this.editProfile = this.editProfile.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		
-
 	}
 
 	componentWillMount(){
 		this.props.updateHeader(false);
-		this.loadProfDetails();
-		
-		
-		
+		this.loadProfDetails();	
 	}
-
-
 
 	loadProfDetails(){
 		var self = this;
@@ -61,42 +49,21 @@ class Profile extends Component {
 				self.setState({profPic: userData.profilepic});
 				self.setState({imgURL: userData.profilepic});
 				self.setState({location: userData.location});
-
-				console.log(userData.profilepic);
-
-				
-				console.log("listings_bought");
-
-
 				
 				snapshot.forEach(function(data){
-					
-
 					if(data.val()){
-
-
 						var boughtListKeys = Object.keys(userData.listings_bought);
-
 						for(var i = 0; i < boughtListKeys.length; i++){
 							self.loadListingInfo(boughtListKeys[i], self, "bought");
 						}
 
-
 						var soldListKeys = Object.keys(userData.listings_sold);
-
 						for(var i = 0; i < soldListKeys.length; i++){
 							self.loadListingInfo(soldListKeys[i], self, "sold");
 						}
-
-
-						
-						
-
 					}
 				});
 			});
-
-			console.log(this.state.bought);
 		} else {
 		   console.log("someone needs to sign in!");
 		  }
@@ -115,40 +82,25 @@ class Profile extends Component {
             temp.price = data.price;
             temp.imageurl = data.imageurl;
 
-            console.log(data);
-
             if(type == "bought"){
             	var boughtListings = self.state.bought;
-				console.log(boughtListings);
 				boughtListings.push(temp);
 
 				self.setState({bought: boughtListings});
-				console.log(self.state.bought);
             }else if(type == "sold"){
             	var soldListings = self.state.sold;
-				console.log(soldListings);
 				soldListings.push(temp);
 
 				self.setState({sold: soldListings});
-				console.log(self.state.sold);
             }
-
-           
-
-        });		
-
+        });
 	}
 
-
-
 	editProfile(event){
-		console.log("here");
 		var self = this;
 		
 		firebase.auth().onAuthStateChanged(function(user) {
 			var uid = user.uid;
-
-			
 
 			if(typeof self.state.profPic === 'string' ) {
 				firebase.database().ref('users/' + uid).update({
@@ -156,58 +108,26 @@ class Profile extends Component {
 				    email: self.state.email,
 				    location: self.state.location,
 				    profilepic: self.state.profPic
-
-
 				});
 			}
 			else{
 				firebase.storage().ref().child(self.state.profPic.name).put(self.state.profPic).then(function (snapshot){
-					
 					var newLink  = snapshot.downloadURL;
-
 					firebase.database().ref('users/' + uid).update({
 					    username: self.state.username,
 					    email: self.state.email,
 					    location: self.state.location,
 					    profilepic: newLink
-
-
-					});
-
-					
-
-					
-					
-
-				}, function(error){console.log(error.message);}, function(){
-					
-				});
+					});	
+				}, function(error){console.log(error.message);}, function(){});
 			}
-			
-			
-			
-			
-			
-			
-
-			
-
-
-			
-
-			
 		});
-
-		
-
-		
 	}
 
 	handleChange(event){
 		switch (event.target.name) {
 			case 'username':
 				this.setState({username: event.target.value});
-				console.log(this.state.username);
 				break;
 
 			case 'email':
@@ -219,35 +139,25 @@ class Profile extends Component {
 				break;
 
 			case 'image':
-				
 				this.setState({profPic: event.target.files[0]});
+				
 				var reader = new FileReader();
-
 				var url = "";
-
+				var a = this;
                 reader.onload = function (e) {
                 	url = e.target.result;
-                	console.log(e.target.result);
-                    
+					a.setState({imgURL: url});
                 };
-
-                this.setState({imgURL: url});
 
                 reader.readAsDataURL(event.target.files[0]);
 				break;
+
 			default:
 				break;
-
 		}
-
 	}
 
 	render() {
-	
-		
-		
-
-
 		return (
 			<div className = "profilePage">
 				<div className="profile-container">
@@ -256,7 +166,7 @@ class Profile extends Component {
 					<div className="products">
 						
 						{this.state.bought.map((l) => {
-							return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
 						})}
 					</div>
 
@@ -265,36 +175,23 @@ class Profile extends Component {
 					<div className="products">
 						
 						{this.state.sold.map((l) => {
-							return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
 						})}
 					</div>
 
 					<h1>Edit Profile Settings</h1>
 
 					
-						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />
-						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="email" value = {this.state.email} name="email" />
-						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="location" value = {this.state.location} name="location" />
-						<img src = {this.state.imgURL} height = "100px" width = "100px"/>
-						<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
-
-						<button onClick = {this.editProfile} type="submit">Submit Changes</button>
-					
-
-					
-
-
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="email" value = {this.state.email} name="email" />
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="location" value = {this.state.location} name="location" />
+					<img src = {this.state.imgURL} height = "100px" width = "100px"/>
+					<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
+					<button onClick = {this.editProfile} type="submit">Submit Changes</button>
 				</div>
-				
-				
 			</div>
 		);
 	}
 }
 
 export default withRouter(Profile);
-
-
-
-
-
