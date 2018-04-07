@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
+import './css/Profile.css';
 import * as firebase from 'firebase';
 
 
@@ -8,7 +8,8 @@ import * as firebase from 'firebase';
 /* COMPONENTS */
 import ProductBox from '../components/ProductBox';
 
-const listBought = [];
+
+
 
 class Profile extends Component {
 
@@ -18,57 +19,88 @@ class Profile extends Component {
 		this.state = {
 			bought: [],
 			sold:[],
+			username: "",
+			email: "",
+			profPic: "",
+			location: "", 
+			imgURL: ""
 		}
 
-		this.loadListings = this.loadListings.bind(this);
+		this.loadProfDetails = this.loadProfDetails.bind(this);
 		this.loadListingInfo = this.loadListingInfo.bind(this);
+		this.editProfile = this.editProfile.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		
 
 	}
 
 	componentWillMount(){
 		this.props.updateHeader(false);
-		this.loadListings();
+		this.loadProfDetails();
+		
+		
 		
 	}
 
-	loadListings(){
+
+
+	loadProfDetails(){
 		var self = this;
-		firebase.database().ref('/users/' + 'Vkv3ORi8oVXouzgEQdpgJ7Og7X52').once("value").then((snapshot) => {
-			
-			console.log("listings_bought");
+		var uid = "";
 
-
-			
-			snapshot.forEach(function(data){
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		  	uid = user.uid;
+		    
+		
+			firebase.database().ref('/users/' + uid).once("value").then((snapshot) => {
 				var userData = snapshot.val();
 
-				if(data.val()){
+				self.setState({username: userData.username});
+				self.setState({email: userData.email});
+				self.setState({profPic: userData.profilepic});
+				self.setState({imgURL: userData.profilepic});
+				self.setState({location: userData.location});
+
+				console.log(userData.profilepic);
+
+				
+				console.log("listings_bought");
 
 
-					var boughtListKeys = Object.keys(userData.listings_bought);
-
-					for(var i = 0; i < boughtListKeys.length; i++){
-						self.loadListingInfo(boughtListKeys[i], self, "bought");
-					}
-
-
-					var soldListKeys = Object.keys(userData.listings_sold);
-
-					for(var i = 0; i < soldListKeys.length; i++){
-						self.loadListingInfo(soldListKeys[i], self, "sold");
-					}
-
-
-					
+				
+				snapshot.forEach(function(data){
 					
 
-				}
+					if(data.val()){
+
+
+						var boughtListKeys = Object.keys(userData.listings_bought);
+
+						for(var i = 0; i < boughtListKeys.length; i++){
+							self.loadListingInfo(boughtListKeys[i], self, "bought");
+						}
+
+
+						var soldListKeys = Object.keys(userData.listings_sold);
+
+						for(var i = 0; i < soldListKeys.length; i++){
+							self.loadListingInfo(soldListKeys[i], self, "sold");
+						}
+
+
+						
+						
+
+					}
+				});
 			});
+
+			console.log(this.state.bought);
+		} else {
+		   console.log("someone needs to sign in!");
+		  }
 		});
-
-		
-
-		console.log(this.state.bought);
 	}
 
 	loadListingInfo(listingID, self, type){
@@ -107,6 +139,109 @@ class Profile extends Component {
 
 	}
 
+
+
+	editProfile(event){
+		console.log("here");
+		var self = this;
+		
+		firebase.auth().onAuthStateChanged(function(user) {
+			var uid = user.uid;
+
+			
+
+			if(typeof self.state.profPic === 'string' ) {
+				firebase.database().ref('users/' + uid).update({
+				    username: self.state.username,
+				    email: self.state.email,
+				    location: self.state.location,
+				    profilepic: self.state.profPic
+
+
+				});
+			}
+			else{
+				firebase.storage().ref().child(self.state.profPic.name).put(self.state.profPic).then(function (snapshot){
+					
+					var newLink  = snapshot.downloadURL;
+
+					firebase.database().ref('users/' + uid).update({
+					    username: self.state.username,
+					    email: self.state.email,
+					    location: self.state.location,
+					    profilepic: newLink
+
+
+					});
+
+					
+
+					
+					
+
+				}, function(error){console.log(error.message);}, function(){
+					
+				});
+			}
+			
+			
+			
+			
+			
+			
+
+			
+
+
+			
+
+			
+		});
+
+		
+
+		
+	}
+
+	handleChange(event){
+		switch (event.target.name) {
+			case 'username':
+				this.setState({username: event.target.value});
+				console.log(this.state.username);
+				break;
+
+			case 'email':
+				this.setState({email: event.target.value});
+				break;
+
+			case 'location':
+				this.setState({location: event.target.value});
+				break;
+
+			case 'image':
+				
+				this.setState({profPic: event.target.files[0]});
+				var reader = new FileReader();
+
+				var url = "";
+
+                reader.onload = function (e) {
+                	url = e.target.result;
+                	console.log(e.target.result);
+                    
+                };
+
+                this.setState({imgURL: url});
+
+                reader.readAsDataURL(event.target.files[0]);
+				break;
+			default:
+				break;
+
+		}
+
+	}
+
 	render() {
 	
 		
@@ -114,8 +249,9 @@ class Profile extends Component {
 
 
 		return (
-			<div>
-				<div className = "boughtItems">
+			<div className = "profilePage">
+				<div className="profile-container">
+
 					<h1>Bought Listings: </h1>
 					<div className="products">
 						
@@ -132,7 +268,24 @@ class Profile extends Component {
 							return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
 						})}
 					</div>
+
+					<h1>Edit Profile Settings</h1>
+
+					
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="email" value = {this.state.email} name="email" />
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="location" value = {this.state.location} name="location" />
+						<img src = {this.state.imgURL} height = "100px" width = "100px"/>
+						<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
+
+						<button onClick = {this.editProfile} type="submit">Submit Changes</button>
+					
+
+					
+
+
 				</div>
+				
 				
 			</div>
 		);
