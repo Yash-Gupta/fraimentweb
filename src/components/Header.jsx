@@ -17,7 +17,7 @@ class Header extends Component {
 		var props = this.props;
 		firebase.auth().signOut().then(function() {
 			console.log("signed out");
-			props.history.push('/');
+			window.location = "/";
 		}, function(error) {
 			console.log(error.message);
 		});
