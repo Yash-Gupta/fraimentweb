@@ -21,13 +21,20 @@ class MessagePage extends Component {
 			if(this.props.match.params.id == null){
 				var self = this;
 				firebase.database().ref('/users/' + newProps.currentUser.uid + '/buy_messages').limitToFirst(1).once('value', function(snap) {
-  					for(var keys in snap.val()){
-  						self.props.match.params.id = keys;
-  					}
+					for(var keys in snap.val()){
+						self.props.match.params.id = keys;
+					}
 				}).then(() => {
+					firebase.database().ref('/threads/' + self.props.match.params.id).once("value").then((threadData) => {
+						firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
+							this.setState({username: snapshot.val()});
+						});
+					});
 					self.setState({threadID: self.props.match.params.id});
 				});
 			}
+			console.log(this.props.match.params.id);
+			this.setState({threadID: this.props.match.params.id});
 		}
 	}
 
@@ -41,13 +48,10 @@ class MessagePage extends Component {
 			senderImage: "",
 			createOfferClosed: true,
 		}
-		
 
 		this.clickThread = this.clickThread.bind(this);
 		this.submitMessage = this.submitMessage.bind(this);
-
 		this.toggleCreateOffer = this.toggleCreateOffer.bind(this);
-
 	}
 
 	toggleCreateOffer(event){
@@ -72,7 +76,7 @@ class MessagePage extends Component {
 				type: "message"
 			};
 
-        	var messageID = firebase.database().ref().child('messages').push().key;
+			var messageID = firebase.database().ref().child('messages').push().key;
 
 			var addMessage = {};
 			addMessage['/threads/' + this.state.threadID + '/messages/' + messageID] = newMessage;
@@ -92,16 +96,18 @@ class MessagePage extends Component {
 
 				<MessageList className="messages-left" currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
 				<div className="messages-right">
-					<p className="message-topbar">@{this.state.username}</p> 
+					<p className="message-topbar">@{this.state.username}</p>
 					<MessageThread uid={this.state.uid} imageurl={this.state.senderImage} id={this.state.threadID}/>
 
 					<div className="messages-send">
 						<form method="POST" >
 							<input onKeyDown={this.submitMessage} placeholder="Type a message..." name="message" id="messageUserInput"/>
 							<input disabled type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
-							<div className="action-icons"> 
+							<div className="action-icons">
 								<i className="fas fa-camera" id="picture-select"></i>
-								<div className="action-icon" onClick={this.toggleCreateOffer}><i className="fas fa-plus" id="create-offer"></i></div>
+								<div className="action-icon" onClick={this.toggleCreateOffer}>
+									<i className="fas fa-plus" id="create-offer"></i>
+								</div>
 							</div>
 						</form>
 					</div>

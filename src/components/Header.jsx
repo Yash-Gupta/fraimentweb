@@ -25,16 +25,13 @@ class Header extends Component {
 
 	render() {
 		var userHeader;
-		if(this.props.currentUser != null){	
+		if(this.props.currentUser != null){
 			userHeader = (
-				<AccountDropdown userid={this.props.currentUser.uid}> 
-					<li> profile </li>
-					<li> <Link to="/messages"> inbox </Link> </li>
-					<li onClick={this.logout}> log out </li>
+				<AccountDropdown userid={this.props.currentUser.uid} logout={this.logout}>
 				</AccountDropdown>);
 		}else{
 			userHeader = (
-				<div className = "header-signedout"> 
+				<div className = "header-signedout">
 					<Link to="/login"> log in </Link>
 					<Link to="/signup"> sign up </Link>
 				</div>
@@ -58,7 +55,7 @@ class Header extends Component {
 
 					{!this.props.simple && userHeader}
 				</div>
-				{!this.props.simple && 
+				{!this.props.simple &&
 				(<div className="container container-categories">
 					<div className="header-categories">
 						<a href="#">popular</a>
@@ -70,9 +67,9 @@ class Header extends Component {
 					</div>
 				</div>)
 				}
-				
+
 				<hr className="header-bar"/>
-			</div>      
+			</div>
 		);
 	}
 }

@@ -17,18 +17,18 @@ class MessageThreadBox extends Component {
 		firebase.database().ref('/threads/' + threadID).once("value").then((threadData) => {
 			this.setState({last_message_text: threadData.child("last_message_text").val()});
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/profilepic').once("value").then((snapshot) => {
-            	this.setState({recieverImageUrl: snapshot.val()});
-       		});
-        	firebase.database().ref('/users/' + threadData.child(child).val() + '/username').once("value").then((snapshot) => {
-            	this.setState({recieverUsername: snapshot.val()});
-       		});
+				this.setState({recieverImageUrl: snapshot.val()});
+			});
+			firebase.database().ref('/users/' + threadData.child(child).val() + '/username').once("value").then((snapshot) => {
+				this.setState({recieverUsername: snapshot.val()});
+			});
 		});
 	}
 
 	componentWillReceiveProps(newProps){
 		if(newProps.id != null){
 			this.getContent(newProps.id, newProps.sellerBool);
-		}	
+		}
 	}
 
 	constructor(props){
@@ -44,7 +44,7 @@ class MessageThreadBox extends Component {
 	render() {
 		var classNameActive = "thread-box";
 		if(this.props.active) classNameActive += " active";
-		
+
 
 		return (
 			<div className={classNameActive} imageurl={this.state.recieverImageUrl} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>

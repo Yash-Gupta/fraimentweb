@@ -31,6 +31,7 @@ class Login extends Component {
 				if (user) {
 				  console.log("User is signed in.");
 				  console.log(user.email);
+					window.location = "/";
 				} else {
 				  console.log("No user is signed in.");
 				}
@@ -59,19 +60,17 @@ class Login extends Component {
 	render() {
 		return (
 			<div className = "">
-			
-
 				<div className = "">
 					<div className = "loginContainer">
 						<form onSubmit={this.login}>
-							<input className = "loginPageBoxes" type="text" placeholder="username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />			   
+							<input className = "loginPageBoxes" type="text" placeholder="username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />
 							<input className = "loginPageBoxes" type="password" placeholder="password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
 							<button className="loginPageSubmit" type="submit" value="">log in</button>
 
 							<center><p className = "noAcct">don't have an account? sign up.</p></center>
 						</form>
 					</div>
-					
+
 				</div>
 			</div>
 		);

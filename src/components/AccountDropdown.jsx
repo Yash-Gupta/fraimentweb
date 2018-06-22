@@ -26,7 +26,6 @@ class AccountDropdown extends Component {
 		};
 
 		this.handleClick = this.handleClick.bind(this);
-
 	}
 
 	handleClick(){
@@ -35,14 +34,16 @@ class AccountDropdown extends Component {
 
 	render() {
 		return (
-			<div className = "header-signedin" > 
+			<div className = "header-signedin" >
 				<img className = "profpic" src = {this.state.pic} onClick={this.handleClick}/>
 
 				{this.state.opened &&
 				<div className = "account-dropdown">
 					<ul>
 						<li><b> @{this.state.username} </b></li>
-						{this.props.children}
+						<li onClick={this.handleClick}> <Link to="/profile"> profile </Link> </li>
+						<li onClick={this.handleClick}> <Link to="/messages"> inbox </Link> </li>
+						<li onClick={this.props.logout}> log out </li>
 					</ul>
 				</div>
 				}

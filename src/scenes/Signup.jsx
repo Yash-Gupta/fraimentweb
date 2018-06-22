@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
 import './css/Signup.css';
 import * as firebase from 'firebase';
-
+import axios from 'axios';
 
 /* COMPONENTS */
 
@@ -16,8 +16,9 @@ class Signup extends Component {
 		super(props);
 		this.state = {
 			username: "",
+			email: "",
 			conf_password: "",
-			 password: "",
+			password: "",
 			errors:[]
 		}
 
@@ -25,7 +26,7 @@ class Signup extends Component {
 		this.signup = this.signup.bind(this);
 		this.verifyDetails = this.verifyDetails.bind(this);
 	}
-	
+
 	verifyDetails(email, pass, conf){
 		var errors = [];
 		if(conf !== pass) errors.push("Passwords don't match!");
@@ -36,44 +37,33 @@ class Signup extends Component {
 
 	signup(event){
 		event.preventDefault();
-		var verification = this.verifyDetails(this.state.username, this.state.password, this.state.conf_password);
+		var verification = this.verifyDetails(this.state.email, this.state.password, this.state.conf_password);
 		if(verification.length !== 0){
 			this.setState({errors: verification});
 			return;
 		}
 
-		firebase.auth().createUserWithEmailAndPassword(this.state.username, this.state.password)
-			.then(function(success){
-				return;
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
+		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+		.then(function(user){
+			var uid = user.uid;
+			var newUser = {
+				"email": this.state.email,
+				"location": "Unknown",
+				"username": this.state.username,
+				"profilepic": "",
+				"buy_messages": {},
+				"sell_messages": {},
+				"listings_bought": {},
+				"listings_sold": {}
+			}
 
-		var newUser = {
-			email: "",
-			profilepic: "", 
-			username: "", 
-			
-		};
+			var uploadUser = {};
+			uploadUser['/users/' + uid] = newUser;
 
-		axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
-        	newProduct.author = res.data.uid;
-
-			//upload file then upload all to firebase
-        	var productID = firebase.database().ref().child('listings').push().key;
-
-			firebase.storage().ref().child(productID).put(this.state.image).then(function (snapshot){
-				newProduct.imageurl = snapshot.downloadURL;
-				var uploadProduct = {};
-				uploadProduct['/listings/' + productID] = newProduct;
-	
-				firebase.database().ref().update(uploadProduct);
-	
-			}, function(error){console.log(error.message);}, function(){
-				
-			});
-	    });
+			firebase.database().ref().update(uploadUser);
+		}).catch(function(error) {
+			console.log(error);
+		});
 
 		this.props.history.push('/login');
 	}
@@ -81,43 +71,47 @@ class Signup extends Component {
 	handleChange(event){
 		switch (event.target.name) {
 			case 'username':
-				this.setState({username: event.target.value});
-				break;
+			this.setState({username: event.target.value});
+			break;
+			case 'email':
+			this.setState({email: event.target.value});
+			break;
 			case 'password':
-				this.setState({password: event.target.value});
-				break;
+			this.setState({password: event.target.value});
+			break;
 			case 'conf_password':
-				this.setState({conf_password: event.target.value});
-				break;
+			this.setState({conf_password: event.target.value});
+			break;
 			default:
-				break;
+			break;
 		}
 	}
 
 	render() {
 		return (
 			<div className = "">
-			
 
-				<div className = "errors"> 
+
+				<div className = "errors">
 					{this.state.errors.map(function(errorMsg){
-            			return <li>{errorMsg}</li>;
-          			})}
-				</div>
+						return <li>{errorMsg}</li>;
+						})}
+					</div>
 
-				<div>
-					<div className = "signupPageContainer">
-						<form onSubmit={this.signup}>
-							<input className = "signupPageBoxes" type="text" placeholder="Username" name="username" onChange={this.handleChange} value={this.state.username} /> <br />			   
-							<input className = "signupPageBoxes" type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
-							<input className = "signupPageBoxes" type="password" placeholder="Confirm Password" name="conf_password" onChange={this.handleChange} value={this.state.conf_password} /> <br />
-							<button className="signupPageSubmit" type="submit" value="">sign up</button>
-						</form>
+					<div>
+						<div className = "signupPageContainer">
+							<form onSubmit={this.signup}>
+								<input className = "signupPageBoxes" type="text" placeholder="Username" name="username" onChange={this.handleChange} value={this.state.username} /> <br />
+								<input className = "signupPageBoxes" type="email" placeholder="Email" name="email" onChange={this.handleChange} value={this.state.email} /> <br />
+								<input className = "signupPageBoxes" type="password" placeholder="Password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
+								<input className = "signupPageBoxes" type="password" placeholder="Confirm Password" name="conf_password" onChange={this.handleChange} value={this.state.conf_password} /> <br />
+								<button className="signupPageSubmit" type="submit" value="">sign up</button>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
-		);
+			);
+		}
 	}
-}
 
-export default withRouter(Signup);
+	export default withRouter(Signup);

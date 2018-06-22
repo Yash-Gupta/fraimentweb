@@ -65,7 +65,7 @@ p{
 
 .prodPrice{
 	font-family: "Avenir Next Bold";
-	
+
 	line-height: 1.5em;
 	margin:0px;
 	margin-bottom: 40px
@@ -126,7 +126,7 @@ p{
 	height:160px;
 	margin-bottom: 10px;
 	background-color: gray;
-	
+
 }
 
 .rating{
@@ -173,6 +173,7 @@ p{
 
 .messageBtn{
 	text-align: center;
+	cursor: pointer;
 	margin-top: 10px;
 	border:1.5px solid black;
 	background-color:transparent;
@@ -184,13 +185,3 @@ p{
 	transition:all ease 0.2s;
 
 }
-
-
-
-
-
-
-
-
-
-
