@@ -65,6 +65,24 @@ class Signup extends Component {
 			console.log(error);
 		});
 
+		/*axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
+        	newProduct.author = res.data.uid;
+
+			//upload file then upload all to firebase
+        	var productID = firebase.database().ref().child('listings').push().key;
+
+			firebase.storage().ref().child(productID).put(this.state.image).then(function (snapshot){
+				newProduct.imageurl = snapshot.downloadURL;
+				var uploadProduct = {};
+				uploadProduct['/listings/' + productID] = newProduct;
+	
+				firebase.database().ref().update(uploadProduct);
+	
+			}, function(error){console.log(error.message);}, function(){
+				
+			});
+	    });*/
+
 		this.props.history.push('/login');
 	}
 
