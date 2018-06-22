@@ -58,7 +58,7 @@ class Signup extends Component {
 			
 		};
 
-		axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
+		/*axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
         	newProduct.author = res.data.uid;
 
 			//upload file then upload all to firebase
@@ -74,7 +74,7 @@ class Signup extends Component {
 			}, function(error){console.log(error.message);}, function(){
 				
 			});
-	    });
+	    });*/
 
 		this.props.history.push('/login');
 	}
