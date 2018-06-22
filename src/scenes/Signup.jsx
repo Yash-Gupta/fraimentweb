@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter} from 'react-router-dom';
 import './css/Signup.css';
 import * as firebase from 'firebase';
-
+import axios from 'axios';
+ 
 
 /* COMPONENTS */
 
