@@ -14,26 +14,46 @@ class MessagePage extends Component {
 		this.props.updateHeader(false);
 	}
 
+	chooseFirstThread(uid){
+		var self = this;
+		firebase.database().ref('/users/' + uid + '/buy_messages').limitToFirst(1).once('value', function(snap) {
+			for(var keys in snap.val()){
+				self.props.match.params.id = snap.val()[keys];
+			}
+		}).then(() => {
+			firebase.database().ref('/threads/' + self.props.match.params.id).once("value").then((threadData) => {
+				firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
+					this.setState({username: snapshot.val()});
+				});
+			});
+			self.setState({threadID: self.props.match.params.id});
+		});
+	}
+
 	componentWillReceiveProps(newProps){
 		if(newProps.currentUser !== null && newProps.currentUser.uid !== this.state.uid){
 			this.setState({uid: newProps.currentUser.uid});
-
-			if(this.props.match.params.id == null){
+			if(this.props.match.params.id != null){
+				console.log(this.props.match.params.id);
 				var self = this;
-				firebase.database().ref('/users/' + newProps.currentUser.uid + '/buy_messages').limitToFirst(1).once('value', function(snap) {
-					for(var keys in snap.val()){
-						self.props.match.params.id = keys;
-					}
+				var exists = false;
+				//take user id and either set the thread id to whatever is stored or create new thread (LATER)
+				firebase.database().ref("/users/" + newProps.currentUser.uid + "/sell_messages/" + this.props.match.params.id).once("value", function(snap){
+					self.setState({threadID: snap.val()});
+					if(snap.val() != null) exists = true;
 				}).then(() => {
-					firebase.database().ref('/threads/' + self.props.match.params.id).once("value").then((threadData) => {
-						firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
-							this.setState({username: snapshot.val()});
-						});
+					firebase.database().ref("/users/" + newProps.currentUser.uid + "/buy_messages/" + this.props.match.params.id).once("value", function(snap){
+						if(snap.val() != null) exists = true;
+						self.setState({threadID: snap.val()}, (() => {
+							if(!exists){
+								self.chooseFirstThread(newProps.currentUser.uid);
+							}
+						}));
 					});
-					self.setState({threadID: self.props.match.params.id});
-				});
+				})
+			}else{
+				this.chooseFirstThread(newProps.currentUser.uid);
 			}
-			console.log(this.props.match.params.id);
 			this.setState({threadID: this.props.match.params.id});
 		}
 	}
@@ -52,6 +72,7 @@ class MessagePage extends Component {
 		this.clickThread = this.clickThread.bind(this);
 		this.submitMessage = this.submitMessage.bind(this);
 		this.toggleCreateOffer = this.toggleCreateOffer.bind(this);
+		this.chooseFirstThread = this.chooseFirstThread.bind(this);
 	}
 
 	toggleCreateOffer(event){

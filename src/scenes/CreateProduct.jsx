@@ -49,6 +49,7 @@ class CreateProduct extends Component {
 			price: this.state.price,
 			description: this.state.description,
 			images: {},
+			timestamp: (new Date()).getTime()
 		};
 
 		axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {

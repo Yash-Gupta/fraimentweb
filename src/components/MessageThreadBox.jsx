@@ -14,14 +14,21 @@ class MessageThreadBox extends Component {
 	getContent(threadID, sellerBool){
 		if(!sellerBool) var child = "seller_id";
 		else var child = "buyer_id";
+
 		firebase.database().ref('/threads/' + threadID).once("value").then((threadData) => {
-			this.setState({last_message_text: threadData.child("last_message_text").val()});
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/profilepic').once("value").then((snapshot) => {
 				this.setState({recieverImageUrl: snapshot.val()});
 			});
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/username').once("value").then((snapshot) => {
 				this.setState({recieverUsername: snapshot.val()});
 			});
+		});
+	}
+
+	componentDidMount() {
+		var self = this;
+		firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).on("child_added", function(snap) {
+			self.setState({last_message_text: snap.child("message").val()});
 		});
 	}
 
@@ -44,7 +51,6 @@ class MessageThreadBox extends Component {
 	render() {
 		var classNameActive = "thread-box";
 		if(this.props.active) classNameActive += " active";
-
 
 		return (
 			<div className={classNameActive} imageurl={this.state.recieverImageUrl} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>

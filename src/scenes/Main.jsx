@@ -27,7 +27,8 @@ class Main extends Component {
 				temp.price = listing.child("price").val();
 				temp.imageurl = listing.child("imageurl").val();
 				temp.brand = listing.child("designer").val();
- 
+				temp.timestamp = listing.child("timestamp").val();
+
 				var currentListings = self.state.listings;
 				currentListings.push(temp);
 
@@ -37,13 +38,12 @@ class Main extends Component {
 	}
 
 	render() {
-		console.log(this.state.listings);
 		return (
 			<div className="main-container">
 				{/* Search Box + Filter + Sort By */}
 				<div className="products">
 					{this.state.listings.map((l) => {
-						return (<ProductBox id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand}/>);
+						return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand} timestamp={l.timestamp}/>);
 					})}
 				</div>
 			</div>

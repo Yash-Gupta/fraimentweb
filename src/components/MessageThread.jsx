@@ -15,21 +15,25 @@ class MessageThread extends Component {
 			var senderImage = false; //TODO - what is senderImage supposed to do here s
 			var imageUrl = "";
 			messagesDb = [];
+
+			firebase.database().ref("/threads/" + newProps.id + "/messages").orderByChild("-timestamp").off(); //remove previous listener to avoid double
 			firebase.database().ref("/threads/" + newProps.id + "/messages").orderByChild("-timestamp").on("child_added", function(dataSnapshot) {
 				var messageID = dataSnapshot.key;
-
-				if(dataSnapshot.child("type").val() == "message")
-				this.addMessage(newProps.uid,
-					dataSnapshot.child("senderID").val(),
-					dataSnapshot.key,
-					dataSnapshot.child("message").val());
-					else
+				if(dataSnapshot.child("type").val() == "message"){
+					this.addMessage(newProps.uid,
+						dataSnapshot.child("senderID").val(),
+						dataSnapshot.key,
+						dataSnapshot.child("message").val()
+					);
+				} else {
 					this.addOffer(newProps.uid,
 						dataSnapshot.key,
 						dataSnapshot.child("senderID").val(),
 						dataSnapshot.child("price").val(),
 						dataSnapshot.child("note").val(),
-						dataSnapshot.child("accepted").val());
+						dataSnapshot.child("accepted").val()
+					);
+				}
 			}.bind(this));
 		}
 	}
@@ -56,6 +60,7 @@ class MessageThread extends Component {
 		this.setState({messages: messagesDb}, () => {
 			document.querySelector(".message-thread").scrollTop = document.querySelector(".message-thread").scrollHeight;
 		});
+		//console.log(messagesDb);
 	}
 
 	constructor(props){
@@ -71,7 +76,7 @@ class MessageThread extends Component {
 	render() {
 		return (
 			<div className = "message-thread">
-			{this.state.messages}
+				{this.state.messages}
 			</div>
 		);
 	}

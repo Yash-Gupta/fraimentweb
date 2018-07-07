@@ -28,10 +28,10 @@ class CreateOffer extends Component {
 		super(props);
 
 		this.state = {
-			price: null,
+			price: 0,
 			note: ""
 		}
-		
+
 		this.submitOffer = this.submitOffer.bind(this);
 		this.onChange = this.onChange.bind(this);
 
@@ -52,7 +52,7 @@ class CreateOffer extends Component {
 	submitOffer(event){
 		if(event.key === "Enter" || event.currentTarget.id == "sendBtn"){
 			event.preventDefault();
-			
+
 			//create offer
 			var newOffer = {
 				price: this.state.price,
@@ -63,7 +63,7 @@ class CreateOffer extends Component {
 				type: "offer"
 			};
 
-        	var offerID = firebase.database().ref('/threads/' + this.props.threadID).child('messages').push().key;
+      var offerID = firebase.database().ref('/threads/' + this.props.threadID).child('messages').push().key;
 
 			var addOffer = {};
 			addOffer['/threads/' + this.props.threadID + '/messages/' + offerID] = newOffer;
@@ -84,10 +84,10 @@ class CreateOffer extends Component {
 				<div className="create-offer-modal">
 					<p id="closeBtn" onClick={this.props.toggleView}>X</p>
 
-					<form> 
+					<form>
 						<p className="modal-title"><i className="fas fa-dollar-sign"></i>Make an offer</p><hr />
 
-						<input value={this.state.price} id="price" onChange={this.onChange} type="number" min="0.01" step="0.01" />
+						<input value={this.state.price} id="price" onChange={this.onChange} type="number" value={this.state.price} min="0.01" step="0.01" />
 						<textarea value={this.state.note} id="note" onChange={this.onChange}> </textarea>
 
 						<input type="submit" onClick={this.submitOffer} id="sendBtn" value="Send" name="sendButton" />

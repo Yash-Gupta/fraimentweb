@@ -6,9 +6,9 @@ import * as firebase from 'firebase';
 /* COMPONENTS */
 import MessageThreadBox from './MessageThreadBox.jsx';
 
-const threadIds = [];
-const buyThreadIds = [];
-const sellThreadIds = [];
+var threadIds = [];
+var buyThreadIds = [];
+var sellThreadIds = [];
 class MessageList extends Component {
 
 	componentWillMount(){
@@ -16,12 +16,15 @@ class MessageList extends Component {
 
 	updateThreads(uid){
 		var self = this;
+		buyThreadIds = [];
+		sellThreadIds = [];
+
 		firebase.database().ref('/users/' + uid + '/buy_messages').once("value").then((snapshot) => {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
 					var active = false;
-					if(thread.key === self.props.currentThread) active = true;
-					buyThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.key} id={thread.key} />);
+					if(thread.val() === self.props.currentThread) active = true;
+					buyThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.val()} id={thread.val()} />);
 					self.setState({buyThreads: buyThreadIds});
 				}
 			});
@@ -31,8 +34,8 @@ class MessageList extends Component {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
 					var active = false;
-					if(thread.key === self.props.currentThread) active = true;
-					sellThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.key} id={thread.key} />);
+					if(thread.val() === self.props.currentThread) active = true;
+					sellThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.val()} id={thread.val()} />);
 					self.setState({sellThreads: sellThreadIds});
 				}
 			});
@@ -60,7 +63,7 @@ class MessageList extends Component {
 	}
 
 	toggleType(event){
-		//TODO: autoselect first thread and set that to view 
+		//TODO: autoselect first thread and set that to view
 		if(event.currentTarget.id == "buy") var other = "sell";
 		else var other = "buy";
 
@@ -87,12 +90,19 @@ class MessageList extends Component {
 		for(var i = 0; i < this.state.buyThreads.length; i++){
 			var active = this.state.buyThreads[i].props.active;
 			if(this.state.buyThreads[i].props.id === this.props.currentThread) active = true;
-			buyThreadBoxes.push(<MessageThreadBox sellerBool= {this.state.buyThreads[i].props.sellerBool} active={active}  onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].props.id} />);
+			buyThreadBoxes.push(<MessageThreadBox sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].props.id} />);
 		}
 		for(var i = 0; i < this.state.sellThreads.length; i++){
 			var active = this.state.sellThreads[i].props.active;
 			if(this.state.sellThreads[i].props.id === this.props.currentThread) active = true;
-			sellThreadBoxes.push(<MessageThreadBox sellerBool={this.state.sellThreads[i].props.sellerBool} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
+			sellThreadBoxes.push(<MessageThreadBox sellerBool={true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
+		}
+
+		if (buyThreadBoxes.length <= 0) {
+			buyThreadBoxes = (<h1> No messages here! </h1>)
+  	}
+		if (sellThreadBoxes.length <= 0) {
+			sellThreadBoxes = (<h1> No messages here! </h1>)
 		}
 
 		return (
@@ -112,6 +122,7 @@ class MessageList extends Component {
 				<div className = "buyThreadBoxes">
 					{buyThreadBoxes}
 				</div>
+
 				<div className = "sellThreadBoxes displayNone">
 					{sellThreadBoxes}
 				</div>
