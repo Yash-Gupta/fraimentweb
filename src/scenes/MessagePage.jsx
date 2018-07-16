@@ -80,7 +80,11 @@ class MessagePage extends Component {
 	}
 
 	clickThread(event){
+		//TODO: check if the lastSentBy property is the user logged in
+		//if no, replace lastSentBy with null
+
 		if(event.currentTarget.id != this.state.threadID){
+			console.log(event.currentTarget.getAttribute("imageurl"));
 			this.setState({threadID: event.currentTarget.id, username: event.currentTarget.getAttribute("username"), senderImage: event.currentTarget.getAttribute("imageurl")});
 		}
 	}
@@ -88,12 +92,12 @@ class MessagePage extends Component {
 	submitMessage(event){
 		if(event.key === "Enter" || event.currentTarget.id == "sendBtn"){
 			event.preventDefault();
-			//create message
+			var date = Date.now();
 			var newMessage = {
 				message: document.getElementById("messageUserInput").value,
 				senderID: this.state.uid,
 				threadID: this.state.threadID,
-				timestamp: -Date.now(),
+				timestamp: -date,
 				type: "message"
 			};
 
@@ -101,6 +105,8 @@ class MessagePage extends Component {
 
 			var addMessage = {};
 			addMessage['/threads/' + this.state.threadID + '/messages/' + messageID] = newMessage;
+			addMessage['/threads/' + this.state.threadID + '/lastSentBy'] = this.state.uid;
+			addMessage['/threads/' + this.state.threadID + '/lastActive'] = date;			
 
 			firebase.database().ref().update(addMessage);
 			document.getElementById("messageUserInput").value = "";
@@ -108,6 +114,8 @@ class MessagePage extends Component {
 
 		if(document.getElementById("messageUserInput").value.replace(/^\s+|\s+$/g, '') === "" || document.getElementById("messageUserInput").value == null){ document.getElementById("sendBtn").disabled = true; }
 		else { document.getElementById("sendBtn").disabled = false; }
+
+
 	}
 
 	render() {
@@ -115,7 +123,7 @@ class MessagePage extends Component {
 			<div className="messages-container">
 				<CreateOffer toggleView={this.toggleCreateOffer} hidden={this.state.createOfferClosed} uid={this.state.uid} threadID={this.state.threadID} />
 
-				<MessageList className="messages-left" currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
+				<MessageList className="messages-left" currentUser = {this.props.currentUser} currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
 				<div className="messages-right">
 					<p className="message-topbar">@{this.state.username}</p>
 					<MessageThread uid={this.state.uid} imageurl={this.state.senderImage} id={this.state.threadID}/>

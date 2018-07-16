@@ -9,34 +9,91 @@ import MessageThreadBox from './MessageThreadBox.jsx';
 var threadIds = [];
 var buyThreadIds = [];
 var sellThreadIds = [];
-class MessageList extends Component {
+var buyThreadHash = [];
+var sellThreadHash = [];
 
-	componentWillMount(){
-	}
+class MessageList extends Component {
 
 	updateThreads(uid){
 		var self = this;
 		buyThreadIds = [];
 		sellThreadIds = [];
 
+		buyThreadHash = [];
+		sellThreadHash = [];
+
 		firebase.database().ref('/users/' + uid + '/buy_messages').once("value").then((snapshot) => {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
 					var active = false;
 					if(thread.val() === self.props.currentThread) active = true;
-					buyThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.val()} id={thread.val()} />);
-					self.setState({buyThreads: buyThreadIds});
+					firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
+						buyThreadHash.push({
+							id: thread.val(),
+							active: active,
+							lastActive: lastActive.val()
+						});
+
+						self.setState({buyThreads: buyThreadHash});
+					});
+
+					firebase.database().ref("/threads/" + thread.val()).off("child_changed");
+					firebase.database().ref("/threads/" + thread.val()).on("child_changed", function(dataSnapshot) {
+						if(dataSnapshot.key == "lastActive"){
+							firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
+								var buyThreadHashNew = self.state.buyThreads;
+
+								//TODO: make this more efficient
+								for(var i = 0; i < buyThreadHashNew.length; i++){
+									if(buyThreadHashNew[i]["id"] == thread.val()){
+										buyThreadHashNew[i]["lastActive"] = lastActive.val();
+									}
+								}
+								self.setState({buyThreads: buyThreadHashNew});
+							});
+						}
+					});
+
+					buyThreadIds.push(thread.val());
+					self.setState({buyThreadIds: buyThreadIds});
 				}
 			});
 		});
 
-		firebase.database().ref('/users/' + uid + '/sell_messages').once("value").then((snapshot) => {
+		firebase.database().ref('/users/' + uid + '/sell_messages').orderByChild("lastActive").once("value").then((snapshot) => {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
 					var active = false;
 					if(thread.val() === self.props.currentThread) active = true;
-					sellThreadIds.push(<MessageThreadBox sellerBool={false} active={active} onClick={self.props.clickThread} key={thread.val()} id={thread.val()} />);
-					self.setState({sellThreads: sellThreadIds});
+					firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
+						sellThreadHash.push({
+							id: thread.val(),
+							active: active,
+							lastActive: lastActive.val()
+						});
+
+						self.setState({sellThreads: sellThreadHash});
+					});
+
+					firebase.database().ref("/threads/" + thread.val()).off("child_changed");
+					firebase.database().ref("/threads/" + thread.val()).on("child_changed", function(dataSnapshot) {
+						if(dataSnapshot.key == "lastActive"){
+							firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
+								var sellThreadHashNew = self.state.sellThreads;
+
+								//TODO: make this more efficient
+								for(var i = 0; i < sellThreadHashNew.length; i++){
+									if(sellThreadHashNew[i]["id"] == thread.val()){
+										sellThreadHashNew[i]["lastActive"] = lastActive.val();
+									}
+								}
+								self.setState({sellThreads: sellThreadHashNew});
+							});
+						}
+					});
+
+					sellThreadIds.push(thread.val());
+					self.setState({sellThreadIds: sellThreadIds});
 				}
 			});
 		});
@@ -54,7 +111,9 @@ class MessageList extends Component {
 		this.state = {
 			uid: null,
 			buyThreads: [],
+			buyThreadIds: [],
 			sellThreads: [],
+			sellThreadIds: [],
 			curType: "buy"
 		}
 
@@ -63,7 +122,6 @@ class MessageList extends Component {
 	}
 
 	toggleType(event){
-		//TODO: autoselect first thread and set that to view
 		if(event.currentTarget.id == "buy") var other = "sell";
 		else var other = "buy";
 
@@ -87,16 +145,33 @@ class MessageList extends Component {
 	render() {
 		var buyThreadBoxes = [];
 		var sellThreadBoxes = [];
+
+		this.state.buyThreads.sort(function(a, b){
+			return b.lastActive - a.lastActive;
+		});
+
+		this.state.sellThreads.sort(function(a, b){
+			return b.lastActive - a.lastActive;
+		});
+
 		for(var i = 0; i < this.state.buyThreads.length; i++){
-			var active = this.state.buyThreads[i].props.active;
-			if(this.state.buyThreads[i].props.id === this.props.currentThread) active = true;
-			buyThreadBoxes.push(<MessageThreadBox sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].props.id} />);
+			var active = this.state.buyThreads[i].active;
+			if(this.state.buyThreads[i].id === this.props.currentThread) active = true;
+			buyThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].id} />);
 		}
+
 		for(var i = 0; i < this.state.sellThreads.length; i++){
+			var active = this.state.sellThreads[i].active;
+			if(this.state.sellThreads[i].id === this.props.currentThread) active = true;
+			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].id} />);
+		}
+
+
+		/*for(var i = 0; i < this.state.sellThreads.length; i++){
 			var active = this.state.sellThreads[i].props.active;
 			if(this.state.sellThreads[i].props.id === this.props.currentThread) active = true;
-			sellThreadBoxes.push(<MessageThreadBox sellerBool={true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
-		}
+			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool={true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
+		}*/
 
 		if (buyThreadBoxes.length <= 0) {
 			buyThreadBoxes = (<h1> No messages here! </h1>)

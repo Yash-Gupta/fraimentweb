@@ -54,13 +54,11 @@ class MessageThread extends Component {
 		if(senderUid === uid) var senderBool = true;
 		else var senderBool = false;
 		var imageUrl = "";
-
 		var tempMessage = (<Message key={messageID} id={messageID} text={message} senderBool={senderBool} userImageUrl={this.props.imageurl}/>);
 		messagesDb.push(tempMessage);
 		this.setState({messages: messagesDb}, () => {
 			document.querySelector(".message-thread").scrollTop = document.querySelector(".message-thread").scrollHeight;
 		});
-		//console.log(messagesDb);
 	}
 
 	constructor(props){

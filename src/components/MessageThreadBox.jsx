@@ -16,6 +16,15 @@ class MessageThreadBox extends Component {
 		else var child = "buyer_id";
 
 		firebase.database().ref('/threads/' + threadID).once("value").then((threadData) => {
+			var lastSentBy = threadData.child("lastSentBy").val();
+			var readThread = false;
+			if(this.props.currentUser.uid == lastSentBy) readThread = true;
+			this.setState({read: readThread});
+
+			firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).once("value").then((snap) => {
+				this.setState({last_message_text: snap.val()[Object.keys(snap.val())[0]]["message"]});
+			});
+
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/profilepic').once("value").then((snapshot) => {
 				this.setState({recieverImageUrl: snapshot.val()});
 			});
@@ -29,6 +38,14 @@ class MessageThreadBox extends Component {
 		var self = this;
 		firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).on("child_added", function(snap) {
 			self.setState({last_message_text: snap.child("message").val()});
+		});
+
+		firebase.database().ref("/threads/" + this.props.id).on("child_changed", function(snapshot){
+			if(snapshot.key == "lastSentBy"){
+				var readThread = false;
+				if(self.props.currentUser.uid == snapshot.val()) readThread = true;
+				self.setState({read: readThread});
+			}
 		});
 	}
 
@@ -51,6 +68,7 @@ class MessageThreadBox extends Component {
 	render() {
 		var classNameActive = "thread-box";
 		if(this.props.active) classNameActive += " active";
+		if(!this.state.read) classNameActive += " unread";
 
 		return (
 			<div className={classNameActive} imageurl={this.state.recieverImageUrl} onClick={this.props.onClick} id={this.props.id} username={this.state.recieverUsername}>

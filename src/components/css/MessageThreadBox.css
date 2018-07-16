@@ -7,6 +7,10 @@
 	background-color: rgba(0, 0, 0, .05);
 }
 
+.thread-box.unread{
+	background-color: blue;
+}
+
 .thread-box>img{
 	border-radius: 100%;
 	width:50px;
