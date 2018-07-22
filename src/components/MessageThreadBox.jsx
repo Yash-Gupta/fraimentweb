@@ -22,7 +22,11 @@ class MessageThreadBox extends Component {
 			this.setState({read: readThread});
 
 			firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).once("value").then((snap) => {
-				this.setState({last_message_text: snap.val()[Object.keys(snap.val())[0]]["message"]});
+				if(snap.val() != null){
+					this.setState({last_message_text: snap.val()[Object.keys(snap.val())[0]]["message"]});
+				} else {
+					this.setState({last_message_text: "No messages found!"});
+				}
 			});
 
 			firebase.database().ref('/users/' + threadData.child(child).val() + '/profilepic').once("value").then((snapshot) => {

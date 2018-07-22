@@ -13,7 +13,7 @@ class Message extends Component {
 
 		return (
 			<div key={this.props.id} className = {styling}>
-				<img src={this.props.userImageUrl} />
+				{/*<img src={this.props.userImageUrl} />*/}
 				<p className="message"> {this.props.text} </p>
 			</div>
 		);

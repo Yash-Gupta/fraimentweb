@@ -23,7 +23,7 @@ class CreateProduct extends Component {
 			brand: "",
 			price: "",
 			description: "",
-			images: [""]
+			image: null
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -41,32 +41,29 @@ class CreateProduct extends Component {
 		event.preventDefault();
 		// take from state and get firebase structure and post
 		var newProduct = {
-			author: "",
+			author: this.props.currentUser.uid,
 			name: this.state.title,
 			category: this.state.category,
 			size: this.state.size,
 			designer: this.state.brand,
 			price: this.state.price,
 			description: this.state.description,
-			images: {},
-			timestamp: (new Date()).getTime()
+			imageurl: "",
+			timestamp: (new Date()).getTime(),
+			active: true
 		};
 
-		axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
-			newProduct.author = res.data.uid;
-
-			//upload file then upload all to firebase
-			var productID = firebase.database().ref().child('listings').push().key;
-			for(var i = 0; i < this.state.images.length; i++){
-				firebase.storage().ref().child(productID + "-" + i.toString()).put(this.state.image).then(function (snapshot){
-					newProduct.images[i.toString()] = snapshot.downloadURL;
-				});
-			}
-
+		var productID = firebase.database().ref().child('listings').push().key;
+		var self = this;
+		firebase.storage().ref().child(productID).put(this.state.image).then(function (snapshot){
+			newProduct.imageurl = snapshot.downloadURL;
 			var uploadProduct = {};
 			uploadProduct['/listings/' + productID] = newProduct;
-
+			uploadProduct['/users/' + self.props.currentUser.uid + '/listings/' + productID] = true;
 			firebase.database().ref().update(uploadProduct);
+
+		}, function(error){console.log(error.message);}, function(){
+
 		});
 	}
 
@@ -94,7 +91,7 @@ class CreateProduct extends Component {
 			this.setState({price: event.target.value});
 			break;
 			case 'image':
-			this.setState({images: event.target.files});
+			this.setState({image: event.target.files[0]});
 			break;
 			default:
 			break;
@@ -102,24 +99,46 @@ class CreateProduct extends Component {
 	}
 
 	render() {
-		var imgInputs = [];
-		for (var i = 0; i < this.state.images.length; i++) {
-			imgInputs.push(<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name={"image" + i} />)
-		}
-
 		return (
-			<div>
+			<div class="create-product-container">
 				<form onSubmit={this.createProduct}>
-					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="title" name="title" />
-					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="brand" name="brand" />
-					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="size" name="size" />
-					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="category" name="category" />
-					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="shipping" name="shipping" />
-					<textarea onChange={this.handleChange} className="create-product-input" type="text" placeholder="description" name="description"></textarea>
-					<input onChange={this.handleChange} className="create-product-input" type="number" placeholder="price" name="price" />
-					{imgInputs}
-					<input onClick={this.addImage} className="create-product-input" type="button" name="addimage" value="Add picture"/>
-					<input type="submit" />
+					<div>
+						<label>Item Name</label>
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="title" name="title" />
+					</div>
+					<div>
+						<label>Brand</label>
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="brand" name="brand" />
+					</div>
+					{/*<div>
+						<label>Type</label>
+						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="category" name="category" />
+					</div>*/}
+					<div>
+						<label>Size</label>
+						<select onChange={this.handleChange} className="create-product-input" type="text" placeholder="size" name="size">
+							<option value="XS">XS</option>
+							<option value="S">S</option>
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+					</div>
+					<div>
+						<label>Price (USD)</label>
+						<input onChange={this.handleChange} className="create-product-input" type="number" placeholder="price" name="price" />
+					</div>
+					<div>
+						<label>Description</label>
+						<textarea onChange={this.handleChange} className="create-product-input" type="text" placeholder="description" name="description"></textarea>
+					</div>
+					<div>
+						<label>Add Image</label>
+						<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
+					</div>
+					<div className="submitDiv">
+						<input type="submit" />
+					</div>
 				</form>
 			</div>
 		);

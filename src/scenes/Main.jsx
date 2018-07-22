@@ -30,9 +30,10 @@ class Main extends Component {
 				temp.timestamp = listing.child("timestamp").val();
 
 				var currentListings = self.state.listings;
-				currentListings.push(temp);
-
-				self.setState({listings: currentListings});
+				if(listing.child("active").val()){
+					currentListings.push(temp);
+					self.setState({listings: currentListings});
+				}
 			});
 		});
 	}

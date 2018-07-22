@@ -34,6 +34,7 @@ class MessagePage extends Component {
 		if(newProps.currentUser !== null && newProps.currentUser.uid !== this.state.uid){
 			this.setState({uid: newProps.currentUser.uid});
 			if(this.props.match.params.id != null){
+				var givenID = this.props.match.params.id;
 				console.log(this.props.match.params.id);
 				var self = this;
 				var exists = false;
@@ -46,7 +47,21 @@ class MessagePage extends Component {
 						if(snap.val() != null) exists = true;
 						self.setState({threadID: snap.val()}, (() => {
 							if(!exists){
-								self.chooseFirstThread(newProps.currentUser.uid);
+								console.log("doesn't exist yet!");
+								var newThread = {
+									"buyer_id": newProps.currentUser.uid,
+									"seller_id": givenID,
+									"lastSentBy": newProps.currentUser.uid,
+									"messages": {}
+								};
+
+								var uploadThread = {};
+								var threadKey = firebase.database().ref().child('threads').push().key;
+								uploadThread["/threads/" + threadKey] = newThread;
+								uploadThread["/users/" + newProps.currentUser.uid + "/buy_messages/" + givenID] = threadKey;
+								uploadThread["/users/" + givenID + "/sell_messages/" + newProps.currentUser.uid] = threadKey;
+								firebase.database().ref().update(uploadThread);
+								console.log("created new thread");
 							}
 						}));
 					});
@@ -54,6 +69,7 @@ class MessagePage extends Component {
 			}else{
 				this.chooseFirstThread(newProps.currentUser.uid);
 			}
+
 			this.setState({threadID: this.props.match.params.id});
 		}
 	}
@@ -106,7 +122,7 @@ class MessagePage extends Component {
 			var addMessage = {};
 			addMessage['/threads/' + this.state.threadID + '/messages/' + messageID] = newMessage;
 			addMessage['/threads/' + this.state.threadID + '/lastSentBy'] = this.state.uid;
-			addMessage['/threads/' + this.state.threadID + '/lastActive'] = date;			
+			addMessage['/threads/' + this.state.threadID + '/lastActive'] = date;
 
 			firebase.database().ref().update(addMessage);
 			document.getElementById("messageUserInput").value = "";

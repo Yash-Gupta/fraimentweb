@@ -15,6 +15,10 @@
 	margin:1px 0px;
 }
 
+.sender-offer>.offer-container>a{
+	color:white !important;
+}
+
 .sender-offer>.offer-container>.action-items>#accept-btn{
 	font-size:14px;
 	display: inline-block;
@@ -24,6 +28,7 @@
 	padding: 6px 12px;
 	color:white;
 	margin:1px 0px;
+	cursor:pointer;
 }
 
 .sender-offer>img{

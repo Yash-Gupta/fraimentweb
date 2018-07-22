@@ -45,9 +45,8 @@ class Header extends Component {
 						<Link to="/"><img src="http://localhost:3000/images/logo.svg" alt="fraiment-logo"/> </Link>
 						{!this.props.simple && (
 						<div className="global-links">
-							<a className="links" href="#">shop</a>
+							<Link to="/" className="links">shop</Link>
 							<Link to="/listing/create" className="links">sell</Link>
-							<a className="links" href="#">help</a>
 						</div>
 						)
 						}

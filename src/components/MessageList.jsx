@@ -163,7 +163,7 @@ class MessageList extends Component {
 		for(var i = 0; i < this.state.sellThreads.length; i++){
 			var active = this.state.sellThreads[i].active;
 			if(this.state.sellThreads[i].id === this.props.currentThread) active = true;
-			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].id} />);
+			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].id} />);
 		}
 
 
@@ -174,10 +174,10 @@ class MessageList extends Component {
 		}*/
 
 		if (buyThreadBoxes.length <= 0) {
-			buyThreadBoxes = (<h1> No messages here! </h1>)
+			buyThreadBoxes = (<h2 className="no-messages"> No messages here! </h2>)
   	}
 		if (sellThreadBoxes.length <= 0) {
-			sellThreadBoxes = (<h1> No messages here! </h1>)
+			sellThreadBoxes = (<h2 className="no-messages"> No messages here! </h2>)
 		}
 
 		return (

@@ -9,6 +9,8 @@ import Header from './components/Header.jsx';
 
 import Login from './scenes/Login.jsx';
 import Signup from './scenes/Signup.jsx';
+import ConfigurePaypal from './scenes/ConfigurePaypal.jsx';
+import AuthorizePaypal from './services/AuthorizePaypal.jsx';
 
 import Profile from './scenes/Profile.jsx';
 
@@ -46,7 +48,7 @@ class App extends Component {
         firebase.auth().onAuthStateChanged((user) => {
           if (user) {
             this.setState({ user });
-          } 
+          }
         });
     }
 
@@ -70,6 +72,14 @@ class App extends Component {
 
                     <Route path="/signup" render={() => {
                         return (<Signup updateHeader={this.updateHeader}></Signup>);
+                    }}/>
+
+                    <Route path="/configure_paypal" render={() => {
+                        return (<ConfigurePaypal updateHeader={this.updateHeader}></ConfigurePaypal>);
+                    }}/>
+
+                    <Route path="/authorize_paypal" render={() => {
+                        return (<AuthorizePaypal updateHeader={this.updateHeader} currentUser={this.state.user} />);
                     }}/>
 
                      <Route path="/profile" render={() => {

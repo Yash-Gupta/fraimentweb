@@ -1,4 +1,62 @@
 .create-product-input{
-	display:block;
-	margin-bottom: 10px;
+	border: solid 1.5px #E0E0E0;
+	border-radius: 5px;
+	padding:10px 10px;
+	padding-left: 10px;
+	padding-right: 0px;
+	font-size:15px;
+	color:#424242;
+	margin-bottom: 15px;
+	font-family: "Helvetica";
+	transition:0.3s ease;
+	width: 100%;
+}
+
+.create-product-input:focus{
+	border: solid 1.5px #BDBDBD;
+	transition:0.3s ease;
+}
+
+.create-product-input::placeholder{
+	font-size:20px;
+	color:#BDBDBD;
+}
+
+.create-product-container>form{
+	margin:auto;
+	width:30%;
+	margin-bottom: 50px;
+}
+
+.create-product-container>form>div>label{
+	display: block;
+	width: 100%;
+	font-weight: bold;
+	color: rgba(0,0,0,0.7);
+}
+
+.create-product-container>form>div{
+	width: 100%;
+}
+
+.create-product-container>form>div.submitDiv{
+	text-align: center;
+}
+
+.create-product-container{
+	margin-top: 100px;
+	display:flex;
+	flex-direction: row;
+}
+
+.create-product-container>form>div>input[type="submit"]{
+	background-color:black;
+	color:white;
+	border-radius: 28px;
+	width:280px;
+	padding:10px 10px;
+	font-size:20px;
+	outline:none;
+	border:2px rgba(0,0,0,0.6) solid;
+	margin:auto;
 }

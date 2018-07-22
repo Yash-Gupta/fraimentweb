@@ -4,7 +4,7 @@ import './css/Signup.css';
 import * as firebase from 'firebase';
 import axios from 'axios';
 
-/* COMPONENTS */
+import LoginPaypal from '../components/LoginPaypal';
 
 class Signup extends Component {
 
@@ -42,15 +42,15 @@ class Signup extends Component {
 			this.setState({errors: verification});
 			return;
 		}
-
+		var self = this;
 		firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
 		.then(function(user){
 			var uid = user.uid;
 			var newUser = {
-				"email": this.state.email,
+				"email": self.state.email,
 				"location": "Unknown",
-				"username": this.state.username,
-				"profilepic": "",
+				"username": self.state.username,
+				"profilepic": "https://t3.ftcdn.net/jpg/00/64/67/80/240_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg",
 				"buy_messages": {},
 				"sell_messages": {},
 				"listings_bought": {},
@@ -65,25 +65,7 @@ class Signup extends Component {
 			console.log(error);
 		});
 
-		/*axios.get("http:\/\/34.216.98.242:3000/getByEmail?email="+ this.props.currentUser.email).then(res => {
-        	newProduct.author = res.data.uid;
-
-			//upload file then upload all to firebase
-        	var productID = firebase.database().ref().child('listings').push().key;
-
-			firebase.storage().ref().child(productID).put(this.state.image).then(function (snapshot){
-				newProduct.imageurl = snapshot.downloadURL;
-				var uploadProduct = {};
-				uploadProduct['/listings/' + productID] = newProduct;
-	
-				firebase.database().ref().update(uploadProduct);
-	
-			}, function(error){console.log(error.message);}, function(){
-				
-			});
-	    });*/
-
-		this.props.history.push('/login');
+		this.props.history.push('/configure_paypal');
 	}
 
 	handleChange(event){
@@ -106,10 +88,9 @@ class Signup extends Component {
 	}
 
 	render() {
+		//TODO: add paypal integration
 		return (
 			<div className = "">
-
-
 				<div className = "errors">
 					{this.state.errors.map(function(errorMsg){
 						return <li>{errorMsg}</li>;

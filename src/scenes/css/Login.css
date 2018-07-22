@@ -11,7 +11,6 @@ a:focus{
 }
 
 .loginContainer{
-
 	display:flex;
 	justify-content: center;
 	height:100%;
@@ -26,7 +25,6 @@ a:focus{
 	width:280px;
 	padding:10px 10px;
 	font-size:20px;
-
 }
 
 
@@ -36,21 +34,18 @@ a:focus{
 	width:258px;
 	padding:10px 10px;
 	font-size:20px;
-	color:#424242
-;
+	color:#424242;
 	margin-bottom: 15px;
 	font-family: "Helvetica";
 	transition:0.3s ease;
-
 }
 
 .loginPageBoxes:focus{
 	border: solid 1.5px #BDBDBD;
 	transition:0.3s ease;
-	
 }
+
 .loginPageBoxes::placeholder{
-	
 	font-size:20px;
 	color:#BDBDBD;
 }

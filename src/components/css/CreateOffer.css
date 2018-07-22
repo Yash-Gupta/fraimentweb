@@ -42,3 +42,26 @@
 	float:right;
 	cursor:pointer;
 }
+
+.create-offer-container>.create-offer-modal>form>span{
+	display:block;
+	width:95%;
+	margin-bottom: 15px;
+}
+
+.create-offer-container>.create-offer-modal>form>span>label{
+	display:inline-block;
+	width:10%;
+	font-weight: bold;
+	vertical-align: top;
+}
+
+.create-offer-container>.create-offer-modal>form>span>div{
+	text-align: right;
+	width: 80%;
+	display: inline-block;
+}
+
+.create-offer-container>.create-offer-modal>form>input[type="submit"]{
+	display: block;
+}

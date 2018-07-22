@@ -8,7 +8,8 @@
 }
 
 .thread-box.unread{
-	background-color: blue;
+	font-weight: bold;
+	color:black;
 }
 
 .thread-box>img{
