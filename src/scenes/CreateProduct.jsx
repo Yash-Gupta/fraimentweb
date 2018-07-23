@@ -63,7 +63,7 @@ class CreateProduct extends Component {
 			uploadProduct['/listings/' + productID] = newProduct;
 			uploadProduct['/users/' + self.props.currentUser.uid + '/listings/' + productID] = true;
 			firebase.database().ref().update(uploadProduct);
-
+			window.location = "/";
 		}, function(error){console.log(error.message);}, function(){
 
 		});
