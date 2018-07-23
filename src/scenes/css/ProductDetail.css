@@ -186,3 +186,22 @@ p{
 	transition:all ease 0.2s;
 
 }
+
+@media (max-width:480px)  {
+	.productdetail-container{
+		display:block !important;
+		padding-top:100px;
+		width: 100vw;
+	}
+
+	.productDetailBigImg{
+		width: 90%;
+		margin:auto;
+		height:40vh;
+		margin-bottom: 20px;
+	}
+
+	.productDetailContent{
+		width: 90% !important;
+	}
+}

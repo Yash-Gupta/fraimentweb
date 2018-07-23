@@ -7,10 +7,6 @@ import * as firebase from 'firebase';
 const threadIds = [];
 class MessageThreadBox extends Component {
 
-	componentWillMount(){
-		this.getContent = this.getContent.bind(this);
-	}
-
 	getContent(threadID, sellerBool){
 		if(!sellerBool) var child = "seller_id";
 		else var child = "buyer_id";
@@ -23,7 +19,8 @@ class MessageThreadBox extends Component {
 
 			firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).once("value").then((snap) => {
 				if(snap.val() != null){
-					this.setState({last_message_text: snap.val()[Object.keys(snap.val())[0]]["message"]});
+					if(snap.val()[Object.keys(snap.val())[0]]["type"] == "offer") this.setState({last_message_text: "Offer created!"});
+					else this.setState({last_message_text: snap.val()[Object.keys(snap.val())[0]]["message"]});
 				} else {
 					this.setState({last_message_text: "No messages found!"});
 				}
@@ -54,7 +51,9 @@ class MessageThreadBox extends Component {
 	}
 
 	componentWillReceiveProps(newProps){
-		if(newProps.id != null){
+		if(newProps.id != null && newProps.id != this.state.id){
+			this.setState({id: newProps.id})
+			console.log("getContent: " + newProps.id);
 			this.getContent(newProps.id, newProps.sellerBool);
 		}
 	}
@@ -62,16 +61,18 @@ class MessageThreadBox extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			id: null,
 			last_message_text: "",
 			recieverUsername: "",
 			recieverImageUrl: ""
 		}
+		this.getContent = this.getContent.bind(this);
 		this.getContent(this.props.id, this.props.sellerBool);
 	}
 
 	render() {
 		var classNameActive = "thread-box";
-		if(this.props.active) classNameActive += " active";
+		if(this.props.currentThread == this.props.id) classNameActive += " active";
 		if(!this.state.read) classNameActive += " unread";
 
 		return (

@@ -14,10 +14,12 @@ var buyer_id;
 class MessageThread extends Component {
 
 	componentWillReceiveProps(newProps){
-		if(newProps.uid != null && newProps.uid !== this.state.uid){
+		if((newProps.uid != null && newProps.uid !== this.state.uid) || (newProps.id != null && newProps.id !== this.state.id)){
+			//this.setState({id: newProps.id});
 			var senderImage = false;
 			var imageUrl = "";
 			messagesDb = [];
+			this.setState({messages: messagesDb});
 			var self = this;
 
 			firebase.database().ref("/threads/" + newProps.id).once("value", function(snap) {
@@ -100,7 +102,8 @@ class MessageThread extends Component {
 		this.state = {
 			messages: [],
 			sellerID: "",
-			buyerID: ""
+			buyerID: "",
+			id: null
 		}
 
 		this.addMessage = this.addMessage.bind(this);

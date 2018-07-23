@@ -161,35 +161,35 @@ class Profile extends Component {
 	render() {
 		return (
 			<div className = "profilePage">
-			<div className="profile-container">
+				<div className="profile-container">
+					<img src = {this.state.imgURL} height = "100px" width = "100px"/>
+					<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="email" value = {this.state.email} name="email" />
+					<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="location" value = {this.state.location} name="location" />
+					<button onClick = {this.editProfile} type="submit">Submit Changes</button>
 
-			<h1>Bought Listings </h1>
-			<div className="products">
+					<h1>current listings</h1>
+					<div className="products">
+						{this.state.bought.map((l) => {
+							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						})}
+					</div>
 
-			{this.state.bought.map((l) => {
-				return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
-			})}
-			</div>
+					<h1>sold</h1>
+					<div className="products">
+						{this.state.sold.map((l) => {
+							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						})}
+					</div>
 
-
-			<h1>Sold Listings </h1>
-			<div className="products">
-
-			{this.state.sold.map((l) => {
-				return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
-			})}
-			</div>
-
-			<h1>Edit Profile</h1>
-
-
-			<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />
-			<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="email" value = {this.state.email} name="email" />
-			<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="location" value = {this.state.location} name="location" />
-			<img src = {this.state.imgURL} height = "100px" width = "100px"/>
-			<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
-			<button onClick = {this.editProfile} type="submit">Submit Changes</button>
-			</div>
+					<h1>bought</h1>
+					<div className="products">
+						{this.state.sold.map((l) => {
+							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price}/>);
+						})}
+					</div>
+				</div>
 			</div>
 		);
 	}

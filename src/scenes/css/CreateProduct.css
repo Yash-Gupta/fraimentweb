@@ -10,6 +10,7 @@
 	font-family: "Avenir Next";
 	transition:0.3s ease;
 	width: 100%;
+	background-color: white;
 }
 
 .create-product-input:focus{
@@ -51,7 +52,7 @@
 	flex-direction: row;
 }
 
-.create-product-container>form>div>input[type="submit"]{
+.create-product-submit{
 	background-color:black;
 	color:white;
 	border-radius: 28px;
@@ -62,4 +63,15 @@
 	border:2px rgba(0,0,0,0.6) solid;
 	margin:auto;
 	font-family: "Avenir Next Demibold";
+}
+
+
+@media (max-width:480px)  {
+	.create-product-container>form{
+		width:60%;
+	}
+
+	.create-product-container>form>div>input[type="submit"]{
+		width:100%;
+	}
 }

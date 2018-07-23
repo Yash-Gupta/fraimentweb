@@ -12,11 +12,21 @@ class MessagePage extends Component {
 
 	componentWillMount(){
 		this.props.updateHeader(false);
+
+	}
+
+	componentDidMount(){
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			document.getElementById("messageRight").classList.add("displayNone");
+		}
 	}
 
 	chooseFirstThread(uid){
 		var self = this;
 		firebase.database().ref('/users/' + uid + '/buy_messages').limitToFirst(1).once('value', function(snap) {
+			if(snap.val() == null){
+				self.setState({username: null, active: false});
+			}
 			for(var keys in snap.val()){
 				self.props.match.params.id = snap.val()[keys];
 			}
@@ -26,42 +36,59 @@ class MessagePage extends Component {
 					this.setState({username: snapshot.val()});
 				});
 			});
-			self.setState({threadID: self.props.match.params.id});
+			self.setState({uid: uid, threadID: self.props.match.params.id});
 		});
 	}
 
 	componentWillReceiveProps(newProps){
 		if(newProps.currentUser !== null && newProps.currentUser.uid !== this.state.uid){
 			var self = this;
-			this.setState({uid: newProps.currentUser.uid});
 			if(this.props.match.params.id != null){
 				var givenID = this.props.match.params.id;
 				var exists = false;
 				firebase.database().ref("/users/" + newProps.currentUser.uid + "/sell_messages/" + this.props.match.params.id).once("value", function(snap){
-					self.setState({threadID: snap.val()});
-					if(snap.val() != null) exists = true;
+					if(snap.val() != null){
+						exists = true;
+						self.setState({uid: newProps.currentUser.uid, threadID: snap.val()});
+						firebase.database().ref('/threads/' + snap.val()).once("value").then((threadData) => {
+							firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
+								self.setState({username: snapshot.val()});
+							});
+						});
+					}
 				}).then(() => {
 					firebase.database().ref("/users/" + newProps.currentUser.uid + "/buy_messages/" + this.props.match.params.id).once("value", function(snap2){
-						if(snap2.val() != null) exists = true;
-						self.setState({threadID: snap2.val()}, (() => {
-							if(!exists){
-								var newThread = {
-									"buyer_id": newProps.currentUser.uid,
-									"seller_id": givenID,
-									"lastSentBy": newProps.currentUser.uid,
-									"messages": {}
-								};
-
-								var uploadThread = {};
-								var threadKey = firebase.database().ref().child('threads').push().key;
-								uploadThread["/threads/" + threadKey] = newThread;
-								uploadThread["/users/" + newProps.currentUser.uid + "/buy_messages/" + givenID] = threadKey;
-								uploadThread["/users/" + givenID + "/sell_messages/" + newProps.currentUser.uid] = threadKey;
-								firebase.database().ref().update(uploadThread, function(error){
-									self.setState({threadID: threadKey});
+						if(snap2.val() != null) {
+							exists = true;
+							self.setState({uid: newProps.currentUser.uid, threadID: snap2.val()});
+							firebase.database().ref('/threads/' + snap2.val()).once("value").then((threadData) => {
+								firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
+									self.setState({username: snapshot.val()});
 								});
-							}
-						}));
+							});
+						}
+						if(!exists){
+							var threadKey = firebase.database().ref().child('threads').push().key;
+							var newThread = {
+								"buyer_id": newProps.currentUser.uid,
+								"seller_id": givenID,
+								"lastSentBy": newProps.currentUser.uid,
+								"messages": {}
+							};
+
+							var uploadThread = {};
+							uploadThread["/threads/" + threadKey] = newThread;
+							uploadThread["/users/" + newProps.currentUser.uid + "/buy_messages/" + givenID] = threadKey;
+							uploadThread["/users/" + givenID + "/sell_messages/" + newProps.currentUser.uid] = threadKey;
+							firebase.database().ref().update(uploadThread, function(error){
+								firebase.database().ref('/threads/' + threadKey).once("value").then((threadData) => {
+									firebase.database().ref('/users/' + threadData.child("seller_id").val() + '/username').once("value").then((snapshot) => {
+										self.setState({username: snapshot.val()});
+									});
+								});
+								self.setState({uid: newProps.currentUser.uid, threadID: threadKey});
+							});
+						}
 					});
 				})
 			}else{
@@ -74,6 +101,7 @@ class MessagePage extends Component {
 		super(props);
 
 		this.state = {
+			active: true,
 			threadID: "",
 			uid: null,
 			username: "",
@@ -85,6 +113,14 @@ class MessagePage extends Component {
 		this.submitMessage = this.submitMessage.bind(this);
 		this.toggleCreateOffer = this.toggleCreateOffer.bind(this);
 		this.chooseFirstThread = this.chooseFirstThread.bind(this);
+		this.shiftMobileView = this.shiftMobileView.bind(this);
+	}
+
+	shiftMobileView(event){
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			document.getElementById("messageRight").classList.add("displayNone");
+			document.getElementById("messageLeft").classList.remove("displayNone");
+		}
 	}
 
 	toggleCreateOffer(event){
@@ -92,6 +128,12 @@ class MessagePage extends Component {
 	}
 
 	clickThread(event){
+
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			document.getElementById("messageRight").classList.remove("displayNone");
+			document.getElementById("messageLeft").classList.add("displayNone");
+		}
+
 		var threadID = event.currentTarget.id;
 		var uid = this.state.uid;
 		firebase.database().ref('/threads/' + threadID + "/lastSentBy").once("value", function(snap){
@@ -137,26 +179,35 @@ class MessagePage extends Component {
 	}
 
 	render() {
+		var username = this.state.username;
+		if(username == null || username == ""){
+			username = "No messages selected";
+		}else{
+			username = "@" + username;
+		}
 		return (
 			<div className="messages-container">
 				<CreateOffer toggleView={this.toggleCreateOffer} hidden={this.state.createOfferClosed} uid={this.state.uid} threadID={this.state.threadID} />
 
-				<MessageList className="messages-left" currentUser = {this.props.currentUser} currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
-				<div className="messages-right">
-					<p className="message-topbar">@{this.state.username}</p>
+				<MessageList className="messages-left" id="messageLeft" currentUser = {this.props.currentUser} currentThread={this.state.threadID} clickThread={this.clickThread} uid={this.state.uid}/>
+				<div className="messages-right" id="messageRight">
+					<p className="message-topbar"><span onClick={this.shiftMobileView} class="message-back"><i class="fas fa-chevron-left"></i></span>{username}</p>
 					<MessageThread uid={this.state.uid} imageurl={this.state.senderImage} id={this.state.threadID}/>
 
-					<div className="messages-send">
-						<form method="POST" >
-							<input onKeyDown={this.submitMessage} placeholder="Type a message..." name="message" id="messageUserInput"/>
-							<input type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
-							<div className="action-icons">
-								<div className="action-icon" onClick={this.toggleCreateOffer}>
-									MAKE OFFER
+					{this.state.active && (
+						<div className="messages-send">
+							<form method="POST" >
+								<input onKeyDown={this.submitMessage} placeholder="Type a message..." name="message" id="messageUserInput"/>
+								<input type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
+								<div className="action-icons">
+									<div className="action-icon" onClick={this.toggleCreateOffer}>
+										MAKE OFFER
+									</div>
 								</div>
-							</div>
-						</form>
-					</div>
+							</form>
+						</div>
+					)}
+
 				</div>
 			</div>
 		);

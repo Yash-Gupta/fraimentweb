@@ -11,13 +11,10 @@ class Header extends Component {
 		super(props);
 
 		this.logout = this.logout.bind(this);
-
-
-
-
 	}
 
 	logout(){
+		console.log("logging out");
 		var props = this.props;
 		firebase.auth().signOut().then(function() {
 			console.log("signed out");
@@ -37,12 +34,12 @@ class Header extends Component {
 	render() {
 		var userHeader;
 
-		
-		if(this.props.currentUser != null){	
-			
+
+		if(this.props.currentUser != null){
+
 
 			userHeader = (
-				<AccountDropdown userid={this.props.currentUser.uid}> 
+				<AccountDropdown userid={this.props.currentUser.uid}>
 					<li> <Link to = {"/profile/" + this.props.currentUser.uid} >profile </Link> </li>
 					<li> <Link to="/messages"> inbox </Link> </li>
 					<li onClick={this.logout}> <Link to= "#" >log out</Link> </li>

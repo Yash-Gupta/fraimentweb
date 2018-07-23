@@ -101,20 +101,20 @@ class CreateOffer extends Component {
 						<span>
 							<label>Price: </label>
 							<div>
-								$ <input value={this.state.price} id="price" onChange={this.onChange} type="number" value={this.state.price} min="0.01" step="0.01"></input>
+								<input className="create-product-input" value={this.state.price} id="price" onChange={this.onChange} type="number" value={this.state.price} min="0.01" step="0.01"></input>
 							</div>
 						</span>
 
 						<span>
 							<label>Note: </label>
 							<div>
-								<textarea resizable="false" value={this.state.note} id="note" onChange={this.onChange}placeholder="Write your message..."></textarea>
+								<textarea className="create-product-input"  resizable="false" value={this.state.note} id="note" onChange={this.onChange}placeholder="Write your message..."></textarea>
 							</div>
 						</span>
 						<span>
 							<label>Listing: </label>
 							<div>
-								<select id="listing" value={this.state.listingID} onChange={this.onChange}>
+								<select id="listing" className="create-product-input" value={this.state.listingID} onChange={this.onChange}>
 									{this.state.availableListings.map((l) => {
 										return (<option key={l.id} value={l.id}>{l.name}</option>);
 									})}
@@ -122,7 +122,7 @@ class CreateOffer extends Component {
 							</div>
 						</span>
 
-						<input type="submit" id="sendBtn" name="sendButton" onClick={this.submitOffer} value="Create"></input>
+						<input type="submit" id="sendBtn" name="sendButton" className="create-product-submit" onClick={this.submitOffer} value="Create"></input>
 					</form>
 				</div>
 			</div>

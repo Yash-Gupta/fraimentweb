@@ -15,6 +15,7 @@ var sellThreadHash = [];
 class MessageList extends Component {
 
 	updateThreads(uid){
+		console.log("update threads");
 		var self = this;
 		buyThreadIds = [];
 		sellThreadIds = [];
@@ -25,15 +26,11 @@ class MessageList extends Component {
 		firebase.database().ref('/users/' + uid + '/buy_messages').once("value").then((snapshot) => {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
-					var active = false;
-					if(thread.val() === self.props.currentThread) active = true;
 					firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
 						buyThreadHash.push({
 							id: thread.val(),
-							active: active,
 							lastActive: lastActive.val()
 						});
-
 						self.setState({buyThreads: buyThreadHash});
 					});
 
@@ -63,12 +60,9 @@ class MessageList extends Component {
 		firebase.database().ref('/users/' + uid + '/sell_messages').orderByChild("lastActive").once("value").then((snapshot) => {
 			snapshot.forEach(function(thread){
 				if(thread.val()){
-					var active = false;
-					if(thread.val() === self.props.currentThread) active = true;
 					firebase.database().ref("/threads/" + thread.val() + "/lastActive").once("value").then((lastActive) => {
 						sellThreadHash.push({
 							id: thread.val(),
-							active: active,
 							lastActive: lastActive.val()
 						});
 
@@ -100,9 +94,14 @@ class MessageList extends Component {
 	}
 
 	componentWillReceiveProps(newProps){
-		if((newProps.uid != null && newProps.uid != this.state.uid) || (newProps.currentThread != null && newProps.currentThread != this.state.threadID)){
+		if(newProps.uid != null && newProps.uid != this.state.uid){
+			console.log("uid: " + newProps.uid + " threadID: " + newProps.currentThread);
 			this.setState({uid: newProps.uid, threadID: newProps.currentThread});
 			this.updateThreads(newProps.uid);
+		}
+
+		if(newProps.currentThread != null && newProps.currentThread != this.state.threadID){
+			this.setState({uid: newProps.uid, threadID: newProps.currentThread});
 		}
 	}
 
@@ -157,23 +156,12 @@ class MessageList extends Component {
 		});
 
 		for(var i = 0; i < this.state.buyThreads.length; i++){
-			var active = this.state.buyThreads[i].active;
-			if(this.state.buyThreads[i].id === this.props.currentThread) active = true;
-			buyThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {false} active={active}  onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].id} />);
+			buyThreadBoxes.push(<MessageThreadBox currentThread={this.state.threadID} currentUser={this.props.currentUser} sellerBool= {false} onClick={this.props.clickThread} key={i} id={this.state.buyThreads[i].id} />);
 		}
 
 		for(var i = 0; i < this.state.sellThreads.length; i++){
-			var active = this.state.sellThreads[i].active;
-			if(this.state.sellThreads[i].id === this.props.currentThread) active = true;
-			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool= {true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].id} />);
+			sellThreadBoxes.push(<MessageThreadBox currentThread={this.state.threadID} currentUser={this.props.currentUser} sellerBool= {true} onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].id} />);
 		}
-
-
-		/*for(var i = 0; i < this.state.sellThreads.length; i++){
-			var active = this.state.sellThreads[i].props.active;
-			if(this.state.sellThreads[i].props.id === this.props.currentThread) active = true;
-			sellThreadBoxes.push(<MessageThreadBox currentUser={this.props.currentUser} sellerBool={true} active={active}  onClick={this.props.clickThread} key={i} id={this.state.sellThreads[i].props.id} />);
-		}*/
 
 		if (buyThreadBoxes.length <= 0) {
 			buyThreadBoxes = (<h2 className="no-messages"> No messages here! </h2>)
@@ -183,7 +171,7 @@ class MessageList extends Component {
 		}
 
 		return (
-			<div className="message-list">
+			<div className="message-list" id="messageLeft">
 
 				<div className = "messageTypes">
 					<a id = "buy" onClick = {this.toggleType} >

@@ -110,6 +110,34 @@
 .message-list>.messageTypes>a>.notSelected{
 	border:none
 }
+
 .displayNone{
-	display: none;
+	display: none !important;
+}
+
+
+
+.message-back{
+	display:none;
+}
+
+
+@media (max-width:480px)  {
+	/*.messages-right{
+		display:none;
+	}*/
+
+	#messageLeft, #messageRight{
+		width: 100%;
+	}
+
+	.message-back{
+		display:inline-block;
+		position: absolute;
+		left:30px;
+	}
+
+	.message-list{
+		width:100% !important;
+	}
 }

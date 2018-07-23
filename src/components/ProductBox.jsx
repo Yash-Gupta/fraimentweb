@@ -28,14 +28,13 @@ class ProductBox extends Component {
 	render() {
 
 		return (
-			<Link to={"/listing/" + this.props.id}><div className="product-box" id={this.props.id}>
+			<Link to={"/listing/" + this.props.id} className="linkproduct"><div className="product-box" id={this.props.id}>
 				<div className="product-image-box">
 					<div className="product-image-container">
 						<img alt={this.props.title} src={this.props.image}/>
 					</div>
-
 				</div>
-				<p className="product-timeposted">{this.convertMillisToTime((new Date()).getTime() - this.props.timestamp)}</p>
+				<p className="product-timeposted">{this.convertMillisToTime((new Date()).getTime() + this.props.timestamp)}</p>
 				<h3 className="product-title">{this.props.title}</h3>
 				<p className="product-size">{this.props.size}</p>
 				<p className="product-brand">{this.props.brand}</p>

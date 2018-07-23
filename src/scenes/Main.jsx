@@ -12,9 +12,8 @@ class Main extends Component {
 		this.state = {
 			listings: [],
 			currentQuery: "",
-			
-		}
 
+		}
 
 		this.handleSearchChange = this.handleSearchChange.bind(this);
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -53,14 +52,12 @@ class Main extends Component {
 		});
 
 		event.preventDefault();
-
-		console.log(this.state.listings);
 	}
 
 
 	defaultListingLoad() {
 		var self = this;
-		firebase.database().ref("listings").once("value").then(function(listings){
+		firebase.database().ref("listings").orderByChild("timestamp").once("value").then(function(listings){
 			listings.forEach(function(listing){
 				var temp = {};
 				temp.id = listing.key;
@@ -82,18 +79,12 @@ class Main extends Component {
 
 	componentWillMount(){
 		this.props.updateHeader(false);
-		
-
 		this.defaultListingLoad();
-
-		
 	}
 
 	render() {
 		return (
 			<div className="main-container">
-
-
 				<div className = "search-container">
 					<form>
 						<input className = "searchField" placeholder = "search" type="text" onChange = {this.handleSearchChange}/>
@@ -105,19 +96,11 @@ class Main extends Component {
 				<div className = "main-listings">
 					<div className="products">
 						{this.state.listings.map((l) => {
-					
+
 							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand} timestamp={l.timestamp}/>);
 						})}
 					</div>
 				</div>
-
-				
-
-
-
-
-
-
 			</div>
 		);
 	}

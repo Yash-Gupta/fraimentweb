@@ -23,11 +23,25 @@ class AccountDropdown extends Component {
 			username: ""
 		};
 		this.handleClick = this.handleClick.bind(this);
+		this.logout = this.logout.bind(this);
 	}
 
 	handleClick(){
 		this.setState({opened: !this.state.opened});
 	}
+
+	logout(){
+		console.log("logging out");
+		firebase.auth().signOut().then(function() {
+			console.log("signed out");
+
+			window.location = "/";
+
+		}, function(error) {
+			console.log(error.message);
+		});
+	}
+
 
 	render() {
 		return (
@@ -41,7 +55,7 @@ class AccountDropdown extends Component {
 							<li onClick={this.handleClick}> <Link to="/profile"> profile </Link> </li>
 							<li onClick={this.handleClick}> <Link to="/messages"> inbox </Link> </li>
 							<li onClick={this.handleClick}> <Link to="/refunds"> refunds </Link> </li>
-							<li onClick={this.props.logout}> log out </li>
+							<li onClick={this.logout}> <Link to="/"> log out </Link></li>
 						</ul>
 					</div>
 				}
