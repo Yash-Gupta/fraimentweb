@@ -112,7 +112,7 @@ class Profile extends Component {
 				});
 			}
 			else{
-				firebase.storage().ref().child(self.state.profPic.name).put(self.state.profPic).then(function (snapshot){
+				firebase.storage().ref().child(uid).put(self.state.profPic).then(function (snapshot){
 					var newLink  = snapshot.downloadURL;
 					firebase.database().ref('users/' + uid).update({
 						username: self.state.username,

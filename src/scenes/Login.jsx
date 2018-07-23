@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import './css/Login.css';
 import * as firebase from 'firebase';
 
@@ -31,7 +31,7 @@ class Login extends Component {
 				if (user) {
 				  console.log("User is signed in.");
 				  console.log(user.email);
-					window.location = "/";
+				  window.location = "/";
 				} else {
 				  console.log("No user is signed in.");
 				}
@@ -77,4 +77,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default withRouter(Login);

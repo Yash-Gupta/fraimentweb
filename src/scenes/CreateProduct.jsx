@@ -50,7 +50,9 @@ class CreateProduct extends Component {
 			description: this.state.description,
 			imageurl: "",
 			timestamp: (new Date()).getTime(),
-			active: true
+			active: true,
+			lowercaseName: this.state.title.toLowerCase(),
+
 		};
 
 		var productID = firebase.database().ref().child('listings').push().key;

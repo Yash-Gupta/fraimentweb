@@ -13,6 +13,7 @@ import ConfigurePaypal from './scenes/ConfigurePaypal.jsx';
 import AuthorizePaypal from './services/AuthorizePaypal.jsx';
 
 import Profile from './scenes/Profile.jsx';
+import ViewProfile from './scenes/ViewProfile.jsx';
 
 import CreateProduct from './scenes/CreateProduct.jsx';
 import ProductDetail from './scenes/ProductDetail.jsx';
@@ -84,6 +85,10 @@ class App extends Component {
 
                      <Route path="/profile" render={() => {
                         return (<Profile updateHeader={this.updateHeader}></Profile>);
+                    }}/>
+
+                    <Route path="/viewProfile/:id" render={({match}) => {
+                        return (<ViewProfile match = {match} updateHeader={this.updateHeader}></ViewProfile>);
                     }}/>
 
                     <Route path="/listing/create" render={() => {
