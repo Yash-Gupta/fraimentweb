@@ -18,8 +18,8 @@ html, body{
 /* FONTS */
 
 @font-face {
-  font-family: 'Gotham Book';
-  src: url("./fonts/Gotham Book.ttf") format('ttf');
+  font-family: "Gotham Book";
+  src: url(./fonts/Gotham Book.ttf);
 }
 
 @font-face {
@@ -55,6 +55,11 @@ html, body{
 @font-face {
   font-family: "Avenir Next Bold";
   src: url(./fonts/AvenirNext-Bold-01.ttf);
+}
+
+@font-face {
+  font-family: "Avenir Next DemiBold";
+  src: url(./fonts/AvenirNext-DemiBold-03.ttf);
 }
 
 @font-face {

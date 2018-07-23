@@ -39,7 +39,7 @@
 }
 
 .messages-send>form>input[name=message]{
-	width: 80%;
+	width: 75%;
 	float:left;
 	border-radius: 0px;
 	border: 0.5px solid rgba(0,0,0,0.2);
@@ -70,8 +70,15 @@
 
 .messages-send>form>.action-icons>.action-icon{
 	margin: 0px 5px;
+	cursor:pointer;
 	width: 100%;
-	font-size: 24px;
+	text-align: center;
+	padding:5px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: black;
+	color:white;
 }
 
 .message-list>.messageTypes{
@@ -80,7 +87,7 @@
 
 .message-list>.messageTypes>a{
 	display: inline-block;
-	
+
 	width:50%;
 	cursor:pointer;
 	padding:20px 0px;
@@ -88,11 +95,11 @@
 	color:black;
 	text-transform: uppercase;
 }
+
 .message-list>.messageTypes>a>p{
 	width:80px;
 	padding-bottom: 10px;
 	margin:auto;
-	
 }
 
 .message-list>.messageTypes>a>.selected{

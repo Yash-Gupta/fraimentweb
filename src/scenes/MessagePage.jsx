@@ -147,11 +147,10 @@ class MessagePage extends Component {
 					<div className="messages-send">
 						<form method="POST" >
 							<input onKeyDown={this.submitMessage} placeholder="Type a message..." name="message" id="messageUserInput"/>
-							<input disabled type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
+							<input type="submit" onClick={this.submitMessage} id="sendBtn" value="Send" name="sendButton" />
 							<div className="action-icons">
-								<i className="fas fa-camera" id="picture-select"></i>
 								<div className="action-icon" onClick={this.toggleCreateOffer}>
-									<i className="fas fa-plus" id="create-offer"></i>
+									MAKE OFFER
 								</div>
 							</div>
 						</form>

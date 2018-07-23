@@ -10,15 +10,16 @@ class Offer extends Component {
 
 	componentWillMount(){
 		var self = this;
-		firebase.database().ref("/listings/" + this.props.listingID + "/name").once("value", function(dataSnapshot) {
-			self.setState({listingName: dataSnapshot.val()});
+		firebase.database().ref("/listings/" + this.props.listingID).once("value", function(dataSnapshot) {
+			self.setState({imageUrl: dataSnapshot.child("imageurl").val(), listingName: dataSnapshot.child("name").val()});
 		});
 	}
 
 	constructor(props){
 		super(props);
 		this.state = {
-			listingName: ""
+			listingName: "",
+			imageUrl: ""
 		};
 
 		this.accept = this.accept.bind(this);
@@ -49,9 +50,7 @@ class Offer extends Component {
 	}
 
 	accept(){
-		//check if listing is still active
 		var self = this;
-		console.log(this.props.listingID);
 		firebase.database().ref("/listings/" + self.props.listingID + "/active").once("value", function(snap){
 			console.log(snap.val());
 			if(!snap.val()){
@@ -125,12 +124,13 @@ class Offer extends Component {
 
 		if (this.props.senderBool){
 			var styling = "sender-offer";
-			var action_items = (<p>Waiting for approval</p>);
+			var action_items = (<div className="action-items"><p>Waiting for approval</p></div>);
 		} else {
 			var styling = "reciever-offer";
 			var action_items = (
 				<div className="action-items">
 					<p onClick={this.accept} id="accept-btn">ACCEPT</p>
+					<hr />
 					<p onClick={this.decline} id="decline-btn">DECLINE</p>
 				</div>
 			);
@@ -139,9 +139,13 @@ class Offer extends Component {
 		return (
 			<div key={this.props.id} className = {styling}>
 				<div className="offer-container">
-					<p className="price">${this.props.price} </p>
-					<p className="note"> {this.props.note} </p>
-					<Link to={"/listing/" + this.props.listingID}>{this.state.listingName}</Link>
+					<img src={this.state.imageUrl}></img>
+					<div className="info-items">
+						<b><Link to={"/listing/" + this.props.listingID}>{this.state.listingName}</Link></b>
+						<p className="sub price">Offer: <b>${this.props.price}</b></p>
+						<p className="sub note"> {this.props.note} </p>
+					</div>
+					<hr />
 					{action_items}
 				</div>
 			</div>

@@ -1,61 +1,73 @@
 /* SENDER MESSAGE */
-.sender-offer{
-	text-align: right;
+.sender-offer, .reciever-offer{
 	width:100%;
+	text-align: center;
 }
 
-.sender-offer>.offer-container{
+.offer-container{
+	font-size:16px;
+	display: inline-block;
+	vertical-align: top;
+	background-color: white;
+	border: rgba(0,0,0,0.3) 1px solid;
+	border-radius: 20px;
+	padding: 6px 0px;
+	color:black;
+	margin:1px auto;
+	text-align: left;
+	width:50%;
+	padding-top:10px;
+}
+
+.offer-container>img{
+	padding:0px 20px;
+	width:60px;
+	height:60px;
+}
+
+.offer-container>.info-items{
+	display:inline-block;
+	vertical-align: top;
+	width: 70%;
+	padding-bottom: 15px;
+}
+
+.offer-container>div>b, .offer-container>div>.sub{
+	padding-left:12px;
+}
+
+.offer-container>div>.sub{
+	color: rgba(0,0,0,0.7);
+}
+
+.offer-container>.action-items{
+	text-align: center;
+	padding:6px 0px;
+	font-weight: bold;
+	padding-bottom: 0px;
+}
+
+.offer-container>hr, .offer-container>.action-items>hr{
+	width:100%;
+	margin:0;
+	padding:0;
+	border:0.5px rgba(0,0,0,0.3) solid;
+}
+
+.offer-container>.action-items>#accept-btn{
 	font-size:14px;
 	display: inline-block;
 	vertical-align: top;
-	background-color: black;
 	border-radius: 20px;
-	padding: 6px 12px;
-	color:white;
-	margin:1px 0px;
-}
-
-.sender-offer>.offer-container>a{
-	color:white !important;
-}
-
-.sender-offer>.offer-container>.action-items>#accept-btn{
-	font-size:14px;
-	display: inline-block;
-	vertical-align: top;
-	background-color: black;
-	border-radius: 20px;
-	padding: 6px 12px;
-	color:white;
+	color:#0084ff !important;
 	margin:1px 0px;
 	cursor:pointer;
 }
 
-.sender-offer>img{
-	display:none;
-}
-
-
-/* RECIEVER MESSAGE */
-.reciever-offer{
-	width:100%;
-}
-
-.reciever-offer>.offer-container{
-	font-size:14px;
-	display: inline-block;
-	vertical-align: bottom;
-	background-color: #f1f0f0;
-	border-radius: 20px;
-	padding: 6px 12px;
-	color:black;
-	margin:1px 0px;
-}
-
-.reciever-offer>img{
-	border-radius: 50%;
-	width:35px;
-	display: inline-block;
-	vertical-align: top;
-	margin-right: 5px;
+.offer-container>.action-items>p{
+	padding:6px 0px;
+	width: 100%;
+	text-align: center;
+	cursor:pointer;
+	color:rgba(0,0,0,0.6);
 }
