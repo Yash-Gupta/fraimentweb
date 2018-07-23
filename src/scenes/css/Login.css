@@ -54,3 +54,7 @@ a:focus{
 	font-style:bold;
 	width:280px;
 }
+
+.loginErrors{
+	color:red;
+}

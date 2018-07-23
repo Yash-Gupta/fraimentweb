@@ -100,16 +100,18 @@ class MessageList extends Component {
 	}
 
 	componentWillReceiveProps(newProps){
-		if(newProps.uid != null && newProps.uid != this.state.uid){
-			this.setState({uid: newProps.uid});
+		if((newProps.uid != null && newProps.uid != this.state.uid) || (newProps.currentThread != null && newProps.currentThread != this.state.threadID)){
+			this.setState({uid: newProps.uid, threadID: newProps.currentThread});
 			this.updateThreads(newProps.uid);
 		}
 	}
+
 
 	constructor(props){
 		super(props);
 		this.state = {
 			uid: null,
+			threadID: null,
 			buyThreads: [],
 			buyThreadIds: [],
 			sellThreads: [],

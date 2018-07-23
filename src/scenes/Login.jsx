@@ -16,7 +16,8 @@ class Login extends Component {
 		super(props);
 		this.state = {
 			username: "",
-			password: ""
+			password: "",
+			errors: []
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -25,18 +26,24 @@ class Login extends Component {
 
 	login(event){
 		event.preventDefault();
+		var self = this;
 		firebase.auth().signInWithEmailAndPassword(this.state.username, this.state.password)
 			.then(function(success){
 				var user = firebase.auth().currentUser;
 				if (user) {
 				  console.log("User is signed in.");
-				  console.log(user.email);
 					window.location = "/";
 				} else {
+					var errors = self.state.errors;
+					errors.push("Incorrect username or password.");
+					self.setState({errors: errors});
 				  console.log("No user is signed in.");
 				}
 			})
 			.catch(function(error) {
+				var errors = self.state.errors;
+				errors.push((<b>Incorrect username or password.<br /></b> ));
+				self.setState({errors: errors});
 				console.log(error.code);
 				console.log(error.message);
 			});
@@ -63,6 +70,7 @@ class Login extends Component {
 				<div className = "">
 					<div className = "loginContainer">
 						<form onSubmit={this.login}>
+							<p className="loginErrors">{this.state.errors}</p>
 							<input className = "loginPageBoxes" type="text" placeholder="username" name="username" onChange={this.handleChange} value={this.state.name} /> <br />
 							<input className = "loginPageBoxes" type="password" placeholder="password" name="password" onChange={this.handleChange} value={this.state.password} /> <br />
 							<button className="loginPageSubmit" type="submit" value="">log in</button>

@@ -20,8 +20,8 @@ class CreateOffer extends Component {
 									"id": listing.key,
 									"name": snap3.child("name").val()
 								});
-								self.setState({availableListings: currentListings});
 							}
+							self.setState({availableListings: currentListings});
 						});
 					});
 				});

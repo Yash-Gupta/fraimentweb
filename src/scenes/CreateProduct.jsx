@@ -100,7 +100,7 @@ class CreateProduct extends Component {
 
 	render() {
 		return (
-			<div class="create-product-container">
+			<div className="create-product-container">
 				<form onSubmit={this.createProduct}>
 					<div>
 						<label>Item Name</label>

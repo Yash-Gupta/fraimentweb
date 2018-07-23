@@ -39,7 +39,7 @@ class ProductBox extends Component {
 				<h3 className="product-title">{this.props.title}</h3>
 				<p className="product-size">{this.props.size}</p>
 				<p className="product-brand">{this.props.brand}</p>
-				<p className="product-price">{this.props.price}</p>
+				<p className="product-price">${this.props.price}</p>
 
 			</div></Link>
 		);

@@ -2,3 +2,7 @@
     display: none;
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+.message-thread{
+  flex:1;
+}

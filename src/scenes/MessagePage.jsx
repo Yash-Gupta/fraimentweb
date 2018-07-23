@@ -32,22 +32,19 @@ class MessagePage extends Component {
 
 	componentWillReceiveProps(newProps){
 		if(newProps.currentUser !== null && newProps.currentUser.uid !== this.state.uid){
+			var self = this;
 			this.setState({uid: newProps.currentUser.uid});
 			if(this.props.match.params.id != null){
 				var givenID = this.props.match.params.id;
-				console.log(this.props.match.params.id);
-				var self = this;
 				var exists = false;
-				//take user id and either set the thread id to whatever is stored or create new thread (LATER)
 				firebase.database().ref("/users/" + newProps.currentUser.uid + "/sell_messages/" + this.props.match.params.id).once("value", function(snap){
 					self.setState({threadID: snap.val()});
 					if(snap.val() != null) exists = true;
 				}).then(() => {
-					firebase.database().ref("/users/" + newProps.currentUser.uid + "/buy_messages/" + this.props.match.params.id).once("value", function(snap){
-						if(snap.val() != null) exists = true;
-						self.setState({threadID: snap.val()}, (() => {
+					firebase.database().ref("/users/" + newProps.currentUser.uid + "/buy_messages/" + this.props.match.params.id).once("value", function(snap2){
+						if(snap2.val() != null) exists = true;
+						self.setState({threadID: snap2.val()}, (() => {
 							if(!exists){
-								console.log("doesn't exist yet!");
 								var newThread = {
 									"buyer_id": newProps.currentUser.uid,
 									"seller_id": givenID,
@@ -60,8 +57,9 @@ class MessagePage extends Component {
 								uploadThread["/threads/" + threadKey] = newThread;
 								uploadThread["/users/" + newProps.currentUser.uid + "/buy_messages/" + givenID] = threadKey;
 								uploadThread["/users/" + givenID + "/sell_messages/" + newProps.currentUser.uid] = threadKey;
-								firebase.database().ref().update(uploadThread);
-								console.log("created new thread");
+								firebase.database().ref().update(uploadThread, function(error){
+									self.setState({threadID: threadKey});
+								});
 							}
 						}));
 					});
@@ -69,8 +67,6 @@ class MessagePage extends Component {
 			}else{
 				this.chooseFirstThread(newProps.currentUser.uid);
 			}
-
-			this.setState({threadID: this.props.match.params.id});
 		}
 	}
 
@@ -96,11 +92,17 @@ class MessagePage extends Component {
 	}
 
 	clickThread(event){
-		//TODO: check if the lastSentBy property is the user logged in
-		//if no, replace lastSentBy with null
+		var threadID = event.currentTarget.id;
+		var uid = this.state.uid;
+		firebase.database().ref('/threads/' + threadID + "/lastSentBy").once("value", function(snap){
+			if(snap.val() != uid){
+				var updates = {};
+				updates["/threads/" + threadID + "/lastSentBy"] = null;
+				firebase.database().ref().update(updates);
+			}
+		});
 
 		if(event.currentTarget.id != this.state.threadID){
-			console.log(event.currentTarget.getAttribute("imageurl"));
 			this.setState({threadID: event.currentTarget.id, username: event.currentTarget.getAttribute("username"), senderImage: event.currentTarget.getAttribute("imageurl")});
 		}
 	}

@@ -88,7 +88,6 @@ class Signup extends Component {
 	}
 
 	render() {
-		//TODO: add paypal integration
 		return (
 			<div className = "">
 				<div className = "errors">

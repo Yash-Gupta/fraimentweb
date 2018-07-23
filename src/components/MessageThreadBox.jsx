@@ -18,7 +18,7 @@ class MessageThreadBox extends Component {
 		firebase.database().ref('/threads/' + threadID).once("value").then((threadData) => {
 			var lastSentBy = threadData.child("lastSentBy").val();
 			var readThread = false;
-			if(this.props.currentUser.uid == lastSentBy) readThread = true;
+			if(this.props.currentUser.uid == lastSentBy || lastSentBy == null) readThread = true;
 			this.setState({read: readThread});
 
 			firebase.database().ref("/threads/" + this.props.id + "/messages").orderByChild("timestamp").limitToFirst(1).once("value").then((snap) => {

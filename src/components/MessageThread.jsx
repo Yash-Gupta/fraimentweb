@@ -15,7 +15,7 @@ class MessageThread extends Component {
 
 	componentWillReceiveProps(newProps){
 		if(newProps.uid != null && newProps.uid !== this.state.uid){
-			var senderImage = false; //TODO - what is senderImage supposed to do here?
+			var senderImage = false;
 			var imageUrl = "";
 			messagesDb = [];
 			var self = this;
