@@ -137,7 +137,7 @@ class CreateProduct extends Component {
 						<input onChange={this.handleChange} className="create-product-input" type="file" placeholder="file" name="image" />
 					</div>
 					<div className="submitDiv">
-						<input type="submit" />
+						<input type="submit" value="Create Listing" />
 					</div>
 				</form>
 			</div>
