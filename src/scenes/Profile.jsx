@@ -112,7 +112,7 @@ class Profile extends Component {
 				});
 			}
 			else{
-				firebase.storage().ref().child(self.state.profPic.name).put(self.state.profPic).then(function (snapshot){
+				firebase.storage().ref().child(uid).put(self.state.profPic).then(function (snapshot){
 					var newLink  = snapshot.downloadURL;
 					firebase.database().ref('users/' + uid).update({
 						username: self.state.username,
@@ -163,7 +163,7 @@ class Profile extends Component {
 			<div className = "profilePage">
 			<div className="profile-container">
 
-			<h1>Bought Listings: </h1>
+			<h1>Bought Listings </h1>
 			<div className="products">
 
 			{this.state.bought.map((l) => {
@@ -172,7 +172,7 @@ class Profile extends Component {
 			</div>
 
 
-			<h1>Sold Listings: </h1>
+			<h1>Sold Listings </h1>
 			<div className="products">
 
 			{this.state.sold.map((l) => {
@@ -180,7 +180,7 @@ class Profile extends Component {
 			})}
 			</div>
 
-			<h1>Edit Profile Settings</h1>
+			<h1>Edit Profile</h1>
 
 
 			<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />

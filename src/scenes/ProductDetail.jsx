@@ -4,7 +4,7 @@ import * as firebase from 'firebase';
 import './css/ProductDetail.css';
 
 /* COMPONENTS */
-import ProductBox from '../components/ProductBox';
+
 
 class ProductDetail extends Component {
 	constructor(props){
@@ -12,6 +12,7 @@ class ProductDetail extends Component {
 		this.state = {
 			listing: [],
 			id: this.props.match.params.id,
+			author:[],
 			name: "",
 			category: "",
 			size: "",
@@ -30,6 +31,7 @@ class ProductDetail extends Component {
 
 	messageClick(event){
 		window.location = "/messages/" + this.state.author_uid;
+		
 	}
 
 	componentWillMount() {
@@ -38,22 +40,33 @@ class ProductDetail extends Component {
 			firebase.database().ref('/users/' + x.author).once("value").then((userSnap) => {
 				this.setState({"author_img": userSnap.child("profilepic").val(), "author_uid": x.author,"author_username": userSnap.val().username, "author_loc": userSnap.val().location});
 			});
+	
+            var x = snapshot.val();
+            this.setState({name: x.name, category: x.category, size: x.size, designer: x.designer, price:x.price, description:x.description, mainImg: x.imageurl});
+            
 
-			this.setState({name: x.name, category: x.category, size: x.size, designer: x.designer, price: x.price, description: x.description, imageurl: x.imageurl});
-		});
+           
+        });		
+        
 	}
+	
 
 	render(){
 		var backgroundStyles = {
-			backgroundImage: "url(" + this.state.imageurl + ")",
+			backgroundImage: "url(" + this.state.mainImg + ")",
 			backgroundSize:'cover',
 			fontWeight:'bold'
 		};
+		
+		
 
+		
+		
 		return (
 			<div className="productdetail-container">
 				<div className = "productDetailBigImg" style={backgroundStyles}>
 				</div>
+
 
 				<div className = "productDetailContent">
 
@@ -70,13 +83,7 @@ class ProductDetail extends Component {
 						<div className = "profContent">
 							<p className = "profUser">{this.state.author_username}</p>
 							<p className = "profLoc">{this.state.author_loc}</p>
-							{/*<div className = "rating">
-								<div className = "star"></div>
-								<div className = "star"></div>
-								<div className = "star"></div>
-								<div className = "star"></div>
-								<div className = "starOutline"></div>
-							</div>*/}
+
 						</div>
 					</div>
 

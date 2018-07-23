@@ -11,23 +11,41 @@ class Header extends Component {
 		super(props);
 
 		this.logout = this.logout.bind(this);
+
+
+
+
 	}
 
 	logout(){
 		var props = this.props;
 		firebase.auth().signOut().then(function() {
 			console.log("signed out");
-			window.location = "/";
+
+			props.history.push('/');
+			window.location.reload();
+
 		}, function(error) {
 			console.log(error.message);
 		});
 	}
 
+
+
+
+
 	render() {
 		var userHeader;
-		if(this.props.currentUser != null){
+
+		
+		if(this.props.currentUser != null){	
+			
+
 			userHeader = (
-				<AccountDropdown userid={this.props.currentUser.uid} logout={this.logout}>
+				<AccountDropdown userid={this.props.currentUser.uid}> 
+					<li> <Link to = {"/profile/" + this.props.currentUser.uid} >profile </Link> </li>
+					<li> <Link to="/messages"> inbox </Link> </li>
+					<li onClick={this.logout}> <Link to= "#" >log out</Link> </li>
 				</AccountDropdown>);
 		}else{
 			userHeader = (
@@ -54,7 +72,7 @@ class Header extends Component {
 
 					{!this.props.simple && userHeader}
 				</div>
-				{!this.props.simple &&
+				{/*{!this.props.simple &&
 				(<div className="container container-categories">
 					<div className="header-categories">
 						<a href="#">popular</a>
@@ -65,7 +83,7 @@ class Header extends Component {
 						<a href="#">accessories</a>
 					</div>
 				</div>)
-				}
+				}*/}
 
 				<hr className="header-bar"/>
 			</div>

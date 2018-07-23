@@ -25,6 +25,7 @@ a:focus{
 	width:280px;
 	padding:10px 10px;
 	font-size:20px;
+	font-family: "Avenir Next Demibold";
 }
 
 
@@ -36,7 +37,7 @@ a:focus{
 	font-size:20px;
 	color:#424242;
 	margin-bottom: 15px;
-	font-family: "Helvetica";
+	font-family: "Avenir Next";
 	transition:0.3s ease;
 }
 
@@ -53,6 +54,7 @@ a:focus{
 .noAcct{
 	font-style:bold;
 	width:280px;
+	font-family: "Avenir Next Demibold";
 }
 
 .loginErrors{
