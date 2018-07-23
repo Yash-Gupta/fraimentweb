@@ -1,9 +1,13 @@
 .profilePage{
 	display: block;
 	margin-top:150px;
+	font-style: "Avenir Next"
 }
+
+
 
 .profile-container{
 	margin-left: 10%;
 	width:80%;
+	font-style: "Avenir Next"
 }
