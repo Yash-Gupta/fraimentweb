@@ -163,7 +163,7 @@ class Profile extends Component {
 			<div className = "profilePage">
 			<div className="profile-container">
 
-			<h1>Bought Listings: </h1>
+			<h1>Bought Listings </h1>
 			<div className="products">
 
 			{this.state.bought.map((l) => {
@@ -172,7 +172,7 @@ class Profile extends Component {
 			</div>
 
 
-			<h1>Sold Listings: </h1>
+			<h1>Sold Listings </h1>
 			<div className="products">
 
 			{this.state.sold.map((l) => {
@@ -180,7 +180,7 @@ class Profile extends Component {
 			})}
 			</div>
 
-			<h1>Edit Profile Settings</h1>
+			<h1>Edit Profile</h1>
 
 
 			<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="username" value = {this.state.username} name="username" />

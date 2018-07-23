@@ -7,7 +7,7 @@
 	font-size:15px;
 	color:#424242;
 	margin-bottom: 15px;
-	font-family: "Helvetica";
+	font-family: "Avenir Next";
 	transition:0.3s ease;
 	width: 100%;
 }
@@ -18,7 +18,7 @@
 }
 
 .create-product-input::placeholder{
-	font-size:20px;
+	font-size:15px;
 	color:#BDBDBD;
 }
 
@@ -33,6 +33,7 @@
 	width: 100%;
 	font-weight: bold;
 	color: rgba(0,0,0,0.7);
+	font-family: "Avenir Next";
 }
 
 .create-product-container>form>div{
@@ -41,6 +42,7 @@
 
 .create-product-container>form>div.submitDiv{
 	text-align: center;
+	font-family: "Avenir Next";
 }
 
 .create-product-container{
@@ -59,4 +61,5 @@
 	outline:none;
 	border:2px rgba(0,0,0,0.6) solid;
 	margin:auto;
+	font-family: "Avenir Next Demibold";
 }
