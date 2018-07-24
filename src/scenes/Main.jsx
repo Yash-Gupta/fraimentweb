@@ -12,12 +12,20 @@ class Main extends Component {
 		this.state = {
 			listings: [],
 			currentQuery: "",
+			currentlySelected: {
+				brand: "",
+				gender:"",
+
+			}
 
 		}
 
 		this.handleSearchChange = this.handleSearchChange.bind(this);
 		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
 		this.defaultListingLoad = this.defaultListingLoad.bind(this);
+		this.brandRadioChange = this.brandRadioChange.bind(this);
+		this.genderRadioChange = this.genderRadioChange.bind(this);
+	
 	}
 
 	handleSearchChange(event) {
@@ -77,12 +85,63 @@ class Main extends Component {
 		});
 	}
 
+	brandRadioChange(event) {
+		var currentlySelected = {...this.state.currentlySelected};
+		if(currentlySelected.brand == event.target.value){
+			currentlySelected.brand = "";
+		} else{
+			currentlySelected.brand = event.target.value;
+		}
+		
+		this.setState({currentlySelected});
+	}
+
+	genderRadioChange(event) {
+		var currentlySelected = {...this.state.currentlySelected};
+		if(currentlySelected.gender == event.target.value){
+			currentlySelected.gender = "";
+		} else{
+			currentlySelected.gender = event.target.value;
+		}
+		
+		this.setState({currentlySelected});
+	}
+
+
+
+
+
 	componentWillMount(){
 		this.props.updateHeader(false);
 		this.defaultListingLoad();
 	}
 
 	render() {
+
+
+		var productBoxes = [];
+
+		var filteredListing = l => {
+			//brands
+			var filters = this.state.currentlySelected;
+			if(filters.brand && l.brand != filters.brand){
+				return false;
+			}
+			if(filters.gender && l.gender != filters.gender){
+				return false;
+			}
+			return true;
+
+		}
+
+		this.state.listings.map((l) => {
+			if(filteredListing(l)){
+				productBoxes.push(<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand} timestamp={l.timestamp}/>);
+			}
+		})
+
+
+
 		return (
 			<div className="main-container">
 				<div className = "search-container">
@@ -93,14 +152,85 @@ class Main extends Component {
 
 				</div>
 				{/* Search Box + Filter + Sort By */}
-				<div className = "main-listings">
-					<div className="products">
-						{this.state.listings.map((l) => {
+				<div className = "list-filter-container">
 
-							return (<ProductBox key={l.id} id={l.id} image={l.imageurl} title={l.title} size={l.size} price={l.price} brand={l.brand} timestamp={l.timestamp}/>);
-						})}
+					<div className = "main-filters">
+						<p className= "filterHeader">filters:</p>
+						<div className = "filterHr"> </div>
+
+						<div className = "filterType brands"> 
+							<p className = "filterHeader filter-subheader">BRANDS</p>
+							 <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="Supreme"
+					              checked={this.state.currentlySelected.brand == "Supreme"}
+					              onClick={this.brandRadioChange}
+					            />
+					            Supreme
+					          </label><br />
+					          <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="Gucci"
+					              checked={this.state.currentlySelected.brand == "Gucci"}
+					              onClick={this.brandRadioChange}
+					            />
+					            Gucci
+					          </label><br />
+					          <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="testbrand"
+					              checked={this.state.currentlySelected.brand == "testbrand"}
+					              onClick={this.brandRadioChange}
+					            />
+					            testbrand
+					          </label><br />
+						</div>
+
+
+						<div className = "filterType gender"> 
+							<p className = "filterHeader filter-subheader">GENDER</p>
+							 <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="Female"
+					              checked={this.state.currentlySelected.gender == "Female"}
+					              onClick={this.genderRadioChange}
+					            />
+					            Female
+					          </label><br />
+					          <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="Male"
+					              checked={this.state.currentlySelected.gender == "Male"}
+					              onClick={this.genderRadioChange}
+					            />
+					            Male
+					          </label><br />
+					          <label className = "filterName">
+					            <input
+					              type="radio"
+					              value="Unisex"
+					              checked={this.state.currentlySelected.gender == "Unisex"}
+					              onClick={this.genderRadioChange}
+					            />
+					            Unisex
+					          </label><br />
+						</div>
+
 					</div>
+					<div className = "main-listings">
+						<div className="products">
+							{productBoxes}
+						</div>
+					</div>
+
+
 				</div>
+				
 			</div>
 		);
 	}
