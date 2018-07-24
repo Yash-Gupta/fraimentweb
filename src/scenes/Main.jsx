@@ -24,7 +24,6 @@ class Main extends Component {
 	}
 
 	toggleMobileFilters(event){
-		console.log("testing");
 		event.preventDefault();
 		this.setState({mobileFiltersActive: !this.state.mobileFiltersActive});
 	}
@@ -73,7 +72,7 @@ class Main extends Component {
 				temp.title = listing.child("name").val();
 				temp.size = listing.child("size").val();
 				temp.price = listing.child("price").val();
-				temp.imageurl = listing.child("imageurl").val();
+				temp.imageurl = listing.child("images").child("1").val();
 				temp.brand = listing.child("designer").val();
 				temp.type = listing.child("type").val();
 				temp.timestamp = listing.child("timestamp").val();
@@ -135,7 +134,7 @@ class Main extends Component {
 			<div className="main-container">
 				<div className ={mobileClass}>
 					<div className="blackFilters">
-					<p onClick={this.toggleMobileFilters} className="closefilters"><i class="fas fa-times-circle"></i></p>
+					<p onClick={this.toggleMobileFilters} className="closefilters"><i className="fas fa-times-circle"></i></p>
 					{this.props.filters.map((l) => {
 						return (
 							<div className = {"filterType " + l.name} key={l.name}>
@@ -162,8 +161,8 @@ class Main extends Component {
 					<div className = "search-container">
 						<form>
 							<input className = "searchField" placeholder = "search" type="text" onChange = {this.handleSearchChange}/>
-							<button className= "searchButton" id="realSearch" onClick = {this.handleSearchSubmit}><i class="fas fa-search"></i></button>
-							<button className= "searchButton" onClick={this.toggleMobileFilters}><i class="fas fa-filter"></i></button>
+							<button className= "searchButton" id="realSearch" onClick = {this.handleSearchSubmit}><i className="fas fa-search"></i></button>
+							<button className= "searchButton" onClick={this.toggleMobileFilters}><i className="fas fa-filter"></i></button>
 						</form>
 					</div>
 

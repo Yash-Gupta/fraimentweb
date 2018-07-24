@@ -13,6 +13,34 @@
 	background-color: white;
 }
 
+.file-input-container>input[type="file"]{
+	display:none;
+}
+
+.big-files{
+	text-align: center;
+}
+.big-files>label{
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+.file-input-container{
+	width:45px;
+	height:75px;
+	background-color: rgba(0,0,0,0.2);
+	color:white;
+	cursor: pointer;
+	text-align: center;
+	display:inline-table;
+	margin-right:10px;
+}
+
+.file-input-container>div{
+	display: table-cell;
+	vertical-align: middle;
+}
+
 .create-product-input:focus{
 	border: solid 1.5px #BDBDBD;
 	transition:0.3s ease;
@@ -44,6 +72,7 @@
 .create-product-container>form>div.submitDiv{
 	text-align: center;
 	font-family: "Avenir Next";
+	margin-top:20px;
 }
 
 .create-product-container{
