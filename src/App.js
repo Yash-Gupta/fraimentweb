@@ -57,14 +57,47 @@ class App extends Component {
         this.setState({simpleHeader:simple})
     }
 
+
     render() {
+        var content = [
+          {
+            name: "brand",
+            text: "BRANDS",
+            text2: "Brand",
+            items: ["Adidas", "Bape", "Jordan Brand", "Palace", "Off-White", "Comme des Garcons", "Undercover", "Saint Laurent Paris", "Gucci", "Yeezy Boost", "Raf Simons ", "Antisocial Social Club", "Rick Owens", "Louis Vuitton"]
+          },
+          {
+            name: "gender",
+            text: "GENDER",
+            text2: "Gender",
+            items: ["Male", "Female", "Unisex"]
+          },
+          {
+            name: "type",
+            text: "TYPE",
+            text2: "Type",
+            items: ["Tops", "Bottoms", "Outerwear", "Footwear", "Accessories", "Other"]
+          },
+          {
+            name: "condition",
+            text: "CONDITION",
+            text2: "Condition",
+            items: ["Deadstock", "Very Good", "Good", "Slightly Used", "Used"]
+          },
+          {
+            name: "size",
+            text: "SIZE",
+            text2: "Size",
+            items: ["XS", "S", "M", "L", "XL"]
+          }
+        ]
         return (
             <div className="app">
                 <Header id="" simple={this.state.simpleHeader} currentUser={this.state.user}/>
                 <Switch>
 
                     <Route exact path="/" render={() => {
-                        return (<Main updateHeader={this.updateHeader}></Main>);
+                        return (<Main filters={content} updateHeader={this.updateHeader}></Main>);
                     }}/>
 
                     <Route path="/login" render={() => {
@@ -92,7 +125,7 @@ class App extends Component {
                     }}/>
 
                     <Route path="/listing/create" render={() => {
-                        return (<CreateProduct currentUser={this.state.user} updateHeader={this.updateHeader}></CreateProduct>);
+                        return (<CreateProduct filters={content} currentUser={this.state.user} updateHeader={this.updateHeader}></CreateProduct>);
                     }}/>
 
                     <Route path="/listing/:id" render={({match}) => {

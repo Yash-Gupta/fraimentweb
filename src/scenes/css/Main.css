@@ -7,48 +7,76 @@ a{
 	display:flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 75px;
+	margin-top: 25px;
 }
 
-.main-container>.search-container{
+.search-container{
 	display: flex;
 	justify-content: center;
 	width:100%;
-	padding: 20px;
-
 }
 
-.main-container>.search-container>form>.searchField {
+.search-container>form{
+	width: 100%;
+	padding:0px 20px;
+	margin:auto;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.search-container>form>p{
+	width: 100%;
+}
+
+.search-container>form>.searchField {
 	border: solid 1.5px #E0E0E0;
-	border-radius: 5px;
-	width:120px;
+	width:60%;
+	border-right:none;
 	padding:10px 10px;
 	font-size:14px;
 	color:#424242;
-
 	font-family: "Avenir Next Regular";
 	transition:0.3s ease;
-	margin-right:12px;
 }
 
-.main-container>.search-container>form>.searchButton {
-	background-color:black;
-	color:white;
-	border-radius: 6px;
-	width:80px;
+.search-container>form>#realSearch {
+	border-right:none;
+	border-left:none;
+}
+
+.search-container>form>.searchField:focus {
+	border: solid 1.5px #BDBDBD;
+	transition:0.3s ease;
+}
+
+
+.search-container>form>.searchButton {
+	background-color:white;
+	color:grey;
+	border: solid 1.5px #E0E0E0;
+	outline: none;
+	width:40px;
 	padding:10px 10px;
 	font-size:12px;
-	height: 42px
+	height: 39px;
+	cursor: pointer;
+}
+
+.list-filter-container{
+	width:100%;
+	display: flex;
+	flex-direction: column;
+	padding-top:30px;
 }
 
 .main-listings{
 	display:flex;
 	flex-direction: row;
   	height: 100%;
-  	width: 1024px;
   	margin-right: auto;
   	margin-left: auto;
-  	padding-top:30px;
+  	flex-grow:4;
+
 }
 
 .main-listings>.products{
@@ -56,4 +84,95 @@ a{
 	margin-right: auto;
 	width: 100%;
 	text-align: left;
+}
+
+.main-filters{
+	display: flex;
+	flex-grow:1;
+	padding-left:20px;
+	height:30px;
+	border: 10px red;
+	flex-direction: column;
+}
+
+.filterHeader{
+	font-family: "Avenir Next Bold";
+}
+
+.filterType {
+	margin-bottom:25px;
+}
+
+.filterHr{
+	width:100%;
+	height:4px;
+	background-color:#BDBDBD;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.filterLabel{
+	font-family: "Avenir Next Regular";
+	margin-left:4px;
+}
+
+.filter-subheader{
+	margin-bottom:8px;
+}
+
+.filterName{
+	font-family: "Avenir Next Regular"
+}
+
+@media (max-width:480px)  {
+	.main-filters{
+		display:block;
+		overflow-y: scroll;
+		position:absolute;
+		left:0;
+		top:0;
+		padding-top:20px;
+		height:100vh;
+		width: 100vw;
+		background-color: rgba(0,0,0,0.5);
+		color:white;
+		z-index: 99999;
+		transition: 0.25s all;
+	}
+
+	.main-filters>.blackFilters{
+		width: 50%;
+		background-color: black;
+		position: absolute;
+		top:0;
+		left:0;
+		padding:20px;
+	}
+
+	.main-filters>.blackFilters>.filterType>div{
+		margin-bottom: 10px;
+	}
+
+	.main-filters>.blackFilters>.filterType>div>label>input{
+		top: 0;
+		left: 0;
+		width: 25px;
+		background-color: #eee;
+		border-radius: 50%;
+		transition: 0.5s all;
+	}
+
+	.main-filters.inactive{
+		opacity:0;
+		z-index: -9999;
+	}
+
+	.closefilters{
+		position:absolute;
+		top:10px;
+		right:10px;
+		color:white;
+		font-size:20px;
+		cursor:pointer;
+	}
 }

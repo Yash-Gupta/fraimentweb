@@ -23,15 +23,23 @@ class ProductDetail extends Component {
 			author_uid: "",
 			author_username: "",
 			author_loc: "",
-			author_img: ""
+			author_img: "",
+			images: [],
+			activeImageIndex: 0,
 		}
 
 		this.messageClick = this.messageClick.bind(this);
+		this.changeActiveImg = this.changeActiveImg.bind(this);
 	}
 
 	messageClick(event){
 		window.location = "/messages/" + this.state.author_uid;
-		
+	}
+
+	changeActiveImg(event){
+		var changeTo = event.currentTarget.id;
+		console.log(event.currentTarget.id);
+		this.setState({activeImageIndex: parseInt(changeTo)});
 	}
 
 	componentWillMount() {
@@ -40,33 +48,54 @@ class ProductDetail extends Component {
 			firebase.database().ref('/users/' + x.author).once("value").then((userSnap) => {
 				this.setState({"author_img": userSnap.child("profilepic").val(), "author_uid": x.author,"author_username": userSnap.val().username, "author_loc": userSnap.val().location});
 			});
-	
-            var x = snapshot.val();
-            this.setState({name: x.name, category: x.category, size: x.size, designer: x.designer, price:x.price, description:x.description, mainImg: x.imageurl});
-            
-
-           
-        });		
-        
+			var x = snapshot.val();
+			var images = [];
+			var counter = 0;
+			snapshot.child("images").forEach(function (image){
+				images.push({url: image.val(), index: counter});
+				counter++;
+			});
+			this.setState({name: x.name, category: x.category, size: x.size, designer: x.designer, price:x.price, description:x.description, mainImg: x.imageurl, images: images});
+		});
 	}
-	
+
 
 	render(){
+		console.log(this.state.images[this.state.activeImageIndex]);
+		console.log(this.state.activeImageIndex);
+		if(this.state.images[this.state.activeImageIndex] == null) var imageUrl = "";
+		else var imageUrl = this.state.images[this.state.activeImageIndex].url;
 		var backgroundStyles = {
-			backgroundImage: "url(" + this.state.mainImg + ")",
-			backgroundSize:'cover',
+			backgroundImage: "url(" + imageUrl + ")",
+			backgroundSize:'contain',
+			backgroundRepeat: 'no-repeat',
 			fontWeight:'bold'
 		};
-		
-		
 
-		
-		
 		return (
 			<div className="productdetail-container">
 				<div className = "productDetailBigImg" style={backgroundStyles}>
 				</div>
 
+				<div className = "productDetailPreview">
+					{this.state.images.map((l) => {
+
+						if(this.state.images[this.state.activeImageIndex].url == l.url){
+							var background = {
+								backgroundImage: "url(" + l.url + ")",
+								border: "4px solid black"
+							};
+						} else{
+							var background = {
+								backgroundImage: "url(" + l.url + ")"
+							};
+						}
+
+						return (
+							<div onClick={this.changeActiveImg} id={l.index} key={l.index} className = "productPreviewImg" style={background}></div>
+						)
+					})}
+				</div>
 
 				<div className = "productDetailContent">
 
