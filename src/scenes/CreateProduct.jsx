@@ -43,16 +43,17 @@ class CreateProduct extends Component {
 		var newProduct = {
 			author: this.props.currentUser.uid,
 			name: this.state.title,
-			category: this.state.category,
+			brand: this.state.brand,
+			gender: this.state.gender,
+			type: this.state.type,
+			condition: this.state.condition,
 			size: this.state.size,
-			designer: this.state.brand,
 			price: this.state.price,
 			description: this.state.description,
 			imageurl: "",
 			timestamp: (new Date()).getTime(),
 			active: true,
 			lowercaseName: this.state.title.toLowerCase(),
-
 		};
 
 		var productID = firebase.database().ref().child('listings').push().key;
@@ -77,14 +78,17 @@ class CreateProduct extends Component {
 			case 'brand':
 			this.setState({brand: event.target.value});
 			break;
+			case 'gender':
+			this.setState({gender: event.target.value});
+			break;
+			case 'type':
+			this.setState({type: event.target.value});
+			break;
+			case 'condition':
+			this.setState({condition: event.target.value});
+			break;
 			case 'size':
 			this.setState({size: event.target.value});
-			break;
-			case 'category':
-			this.setState({category: event.target.value});
-			break;
-			case 'shipping':
-			this.setState({shipping: event.target.value});
 			break;
 			case 'description':
 			this.setState({description: event.target.value});
@@ -108,24 +112,18 @@ class CreateProduct extends Component {
 						<label>Item Name</label>
 						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="title" name="title" />
 					</div>
-					<div>
-						<label>Brand</label>
-						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="brand" name="brand" />
-					</div>
-					{/*<div>
-						<label>Type</label>
-						<input onChange={this.handleChange} className="create-product-input" type="text" placeholder="category" name="category" />
-					</div>*/}
-					<div>
-						<label>Size</label>
-						<select onChange={this.handleChange} className="create-product-input" type="text" placeholder="size" name="size">
-							<option value="XS">XS</option>
-							<option value="S">S</option>
-							<option value="M">M</option>
-							<option value="L">L</option>
-							<option value="XL">XL</option>
-						</select>
-					</div>
+					{this.props.filters.map((l) => {
+						return (
+							<div>
+								<label>{l.text2}</label>
+								<select onChange={this.handleChange} className="create-product-input" type="text" placeholder={l.name} name={l.name}>
+									{l.items.map((z) => {
+										return (<option value={z}>{z}</option>);
+									})}
+								</select>
+							</div>
+						);
+					})}
 					<div>
 						<label>Price (USD)</label>
 						<input onChange={this.handleChange} className="create-product-input" type="number" placeholder="price" name="price" />
