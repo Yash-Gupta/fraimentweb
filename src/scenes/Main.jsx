@@ -72,9 +72,11 @@ class Main extends Component {
 				temp.title = listing.child("name").val();
 				temp.size = listing.child("size").val();
 				temp.price = listing.child("price").val();
-				temp.imageurl = listing.child("images").child("1").val();
-				temp.brand = listing.child("designer").val();
+				temp.imageurl = listing.child("imageurl").val();
+				temp.brand = listing.child("brand").val();
 				temp.type = listing.child("type").val();
+				temp.gender = listing.child("gender").val();
+				temp.condition = listing.child("condition").val();
 				temp.timestamp = listing.child("timestamp").val();
 
 				var currentListings = self.state.listings;
@@ -113,6 +115,10 @@ class Main extends Component {
 			} if(filters.gender && l.gender != filters.gender){
 				return false;
 			} if(filters.type && l.type != filters.type){
+				return false;
+			} if(filters.condition && l.condition != filters.condition){
+				return false;
+			} if(filters.size && l.size != filters.size){
 				return false;
 			}
 

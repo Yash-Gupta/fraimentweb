@@ -28,7 +28,7 @@ class CreateProduct extends Component {
 			description: "",
 			image: null,
 			images: [],
-			imageurls: []
+			imageurl: ""
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -39,7 +39,7 @@ class CreateProduct extends Component {
 
 	getFile(event){
 		var id = event.currentTarget.id;
-		document.getElementById("input-" + id).click();
+		document.getElementById("inputFile").click();
 	}
 
 	addImage(event){
@@ -65,26 +65,25 @@ class CreateProduct extends Component {
 			timestamp: -(new Date()).getTime(),
 			active: true,
 			lowercaseName: this.state.title.toLowerCase(),
-			images: {}
+			//images: {}
 		};
 
 		var productID = firebase.database().ref().child('listings').push().key;
 		var self = this;
-		var imageUrls = [];
-		for(var i = 0; i < this.state.images.length; i++){
-			firebase.storage().ref().child(productID).child("image" + i).put(this.state.images[i]).then(function (snapshot){
-				console.log(snapshot.downloadURL);
-				var updates = {}
-				updates["/listings/" + productID + "/images/" + i] = snapshot.downloadURL;
-				firebase.database().ref().update(updates);
+		//var imageUrls = [];
+		//for(var i = 0; i < this.state.images.length; i++){
+			firebase.storage().ref().child(productID).put(this.state.image).then(function (snapshot){
+				//console.log(snapshot.downloadURL);
+				newProduct.imageurl = snapshot.downloadURL;
+				var uploadProduct = {};
+				uploadProduct['/listings/' + productID] = newProduct;
+				uploadProduct['/users/' + self.props.currentUser.uid + '/listings/' + productID] = true;
+				firebase.database().ref().update(uploadProduct);
+				window.location = "/";
 			});
-		}
+		//}
 
-		var uploadProduct = {};
-		uploadProduct['/listings/' + productID] = newProduct;
-		uploadProduct['/users/' + self.props.currentUser.uid + '/listings/' + productID] = true;
-		firebase.database().ref().update(uploadProduct);
-		window.location = "/";
+
 	}
 
 	handleChange(event){
@@ -114,19 +113,19 @@ class CreateProduct extends Component {
 			this.setState({price: event.target.value});
 			break;
 			case 'image':
-				var index = parseInt(event.target.id.split("-")[1]);
-				var images = this.state.images;
-				images[index] = event.target.files[0];
-				this.setState({images: images});
-
+				//var index = parseInt(event.target.id.split("-")[1]);
+				//var images = this.state.images;
+				//images[index] = event.target.files[0];
+				//this.setState({images: images});
+				this.setState({image: event.target.files[0]})
 				var reader = new FileReader();
 				var url = "";
 				var self = this;
 				reader.onload = function (e) {
 					url = e.target.result;
-					var imageurls = self.state.imageurls;
-					imageurls[index] = url
-					self.setState({imageurls: imageurls});
+					//var imageurls = self.state.imageurls;
+					//imageurls[index] = url
+					self.setState({imageurl: url});
 				};
 
 				reader.readAsDataURL(event.target.files[0]);
@@ -138,20 +137,18 @@ class CreateProduct extends Component {
 
 	render() {
 		var fileInputs = [];
-		for(var i = 0; i < 4; i++){
 			var background = {
-				backgroundImage: "url(" + this.state.imageurls[i] + ")",
+				backgroundImage: "url(" + this.state.imageurl + ")",
 				backgroundPosition: "center",
 				backgroundRepeat: "no-repeat",
 				backgroundSize: "contain"
 			}
 			fileInputs.push(
-				<div key={i} id={i} onClick={this.getFile} className="file-input-container" style={background}>
-					<input onChange={this.handleChange} id={"input-" + i} className="create-product-input" accept="image/*" capture="camera" type="file" placeholder="file" name="image" />
-					<div id={i}>+</div>
+				<div onClick={this.getFile} className="file-input-container" style={background}>
+					<input onChange={this.handleChange} id="inputFile" className="create-product-input" accept="image/*" capture="camera" type="file" placeholder="file" name="image" />
+					<div >+</div>
 				</div>
 			);
-		}
 
 		return (
 			<div className="create-product-container">

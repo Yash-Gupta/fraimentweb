@@ -26,6 +26,7 @@ class ProductDetail extends Component {
 			author_img: "",
 			images: [],
 			activeImageIndex: 0,
+			mainImg:""
 		}
 
 		this.messageClick = this.messageClick.bind(this);
@@ -38,7 +39,6 @@ class ProductDetail extends Component {
 
 	changeActiveImg(event){
 		var changeTo = event.currentTarget.id;
-		console.log(event.currentTarget.id);
 		this.setState({activeImageIndex: parseInt(changeTo)});
 	}
 
@@ -61,12 +61,10 @@ class ProductDetail extends Component {
 
 
 	render(){
-		console.log(this.state.images[this.state.activeImageIndex]);
-		console.log(this.state.activeImageIndex);
 		if(this.state.images[this.state.activeImageIndex] == null) var imageUrl = "";
 		else var imageUrl = this.state.images[this.state.activeImageIndex].url;
 		var backgroundStyles = {
-			backgroundImage: "url(" + imageUrl + ")",
+			backgroundImage: "url(" + this.state.mainImg + ")",
 			backgroundSize:'contain',
 			backgroundRepeat: 'no-repeat',
 			fontWeight:'bold'
